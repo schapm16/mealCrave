@@ -1,5 +1,9 @@
 console.log("Controllers: Ok!");
-exports.login = (request, response)=>{
-	console.log("login page requested");
-	response.render("login");
+module.exports = function(app){
+
+	app.get("/", function(request, response){
+		console.log("index requested");
+		response.render("login");
+	});
+
 }
