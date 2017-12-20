@@ -14,6 +14,8 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
 var controllers = require("./controllers");
+var apiRoutes = require("./routes/api_routes.js");
+var htmlRoutes = require("./routes/html_routes.js");
 
 
 var PORT = process.env.PORT || 8080;
