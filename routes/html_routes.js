@@ -1,4 +1,9 @@
+console.log("HTML routes: Ok!");
+module.exports = function(app){
 
-module.exports = {
-	name: "htmlRoutes"
+	var controllers = require("../controllers/index.js");
+
+
+	app.get("/", controllers.login);
 }
+

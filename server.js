@@ -13,9 +13,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
-var controllers = require("./controllers");
-var apiRoutes = require("./routes/api_routes.js");
-var htmlRoutes = require("./routes/html_routes.js");
+var apiRoutes = require("./routes/api_routes.js")(app);
+var htmlRoutes = require("./routes/html_routes.js")(app);
 
 
 var PORT = process.env.PORT || 8080;
