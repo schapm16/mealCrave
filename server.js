@@ -7,7 +7,7 @@ app.use("view engine", "handlebars");
 var path = require("path");
 
 //making "public" folder realy public for client side
-app.use(express.static(path.join(__dirname, 'public')));
+app.set(express.static(path.join(__dirname, 'public')));
 
 //connecting bodyparsers to express server
 var bodyParser = require("body-parser");
