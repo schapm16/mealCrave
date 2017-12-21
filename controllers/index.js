@@ -37,6 +37,16 @@ module.exports = function(app) {
 		})
 	});
 
+	app.get("/search/:type", function(req, res) {
+		DB.Food.findAll({
+			where: {
+				type: req.params.type
+			}
+		}).then(function(data) {
+			res.render("searchResults", { data: data })
+		})
+	})
+
 
 
 
