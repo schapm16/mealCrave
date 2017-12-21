@@ -1,0 +1,21 @@
+.Site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.Site-content {
+  flex: 1;
+}
+
+.searchMain{
+    background-image: url("../1.jpg");
+}
+
+.image{
+    max-height: 200px;
+}
+
+.hero{
+    background-image: url("../public/assets/images/1.jpg");
+}
