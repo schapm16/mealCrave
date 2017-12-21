@@ -1,11 +1,28 @@
 // >>> Start Function Declarations <<<
 // Updates page with profile link once user is logged in
-function loggedIn() {
-
+function loggedIn(userName) {
+  
 
 }
 
-function joinInputValidation(userName, passwordOne, passwordTwo) {
+function loginValidation(userName, password) {
+  
+  $.ajax({
+      method: 'GET',
+      traditional: true,
+      url: '/login', //This is a pending route, confirm with backend team
+      data: { userName: userName, password: password }
+    }).done(function(response) {
+      // How is backend going to respond?
+      if (response.body.valid === "good") {
+        $('#loginModal').removeClass('is-active');
+        loggedIn(userName);
+      }
+    });
+  
+}
+
+function joinValidation(userName, passwordOne, passwordTwo) {
 
   if (passwordOne !== passwordTwo) {
     $("#joinError").html("<p>Passwords Do Not Match</p>");
@@ -18,8 +35,17 @@ function joinInputValidation(userName, passwordOne, passwordTwo) {
       url: "/join",
       data: { userName: userName, password: passwordOne }
     }).done(function(response) {
+      
+      if(response.body.valid === 'exists') {
+        $("#joinError").html("<p>Username Already Existis</p>");
+      }
+      
+      else {
       // Login user once new account is verified
-      loggedIn(userName, passwordOne);
+      $('#joinModal').removeClass('is-active');
+      loggedIn(userName);
+      }
+      
     });
   }
 }
@@ -27,7 +53,7 @@ function joinInputValidation(userName, passwordOne, passwordTwo) {
 // >>> End Function Declarataions <<<
 
 
-
+// >>> Execution Begins Here <<<
 $(function() {
   /* global $ */
 
@@ -44,7 +70,7 @@ $(function() {
 
   // >>> The following is for the Login Modal <<<
   // Opens modal upon click of login link
-  $('#login').click(function() {
+  $('#login').on("click", function() {
     $('#loginModal').addClass('is-active');
   });
 
@@ -57,22 +83,15 @@ $(function() {
   $('#loginButton').click(function() {
     var userName = $('#loginUsername').val().trim();
     var password = $('#loginPassword').val().trim();
-
-    $.ajax({
-      method: 'GET',
-      traditional: true,
-      url: '/login', //This is a pending route, confirm with backend team
-      data: { userName: userName, password: password }
-    }).done(function(response) {
-      // How is backend going to respond?
-    });
+    
+    loginValidation(userName, password);
   });
   // >>> End Login Modal <<<
 
 
   // >>> The following is for the Join Modal <<<
   // Opens modal upon click of Join link
-  $('#join').click(function() {
+  $('#join').on("click",function() {
     $('#joinModal').addClass('is-active');
   });
 
@@ -86,9 +105,8 @@ $(function() {
     var passwordOne = $('#joinPasswordOne').val().trim();
     var passwordTwo = $('#joinPasswordTwo').val().trim();
 
-    joinInputValidation(userName, passwordOne, passwordTwo);
+    joinValidation(userName, passwordOne, passwordTwo);
   });
   // >>> End Join Modal <<<  
-
 
 });
