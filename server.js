@@ -15,6 +15,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
+//path for temporary saving photos
+app.use(bodyParser({uploadDir:'/uploads/'}));
+
 var controllers = require("./controllers/index.js")(app);
 
 var PORT = process.env.PORT || 8080;
