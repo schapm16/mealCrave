@@ -46,7 +46,7 @@
         });
         
         $("#modalRestName").on("click", function(){
-            alert($(this).data("info"));
+            alert($(this).attr("data-info"));
             // $.ajax({
             //     url: "map/" + $(this).data("info"),
             //     method: "GET",
@@ -68,6 +68,3 @@
         
     </script>
 </body>
-    
-    
-    {{!--ONLY GRABBING THE FIRST WORD IN THE STRING FOR THE DATA-ATTRIBUTE--}}
