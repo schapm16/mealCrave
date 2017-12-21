@@ -1,6 +1,6 @@
 console.log("Controllers: \x1b[32mok!\x1b[0m");
 var path = require('path'),
-	fs = require('fs');
+fs = require('fs');
 //express part for uploading files from html-form
 var multer = require('multer');
 //var S3 = require("../models/amazon.js");
@@ -11,7 +11,6 @@ console.log(Object.getOwnPropertyNames(DB));
 
 module.exports = function(app){
 	app.get("/", function(request, response){
-
 		console.log("index requested");
 		response.render("login", {stylePath: '"./assets/css/login.css"'});
 	});
@@ -37,15 +36,15 @@ module.exports = function(app){
 			request.type, 
 			request.tags);
 		response.send("Added!");
-	})
-}
 		console.log(request.file);
 		var image = new Buffer(request.file.buffer);
 		DB.S3.sendPhotoAndGetURL(image, "testTest.jpg", function(url) {
 			console.log(url);
 			response.send("Ok!");
 		});
-	});
+	})
+
+
 
 	app.get("/api/location/:id", function(req, res) {
 		DB.Locations.findOne({
@@ -98,5 +97,5 @@ module.exports = function(app){
 				res.json({ valid: false })
 			}
 		})
-	})
-};
+	});
+}
