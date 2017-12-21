@@ -8,12 +8,6 @@ var DB = require("../models");
 var upload = multer({ dest: null });
 
 console.log(Object.getOwnPropertyNames(DB));
-if(process.argv[2]){
-	var D = process.argv[2]
-	for(var i =0; i<D; i++){
-		DB.sendFoodToDB("BigMac"+D, "12"+D, "", "120"+D, "Charlotte", false, false, "burger", "amazing!");
-	}
-}
 
 module.exports = function(app){
 	app.get("/", function(request, response){
@@ -28,7 +22,7 @@ module.exports = function(app){
 		var image = new Buffer(request.file.buffer);
 	});
 
-	app.post("api/add/", function(request, response){
+	app.post("api/addFood/", function(request, response){
 		var food = {
 			user: ""
 		}

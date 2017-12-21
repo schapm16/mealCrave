@@ -45,14 +45,28 @@ const Locations = sequelize.define('locations', {
 });
 
 sequelize.sync()
-.then(() => Users.create({
+.then(() => {Users.create({
 	login: "vvitali",
 	alias: "Vorobyev",
 	password: "test_password",
 	location: "34.342, 42.23423",
 	preferences: "no",
-})).then(()=>{
-	console.log("Synced!")
+})
+}).then(()=>{
+	console.log("Synced!");
+	if(process.argv[2]){
+		var D = process.argv[2]
+		var foodTypes = ["burger","salad","pasta","drink"]
+		for(var i =0; i<D; i++){
+			db.sendFoodToDB("BigMac"+D, 
+				"120"+D,
+				"photoTemp",
+				Math.floor(Math.random() * 100),
+				!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2),
+				foodTypes[Math.floor(Math.random() * 3)],
+				"amazing!");
+		}
+	}
 })
 
 db.sendFoodToDB = function sendPhotoAndGetURL(food_name, 
@@ -73,7 +87,7 @@ db.sendFoodToDB = function sendPhotoAndGetURL(food_name,
 		veg: veg
 
 	}).then(()=>{
-		console.log("Synced!")
+		console.log(food_name+"Added!")
 	})
 	//will return true in case of success
 
@@ -85,7 +99,6 @@ db.sendFoodToDB = function sendPhotoAndGetURL(food_name,
 	});
 	return "0";
 }
-
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
