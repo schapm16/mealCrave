@@ -1,33 +1,34 @@
 'use strict';
 
-var fs        = require('fs');
-var path      = require('path');
+var fs = require('fs');
+var path = require('path');
 var Sequelize = require('sequelize');
-var basename  = path.basename(__filename);
-var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.json')[env];
-var db        = {};
+var basename = path.basename(__filename);
+var env = process.env.NODE_ENV || 'development';
+var config = require(__dirname + '/../config/config.json')[env];
+var db = {};
 var S3 = require("./amazon2.js");
 
 if (config.use_env_variable) {
-	var sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-	var sequelize = new Sequelize(config.database, config.username, config.password, config);
+  var sequelize = new Sequelize(process.env[config.use_env_variable], config);
+}
+else {
+  var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 console.log("SQL model: \x1b[32mok!\x1b[0m");
 
 const Users = sequelize.define('users', {
-	user_id: {
-		type:Sequelize.INTEGER,
-		primaryKey: true,
-		autoIncrement: true,
-	},
-	login: Sequelize.STRING,
-	alias: Sequelize.STRING,
-	password: Sequelize.STRING,
-	location: Sequelize.STRING,
-	preferences: Sequelize.STRING,
+  user_id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  login: Sequelize.STRING,
+  alias: Sequelize.STRING,
+  password: Sequelize.STRING,
+  location: Sequelize.STRING,
+  preferences: Sequelize.STRING,
 });
 const Food = sequelize.define('food', {
 	food_id: Sequelize.INTEGER,
@@ -39,9 +40,9 @@ const Food = sequelize.define('food', {
 	veg: Sequelize.BOOLEAN
 });
 const Locations = sequelize.define('locations', {
-	location_id: Sequelize.INTEGER,
-	location_name: Sequelize.STRING,
-	gps_tag: Sequelize.STRING,
+  location_id: Sequelize.INTEGER,
+  location_name: Sequelize.STRING,
+  gps_tag: Sequelize.STRING,
 });
 
 sequelize.sync()
@@ -94,7 +95,6 @@ db.sendFoodToDB = function sendPhotoAndGetURL(food_name,
 	return 0;
 	S3.sendPhotoAndGetURL(photo_object, user_id+"/"+food_name+".jpg", function(url){
 		console.log(url);
-
 		response.send("Ok!");
 	});
 	return "0";

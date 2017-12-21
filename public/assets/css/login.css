@@ -23,14 +23,18 @@ a {
     margin: 5px 7px;
 }
 
-/*Search Button*/
 .button {
     background-color: #00BEAC;
 }
+
 
 /*Styling for Login and Join Modals*/
 .modal-content{
     background-color: white;
     border-radius: 5px;
     padding: 20px;
+}
+
+p {
+    color: red;
 }
