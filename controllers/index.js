@@ -43,9 +43,9 @@ module.exports = function(app) {
 				type: req.params.type
 			}
 		}).then(function(data) {
-			res.render("searchResults", { data: data })
-		})
-	})
+			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
+		});
+	});
 
 	app.get("/join", function(req, res) {
 		DB.Users.findOne({
@@ -80,7 +80,4 @@ module.exports = function(app) {
 			}
 		})
 	})
-
-
-
 };

@@ -1,0 +1,45 @@
+.Site-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 35px;
+}
+.mealPics{
+    max-width: 100%;
+    text-align: justify;
+    margin: auto;
+}
+
+.has-bg-img { 
+    background: url("../photos/restaurant.png")center center; background-size:cover; 
+    
+}
+
+.modal-content{
+	position: relative;
+	text-align: center;
+}
+
+.label{
+	position: absolute;
+	bottom: 15px;
+}
+
+.input{
+    max-width: 50%;
+}
+h3{
+    font-weight: bold;
+    font-size: 28px;
+    color: white;
+}
+
+h4{
+    font-weight: bold;
+    font-size: 24px;
+    color: white;
+}
+
+#modalRestName:hover{
+	color: white;
+	text-decoration: underline;
+}
