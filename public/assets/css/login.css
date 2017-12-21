@@ -1,0 +1,36 @@
+html {
+    overflow-y: hidden; /*Removes scroll bar*/
+}
+
+body {
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+#whiteSpace {
+    height: 15vh;
+}
+
+main {
+    background-image: url("../photos/restaurant.png");
+    background-size: 100vw auto;
+    background-position: center;
+}
+
+
+/*Login | Join links*/
+a {
+    margin: 5px 7px;
+}
+
+/*Search Button*/
+.button {
+    background-color: #00BEAC;
+}
+
+/*Styling for Login and Join Modals*/
+.modal-content{
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+}
