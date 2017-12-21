@@ -1,2 +1,110 @@
-<h1>Test index page!</h1>
-asdasdss
+<body>
+  <div id="whiteSpace"></div>
+
+  <main>
+
+    <div class="hero is-medium">
+
+      <!--Login | Join links-->
+      <div class="hero-head">
+        <a id="join" class="has-text-light is-pulled-right">Join</a>
+        <span class="is-pulled-right">  |  </span>
+        <a id="login" class="has-text-light is-pulled-right">Login</a>
+      </div>
+      <!--End Login | Join links-->
+
+      <!--Search Bar-->
+      <div class="columns">
+        <div class="column is-half is-offset-one-quarter">
+          <div class="hero-body">
+            <h1 class="has-text-light is-size-2">mealCrave.</h1>
+            <form class="field is-grouped">
+              <div class="control is-expanded">
+                <input id="searchTerm" class="input" type="text" placeholder="Find your next dish">
+              </div>
+              <div class="control">
+                <button id="search" class="button is-link" type="button">Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!--End Search Bar-->
+      
+    </div>
+  </main>
+
+  <!--Login Modal-->
+  <section id="loginModal" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+      <form>
+        <div class="field">
+          <label class="label">User Name</label>
+          <div class="control">
+            <input id="loginUsername" class="input" type="text" placeholder="e.g. Foodie123">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input id="loginPassword" class="input" type="password">
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <button id="loginButton" class="button is-link is-pulled-right" type="button">Login</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <button id="closeLoginModal" class="modal-close is-large" aria-label="close"></button>
+  </section>
+  <!--End Login Modal-->
+
+  <!--Join Modal-->
+  <section id="joinModal" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+      <form>
+        <div class="field">
+          <label class="label">User Name</label>
+          <div class="control">
+            <input id="joinUsername" class="input" type="text" placeholder="e.g. Foodie123">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input id="joinPasswordOne" class="input" type="password">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input id="joinPasswordTwo" class="input" type="password">
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <button id="joinButton" class="button is-link is-pulled-right" type="button">Login</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <button id="closeJoinModal" class="modal-close is-large" aria-label="close"></button>
+  </section>
+  <!--End Join Modal-->
+
+  <!--Custom Script-->
+  <script type="text/javascript" src="login.js"></script>
+
+</body>
