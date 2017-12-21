@@ -1,4 +1,4 @@
-console.log("Controllers: Ok!");
+console.log("Controllers: \x1b[32mok!\x1b[0m");
 var path = require('path'),
 fs = require('fs');
 //express part for uploading files from html-form

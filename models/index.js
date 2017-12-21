@@ -32,5 +32,5 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-console.log("Sequelize: ok!");
+console.log("Sequelize:\x1b[32mok!\x1b[0m");
 module.exports = db;

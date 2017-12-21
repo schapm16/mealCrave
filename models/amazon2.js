@@ -16,7 +16,7 @@ module.exports = function(){
 	});
 	//list of buckets
 	//s3.listBuckets(function(err, data) { console.log(err, data); });
-	console.log("AWS S3: ok!");
+	console.log("AWS S3: \x1b[32mok!\x1b[0m");
 	objectToExport.sendPhotoAndGetURL = function sendPhotoAndGetURL(image, nameOfPhoto, cb){
 		//var image = fs.createReadStream(pathToPhoto);
 		var params = {
