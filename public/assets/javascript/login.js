@@ -14,7 +14,8 @@ function loginValidation(userName, password) {
       data: { userName: userName, password: password }
     }).done(function(response) {
       // How is backend going to respond?
-      if (response.body.valid === "good") {
+      if (response.valid === true) {
+        console.log('Login Successful');
         $('#loginModal').removeClass('is-active');
         loggedIn(userName);
       }
@@ -36,12 +37,13 @@ function joinValidation(userName, passwordOne, passwordTwo) {
       data: { userName: userName, password: passwordOne }
     }).done(function(response) {
       
-      if(response.body.valid === 'exists') {
+      if(response.valid === false) {
         $("#joinError").html("<p>Username Already Existis</p>");
       }
       
       else {
       // Login user once new account is verified
+      console.log('Join Succesful');
       $('#joinModal').removeClass('is-active');
       loggedIn(userName);
       }
