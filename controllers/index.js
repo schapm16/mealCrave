@@ -3,10 +3,11 @@ var path = require('path'),
 fs = require('fs');
 //express part for uploading files from html-form
 var multer  = require('multer');
+//var S3 = require("../models/amazon.js");
+var DB = require("../models");
 var upload = multer({ dest: null });
-
+console.log(Object.getOwnPropertyNames(DB));
 module.exports = function(app){
-
 	app.get("/", function(request, response){
 		console.log("index requested");
 		response.render("login");
@@ -17,14 +18,11 @@ module.exports = function(app){
 		console.log(typeof(request.file));
 		console.log(request.file)
 
-		var image = new Buffer(request.file.buffer).toString("base64");
+		var image = new Buffer(request.file.buffer);
 
-		fs.writeFile("test.txt", image, function(){
-			console.log("Done!");
-		})
-
+		DB.S3.sendPhotoAndGetURL(image, "testTest.jpg", function(url){
+			console.log(url);
+			response.send("Ok!");
+		});		
 	});
-
 }
-
-

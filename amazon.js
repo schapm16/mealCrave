@@ -11,8 +11,8 @@ var s3 = new AWS.S3({
 //list of buckets
 //s3.listBuckets(function(err, data) { console.log(err, data); });
 console.log("AWS S3: ok!");
-exports.sendPhotoAndGetURL = function sendPhotoAndGetURL(pathToPhoto, nameOfPhoto, cb){
-	var image = fs.createReadStream(pathToPhoto);
+exports.sendPhotoAndGetURL = function sendPhotoAndGetURL(image, nameOfPhoto, cb){
+	//var image = fs.createReadStream(pathToPhoto);
 	var params = {
 		Body: image,
 		Key: nameOfPhoto,
@@ -25,9 +25,8 @@ exports.sendPhotoAndGetURL = function sendPhotoAndGetURL(pathToPhoto, nameOfPhot
 			s3.getSignedUrl('getObject', urlParams, function(err, url){
 				cb(url)
 				return url;
-			})
-			
+			})	
 		}
 	});
-	
 }
+
