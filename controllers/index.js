@@ -66,4 +66,37 @@ module.exports = function(app){
 			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
 		});
 	});
+	app.get("/join", function(req, res) {
+		DB.Users.findOne({
+			where: {
+				//res = {userName: ___ ,
+				//password: ____}
+				login: req.body.userName
+			}
+		}).then(function(data) {
+			if (!data) {
+				DB.Users.create(req.body).then(function() {
+					res.json({ valid: true })
+				});
+			}
+			else {
+				res.json({ valid: false })
+			}
+		})
+	});
+
+	app.get("/login", function(req, res) {
+		DB.Users.findOne({
+			where: {
+				login: req.body.userName
+			}
+		}).then(function(data) {
+			if (data) {
+				res.json({ valid: true })
+			}
+			else {
+				res.json({ valid: false })
+			}
+		})
+	})
 };
