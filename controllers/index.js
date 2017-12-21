@@ -17,7 +17,7 @@ module.exports = function(app) {
 		console.log("Post Upload Photo request!");
 		console.log(!!request.file);
 		console.log(typeof(request.file));
-		console.log(request.file)
+		console.log(request.file);
 
 		var image = new Buffer(request.file.buffer);
 
@@ -33,8 +33,8 @@ module.exports = function(app) {
 				locations_id: req.params.id
 			}
 		}).then(function(location) {
-			res.json(location)
-		})
+			res.json(location);
+		});
 	});
 
 	app.get("/search/:type", function(req, res) {
@@ -43,9 +43,17 @@ module.exports = function(app) {
 				type: req.params.type
 			}
 		}).then(function(data) {
-			res.render("searchResults", { data: data })
-		})
-	})
+			res.render("searchResults", { data: data });
+		});
+	});
+
+	app.get("/profile/:id", function(req, res) {
+		DB.Users.findOne({
+			where: {
+				id: req.params.id
+			}
+		});
+	});
 
 
 
