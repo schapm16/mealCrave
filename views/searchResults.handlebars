@@ -1,0 +1,73 @@
+<body class="Site">
+    <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <img id="modalImage" alt="Meal Image" width="400" height="400">
+			<div id="label">
+				<h4><span id="modalMealName"></span> from <span id="modalRestName">Restaurant Name</span></h4>
+				<h4>$<span id="modalPrice">Price</span></h4>
+			</div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+    <header class="header">
+        <section class="hero has-bg-img">
+          <div class="hero-body has-text-centered">
+            <div class="container">
+              <h3>mealCrave. <span><input class="input" type="text" placeholder="Search Here"> <button id="searchSubmit" class="button is-dark">Submit</button></span></h3>
+            </div>
+          </div>
+        </section>
+    </header>
+    <main class="Site-content">
+        <div class="mealPics">
+                {{#each data}}
+                <div class="column is-pulled-left" height="300"><img src={{photo_url}} data-name='{{food_name}}' data-rest='{{rest_name}}' data-price={{price}} data-restid='{{address}}' width="200" class="mealImages"></div>
+                {{/each}}
+        </div>
+    </main>
+    <script>
+        $(".mealImages").on("click", function(){
+            console.log($(this).data("restid"));
+            $("#modalImage").attr("src", $(this).attr("src"));
+            $("#modalMealName").html($(this).data("name"));
+            $("#modalRestName").html($(this).data("rest"));
+            $("#modalRestName").attr("data-info", $(this).data("restid"));
+            $("#modalPrice").html($(this).data("price"));
+            $(".modal").addClass("is-clipped is-active");
+        });
+        
+        $(".modal-background").on("click", function(){
+            $(".modal").removeClass("is-clipped is-active");
+        });
+        
+        $(".modal-close").on("click", function(){
+            $(".modal").removeClass("is-clipped is-active");
+        });
+        
+        $("#modalRestName").on("click", function(){
+            alert($(this).data("info"));
+            // $.ajax({
+            //     url: "map/" + $(this).data("info"),
+            //     method: "GET",
+            //     data:{}
+            //     })
+        });
+        
+        $("#searchSubmit").on("click", function(){
+            alert($("#searchInput").val().trim())
+            $.ajax({
+                url: "/search/" + $("#searchInput").val().trim(),
+                method: "GET"
+            }).done(function(err,res){
+                if (err) {return res.status(500).end();}
+                location.reload();
+            });
+            
+        });
+        
+    </script>
+</body>
+    
+    
+    {{!--ONLY GRABBING THE FIRST WORD IN THE STRING FOR THE DATA-ATTRIBUTE--}}
