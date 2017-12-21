@@ -8,6 +8,13 @@ var DB = require("../models");
 var upload = multer({ dest: null });
 
 console.log(Object.getOwnPropertyNames(DB));
+if(process.argv[2]){
+	var D = process.argv[2]
+	for(var i =0; i<D; i++){
+		DB.sendFoodToDB("BigMac"+D, "12"+D, "", "120"+D, "Charlotte", false, false, "burger", "amazing!");
+	}
+}
+
 module.exports = function(app){
 	app.get("/", function(request, response){
 		console.log("index requested");
@@ -18,12 +25,22 @@ module.exports = function(app){
 		console.log(!!request.file);
 		console.log(typeof(request.file));
 		console.log(request.file)
-
 		var image = new Buffer(request.file.buffer);
-
-		DB.S3.sendPhotoAndGetURL(image, "testTest.jpg", function(url){
-			console.log(url);
-			response.send("Ok!");
-		});
 	});
+
+	app.post("api/add/", function(request, response){
+		var food = {
+			user: ""
+		}
+		DB.sendFoodToDB(request.food_name, 
+			request.user_id,
+			request.photoObjec, 
+			request.price, 
+			request.location, 
+			request.gFree, 
+			request.veg, 
+			request.type, 
+			request.tags);
+		response.send("Added!");
+	})
 }

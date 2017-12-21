@@ -36,7 +36,7 @@ const Food = sequelize.define('food', {
 	price: Sequelize.INTEGER,
 	gluFree: Sequelize.BOOLEAN,
 	type: Sequelize.STRING,
-	preferences: Sequelize.STRING,
+	veg: Sequelize.BOOLEAN
 });
 const Locations = sequelize.define('locations', {
 	location_id: Sequelize.INTEGER,
@@ -55,9 +55,34 @@ sequelize.sync()
 	console.log("Synced!")
 })
 
+db.sendFoodToDB = function sendPhotoAndGetURL(food_name, 
+	user_id, 
+	photo_object, 
+	price,
+	gFree, 
+	veg, 
+	type, 
+	tags){
+	Food.create({
+		food_id:  "vvitali",
+		food_name: food_name,
+		photoUrl: "http://lorempixel.com/400/200/",
+		price: price,
+		gluFree: gFree,
+		type: type,
+		veg: veg
 
-db.sendFoodToDB = function sendPhotoAndGetURL(food_name, user_id, photo_object, price, location, gFree, veg, type, tags){
+	}).then(()=>{
+		console.log("Synced!")
+	})
 	//will return true in case of success
+
+	return 0;
+	S3.sendPhotoAndGetURL(photo_object, user_id+"/"+food_name+".jpg", function(url){
+		console.log(url);
+
+		response.send("Ok!");
+	});
 	return "0";
 }
 
