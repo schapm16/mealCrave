@@ -11,13 +11,14 @@ console.log(Object.getOwnPropertyNames(DB));
 module.exports = function(app) {
 	app.get("/", function(request, response) {
 		console.log("index requested");
-		response.render("login");
+		response.render("login", {stylePath: '"./assets/css/login.css"'});
 	});
 	app.post('/upload', upload.single('file'), function(request, response) {
 		console.log("Post Upload Photo request!");
 		console.log(!!request.file);
 		console.log(typeof(request.file));
-		console.log(request.file)
+		console.log(request.file);
+
 
 		var image = new Buffer(request.file.buffer);
 
@@ -33,8 +34,8 @@ module.exports = function(app) {
 				locations_id: req.params.id
 			}
 		}).then(function(location) {
-			res.json(location)
-		})
+			res.json(location);
+		});
 	});
 
 	app.get("/search/:type", function(req, res) {
@@ -48,3 +49,4 @@ module.exports = function(app) {
 	});
 
 };
+
