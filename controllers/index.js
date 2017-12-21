@@ -3,7 +3,7 @@ module.exports = function(app){
 
 	app.get("/", function(request, response){
 		console.log("index requested");
-		response.render("login");
+		response.render("login", {stylePath: '"./assets/css/login.css"'});
 	});
 
-}
+};
