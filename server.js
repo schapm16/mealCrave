@@ -20,6 +20,7 @@ app.use(bodyParser({uploadDir:'/uploads/'}));
 
 var controllers = require("./controllers/index.js")(app);
 
+
 var PORT = process.env.PORT || 8080;
 app.listen(PORT, function(){
 	console.log("Server started at "+PORT);

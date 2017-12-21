@@ -8,8 +8,10 @@ var DB = require("../models");
 var upload = multer({ dest: null });
 
 console.log(Object.getOwnPropertyNames(DB));
-module.exports = function(app) {
-	app.get("/", function(request, response) {
+
+module.exports = function(app){
+	app.get("/", function(request, response){
+
 		console.log("index requested");
 		response.render("login", {stylePath: '"./assets/css/login.css"'});
 	});
@@ -17,11 +19,28 @@ module.exports = function(app) {
 		console.log("Post Upload Photo request!");
 		console.log(!!request.file);
 		console.log(typeof(request.file));
-		console.log(request.file);
-
-
+		console.log(request.file)
 		var image = new Buffer(request.file.buffer);
+	});
 
+	app.post("api/addFood/", function(request, response){
+		var food = {
+			user: ""
+		}
+		DB.sendFoodToDB(request.food_name, 
+			request.user_id,
+			request.photoObjec, 
+			request.price, 
+			request.location, 
+			request.gFree, 
+			request.veg, 
+			request.type, 
+			request.tags);
+		response.send("Added!");
+	})
+}
+		console.log(request.file);
+		var image = new Buffer(request.file.buffer);
 		DB.S3.sendPhotoAndGetURL(image, "testTest.jpg", function(url) {
 			console.log(url);
 			response.send("Ok!");
@@ -47,7 +66,6 @@ module.exports = function(app) {
 			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
 		});
 	});
-
 	app.get("/join", function(req, res) {
 		DB.Users.findOne({
 			where: {
@@ -82,4 +100,3 @@ module.exports = function(app) {
 		})
 	})
 };
-

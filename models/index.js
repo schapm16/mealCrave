@@ -31,13 +31,13 @@ const Users = sequelize.define('users', {
   preferences: Sequelize.STRING,
 });
 const Food = sequelize.define('food', {
-  food_id: Sequelize.INTEGER,
-  food_name: Sequelize.STRING,
-  photoUrl: Sequelize.STRING,
-  price: Sequelize.INTEGER,
-  gluFree: Sequelize.BOOLEAN,
-  type: Sequelize.STRING,
-  preferences: Sequelize.STRING,
+	food_id: Sequelize.INTEGER,
+	food_name: Sequelize.STRING,
+	photoUrl: Sequelize.STRING,
+	price: Sequelize.INTEGER,
+	gluFree: Sequelize.BOOLEAN,
+	type: Sequelize.STRING,
+	veg: Sequelize.BOOLEAN
 });
 const Locations = sequelize.define('locations', {
   location_id: Sequelize.INTEGER,
@@ -46,22 +46,59 @@ const Locations = sequelize.define('locations', {
 });
 
 sequelize.sync()
-  .then(() => Users.create({
-    login: "vvitali",
-    alias: "Vorobyev",
-    password: "test_password",
-    location: "34.342, 42.23423",
-    preferences: "no",
-  })).then(() => {
-    console.log("Synced!")
-  })
+.then(() => {Users.create({
+	login: "vvitali",
+	alias: "Vorobyev",
+	password: "test_password",
+	location: "34.342, 42.23423",
+	preferences: "no",
+})
+}).then(()=>{
+	console.log("Synced!");
+	if(process.argv[2]){
+		var D = process.argv[2]
+		var foodTypes = ["burger","salad","pasta","drink"]
+		for(var i =0; i<D; i++){
+			db.sendFoodToDB("BigMac"+D, 
+				"120"+D,
+				"photoTemp",
+				Math.floor(Math.random() * 100),
+				!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2),
+				foodTypes[Math.floor(Math.random() * 3)],
+				"amazing!");
+		}
+	}
+})
 
+db.sendFoodToDB = function sendPhotoAndGetURL(food_name, 
+	user_id, 
+	photo_object, 
+	price,
+	gFree, 
+	veg, 
+	type, 
+	tags){
+	Food.create({
+		food_id:  "vvitali",
+		food_name: food_name,
+		photoUrl: "http://lorempixel.com/400/200/",
+		price: price,
+		gluFree: gFree,
+		type: type,
+		veg: veg
 
-db.sendFoodToDB = function sendPhotoAndGetURL(food_name, user_id, photo_object, price, location, gFree, veg, type, tags) {
-  //will return true in case of success
-  return "0";
+	}).then(()=>{
+		console.log(food_name+"Added!")
+	})
+	//will return true in case of success
+
+	return 0;
+	S3.sendPhotoAndGetURL(photo_object, user_id+"/"+food_name+".jpg", function(url){
+		console.log(url);
+		response.send("Ok!");
+	});
+	return "0";
 }
-
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
