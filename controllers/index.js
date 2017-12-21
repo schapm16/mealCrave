@@ -6,6 +6,7 @@ var multer  = require('multer');
 //var S3 = require("../models/amazon.js");
 var DB = require("../models");
 var upload = multer({ dest: null });
+
 console.log(Object.getOwnPropertyNames(DB));
 module.exports = function(app){
 	app.get("/", function(request, response){
@@ -23,6 +24,6 @@ module.exports = function(app){
 		DB.S3.sendPhotoAndGetURL(image, "testTest.jpg", function(url){
 			console.log(url);
 			response.send("Ok!");
-		});		
+		});
 	});
 }
