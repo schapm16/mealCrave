@@ -71,36 +71,52 @@ const Locations = sequelize.define('locations', {
 
 Food.belongsTo(Locations);
 Users.belongsTo(Locations);
+Food.belongsTo(Users, {foreignKey: "user_id"});
 
 sequelize.sync()
-.then(() => {Users.create({
-	login: "vvitali",
-	alias: "Vorobyev",
-	password: "test_password",
-	location: "34.342, 42.23423",
-	preferences: "no",
-})
+.then(() => {
+	Locations.create({
+		location_name:"Charlotte, NC",
+		gps_tag: "34.333, 35.222"
+	});
+	Locations.create({
+		location_name:"Portland, OR",
+		gps_tag: "66.77, 12.192"
+	});
+	Users.create({
+		login: "vvitali",
+		alias: "Vorobyev",
+		password: "test_password",
+		locationId: 1,
+		preferences: "no",
+	});
+	Users.create({
+		login: "cstephen",
+		alias: "Chapman",
+		password: "s_password_test",
+		locationId: 2,
+		preferences: "no",
+	});	
 }).then(()=>{
 	console.log("Synced!");
 	if(process.argv[2]){
 		var D = process.argv[2]
-		var foodTypes = ["burger","salad","pasta","drink"]
+		var foodTypes = ["burger","salad","pasta","drink"];
+		var len = foodTypes.length-1;
 		for(var i =0; i<D; i++){
-			db.sendFoodToDB("BigMac"+D, 
-				"120"+D,
-				"photoTemp",
-				Math.floor(Math.random() * 100),
-				!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2),
-				foodTypes[Math.floor(Math.random() * 3)],
-				"amazing!");
+			db.sendFoodToDB("BigMac"+D, //food name
+				Math.floor(Math.random() * 2 + 1), //random user id
+				"photoTemp", //random photo url, check definition of the function to change it from leromPixel link to actual data
+				Math.floor(Math.random() * 100), //random price
+				!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2), //random gluten free, and veg. parameters.
+				foodTypes[Math.floor(Math.random() * len)],//random food type from array of foodtypes
+				"amazing!", // optional test tag
+				Math.floor(Math.random() * 2 + 1)); // random user id
 		}
 	}
 })
 
-Locations.create({
-	location_name:"Charlotte, NC",
-	gps_tag: "34.333, 35.222"
-})
+
 
 db.sendFoodToDB = function sendPhotoAndGetURL(food_name, 
 	user_id, 
@@ -109,16 +125,17 @@ db.sendFoodToDB = function sendPhotoAndGetURL(food_name,
 	gFree, 
 	veg, 
 	type, 
-	tags){
+	tags,
+	location_id){
 	Food.create({
-		food_id:  "vvitali",
+		user_id: user_id,
 		food_name: food_name,
 		photoUrl: "http://lorempixel.com/400/200/",
 		price: price,
 		gluFree: gFree,
 		type: type,
 		veg: veg,
-		locationId: 1
+		locationId: location_id
 
 	}).then(()=>{
 		console.log(food_name+"Added!")
