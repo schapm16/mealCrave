@@ -19,7 +19,11 @@ main {
 
 
 /*Login | Join links*/
-a {
+.hero-head a {
+    margin: 5px 7px;
+}
+
+.hero-head span {
     margin: 5px 7px;
 }
 

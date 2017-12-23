@@ -1,7 +1,12 @@
 // >>> Start Function Declarations <<<
 // Updates page with profile link once user is logged in
 function loggedIn(userName) {
-
+  $('.hero-head').html(
+    '<a id="logout" class="has-text-light is-pulled-right">Logout</a>' +
+    '<span class="has-text-light is-pulled-right">  |  </span>' +
+    '<a id="profile" class="has-text-light is-pulled-right">Your Profile</a>' +
+    '<span class="has-text-light is-pulled-right">Welcome, ' + userName + '.   </span>'
+  );
 
 }
 
@@ -23,6 +28,9 @@ function loginValidation(userName, password) {
         loggedIn(userName); // Login user once userName and password are verified
       }
     });
+
+    $('#loginModal').removeClass('is-active'); // For Testing.... Remove!
+    loggedIn(userName);
   }
 }
 
@@ -120,5 +128,16 @@ $(function() {
     joinValidation(userName, passwordOne, passwordTwo);
   });
   // >>> End Join Modal <<<  
+
+  // >>> The following is for the "Your Profile | Logout" navigation links <<<
+  $(document).on('click', '#profile', function() {
+    console.log("profile pressed");
+  });
+
+  $(document).on('click', '#logout', function() {
+    console.log("logout pressed");
+    location.reload();
+  });
+  // >>> End "Your Profile | Logout" links <<<
 
 });
