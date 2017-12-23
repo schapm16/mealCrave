@@ -7,6 +7,8 @@ function loggedIn(userName) { // Updates page with profile link once user is log
     '<a id="profile" class="has-text-light is-pulled-right">Your Profile</a>' +
     '<span class="has-text-light is-pulled-right">Welcome, ' + userName + '.   </span>'
   );
+  
+  sessionStorage.setItem('userName', userName);
 }
 
 function loginValidation(userName, password) { // Validate user login information
@@ -24,7 +26,6 @@ function loginValidation(userName, password) { // Validate user login informatio
       if (response.valid === true) {
         console.log('Login Successful');
         $('#loginModal').removeClass('is-active'); // Close Login Modal
-        sessionStorage.setItem('userName', userName);
         loggedIn(userName); // Login user once userName and password are verified
       }
       else {
@@ -66,6 +67,11 @@ function joinValidation(userName, passwordOne, passwordTwo) {
 // >>> Execution Begins Here <<<
 $(function() {
   /* global $ */
+  
+  //Check if user already logged in this Session so that page can reflect that
+  if(sessionStorage.getItem('userName')) {
+    loggedIn(sessionStorage.getItem('userName'));
+  }
 
   // Sends text search terms to server upon click of search button
   $('#search').click(function() {
