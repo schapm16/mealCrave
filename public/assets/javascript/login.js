@@ -75,13 +75,7 @@ $(function() {
 
   // Sends text search terms to server upon click of search button
   $('#search').click(function() {
-    $.ajax({
-      method: 'GET',
-      traditional: true,
-      url: '/search/' + $('#searchTerm').val().trim(),
-    }).then(data =>{
-      
-    });
+    window.location.href = "/search/"+ $('#searchTerm').val().trim();
   });
   // >>> End Search Code <<<
 
