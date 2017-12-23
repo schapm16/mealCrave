@@ -92,7 +92,7 @@ module.exports = function(app){
 			}
 		}).then(function(data) {
 
-			if (data) {
+			if (data.password == req.body.password) {
 				res.json({ valid: true })
 			}
 			else {

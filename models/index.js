@@ -74,37 +74,40 @@ Users.belongsTo(Locations);
 Food.belongsTo(Users, {foreignKey: "user_id"});
 
 sequelize.sync()
-.then(() => {
-	Locations.create({
-		location_name:"Charlotte, NC",
-		gps_tag: "34.333, 35.222"
-	});
-	Locations.create({
-		location_name:"Portland, OR",
-		gps_tag: "66.77, 12.192"
-	});
-	Users.create({
-		login: "vvitali",
-		alias: "Vorobyev",
-		password: "test_password",
-		locationId: 1,
-		preferences: "no",
-	});
-	Users.create({
-		login: "cstephen",
-		alias: "Chapman",
-		password: "s_password_test",
-		locationId: 2,
-		preferences: "no",
-	});	
+.then(() => {	
 }).then(()=>{
 	console.log("Synced!");
+	//if argument was passed in command linu at start - create a test-data in database
 	if(process.argv[2]){
+
+		Locations.create({
+			location_name:"Charlotte, NC",
+			gps_tag: "34.333, 35.222"
+		});
+		Locations.create({
+			location_name:"Portland, OR",
+			gps_tag: "66.77, 12.192"
+		});
+		Users.create({
+			login: "vvitali",
+			alias: "Vorobyev",
+			password: "test_password",
+			locationId: 1,
+			preferences: "no",
+		});
+		Users.create({
+			login: "cstephen",
+			alias: "Chapman",
+			password: "s_password_test",
+			locationId: 2,
+			preferences: "no",
+		});
+
 		var D = process.argv[2]
 		var foodTypes = ["burger","salad","pasta","drink"];
 		var len = foodTypes.length-1;
 		for(var i =0; i<D; i++){
-			db.sendFoodToDB("BigMac"+D, //food name
+			db.sendFoodToDB("BigMac"+i, //food name
 				Math.floor(Math.random() * 2 + 1), //random user id
 				"photoTemp", //random photo url, check definition of the function to change it from leromPixel link to actual data
 				Math.floor(Math.random() * 100), //random price
