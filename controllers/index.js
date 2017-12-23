@@ -85,7 +85,7 @@ module.exports = function(app){
 	});
 
 	app.post("/login", function(req, res) {
-		console.log("\x1b[33m"+"Login attempt:\nLogin: "+ req.body.login+"\nPassword: "+req.body.password+"\x1b[0m");
+		DEBUG && console.log("\x1b[33m"+"Login attempt:\nLogin: "+ req.body.login+"\nPassword: "+req.body.password+"\x1b[0m");
 		DB.Users.findOne({
 			where: {
 				login: req.body.login
@@ -93,9 +93,11 @@ module.exports = function(app){
 		}).then(function(data) {
 
 			if (data.password == req.body.password) {
+				DEBUG && console.log("\x1b[32m"+req.body.login+": Access granted!"+"\x1b[0m");
 				res.json({ valid: true })
 			}
 			else {
+				DEBUG && console.log("\x1b[31m"+req.body.login+": Access denied!"+"\x1b[0m");
 				res.json({ valid: false })
 			}
 		})
