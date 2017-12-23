@@ -15,6 +15,10 @@ module.exports = function(app){
 		console.log("index requested");
 		response.render("login", {stylePath: '"./assets/css/login.css"'});
 	});
+	app.get("/addFood", function(request, response){
+		console.log("index requested");
+		response.render("addFood");
+	});
 	app.post('/upload', upload.single('file'), function(request, response) {
 		console.log("Post Upload Photo request!");
 		console.log(!!request.file);

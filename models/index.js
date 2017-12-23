@@ -153,6 +153,8 @@ db.sendFoodToDB = function sendPhotoAndGetURL(food_name,
 	return "0";
 }
 
+db.getFoodByType
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.Locations = Locations;
