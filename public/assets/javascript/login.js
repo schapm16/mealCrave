@@ -27,6 +27,9 @@ function loginValidation(userName, password) { // Validate user login informatio
         sessionStorage.setItem('userName', userName);
         loggedIn(userName); // Login user once userName and password are verified
       }
+      else {
+        $('#loginError').html('<p>Username and/or Password do not match an existing account</p>');
+      }
     });
   }
 }
