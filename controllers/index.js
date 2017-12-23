@@ -22,7 +22,7 @@ module.exports = function(app){
 		console.log(request.file)
 		var image = new Buffer(request.file.buffer);
 	});
-
+	//add only food element to the database
 	app.post("api/addFood/", function(request, response){
 		var food = {
 			user: ""
@@ -43,14 +43,12 @@ module.exports = function(app){
 			console.log(url);
 			response.send("Ok!");
 		});
-	})
-
-
+	});
 
 	app.get("/api/location/:id", function(req, res) {
 		DB.Locations.findOne({
 			where: {
-				locations_id: req.params.id
+				id: req.params.id
 			}
 		}).then(function(location) {
 			res.json(location);
@@ -86,12 +84,14 @@ module.exports = function(app){
 		})
 	});
 
-	app.get("/login", function(req, res) {
+	app.post("/login", function(req, res) {
+		console.log("\x1b[33m"+"Login attempt:\nLogin: "+ req.body.login+"\nPassword: "+req.body.password+"\x1b[0m");
 		DB.Users.findOne({
 			where: {
-				login: req.body.userName
+				login: req.body.login
 			}
 		}).then(function(data) {
+
 			if (data) {
 				res.json({ valid: true })
 			}

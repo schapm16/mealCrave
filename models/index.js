@@ -24,29 +24,53 @@ const Users = sequelize.define('users', {
 		primaryKey: true,
 		autoIncrement: true,
 	},
-	login: Sequelize.STRING,
+	login:  {
+		type: Sequelize.STRING,
+		unique: true,
+		allowNull: false 
+	},
 	alias: Sequelize.STRING,
-	password: Sequelize.STRING,
-	location: Sequelize.STRING,
+	password: {
+		type: Sequelize.STRING,
+		allowNull: false 
+	},
 	preferences: Sequelize.STRING,
 });
 const Food = sequelize.define('food', {
-	food_id: Sequelize.INTEGER,
-	food_name: Sequelize.STRING,
-	photoUrl: Sequelize.STRING,
-	price: Sequelize.INTEGER,
+	food_id: {
+		type: Sequelize.INTEGER,
+		primaryKey: true,
+		autoIncrement: true,
+	},
+	food_name: {
+		type: Sequelize.STRING,
+		allowNull: false 
+	},
+	photoUrl: {
+		type: Sequelize.STRING,
+		allowNull: false 
+	},
+	price: {
+		type: Sequelize.INTEGER,
+		allowNull: false 
+	},
 	gluFree: Sequelize.BOOLEAN,
 	type: Sequelize.STRING,
 	veg: Sequelize.BOOLEAN
 });
 const Locations = sequelize.define('locations', {
-	location_id: Sequelize.INTEGER,
-	location_name: Sequelize.STRING,
-	gps_tag: Sequelize.STRING,
+	location_name: {
+		type: Sequelize.STRING,
+		allowNull: false 
+	},
+	gps_tag: {
+		type: Sequelize.STRING,
+		allowNull: false 
+	},
 });
 
-Locations.belongsToMany(Food, {through: 'location_id'});
-Locations.belongsToMany(Users, {through: 'location_id'});
+Food.belongsTo(Locations);
+Users.belongsTo(Locations);
 
 sequelize.sync()
 .then(() => {Users.create({
@@ -73,6 +97,11 @@ sequelize.sync()
 	}
 })
 
+Locations.create({
+	location_name:"Charlotte, NC",
+	gps_tag: "34.333, 35.222"
+})
+
 db.sendFoodToDB = function sendPhotoAndGetURL(food_name, 
 	user_id, 
 	photo_object, 
@@ -88,7 +117,8 @@ db.sendFoodToDB = function sendPhotoAndGetURL(food_name,
 		price: price,
 		gluFree: gFree,
 		type: type,
-		veg: veg
+		veg: veg,
+		locationId: 1
 
 	}).then(()=>{
 		console.log(food_name+"Added!")
@@ -105,6 +135,9 @@ db.sendFoodToDB = function sendPhotoAndGetURL(food_name,
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.Locations = Locations;
 db.Food = Food;
+db.Users = Users;
+
 console.log("Sequelize:\x1b[32mok!\x1b[0m");
 module.exports = db;
