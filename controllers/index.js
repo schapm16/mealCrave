@@ -65,7 +65,7 @@ module.exports = function(app){
 			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
 		});
 	});
-	app.get("/join", function(req, res) {
+	app.post("/join", function(req, res) {
 		DB.Users.findOne({
 			where: {
 				//res = {userName: ___ ,
@@ -73,8 +73,12 @@ module.exports = function(app){
 				login: req.body.userName
 			}
 		}).then(function(data) {
+			DEBUG && console.log("Join: response: "+!data);
 			if (!data) {
-				DB.Users.create(req.body).then(function() {
+				DB.Users.create({
+					login: req.body.userName,
+					password: req.body.password
+				}).then(function() {
 					res.json({ valid: true })
 				});
 			}
@@ -88,7 +92,7 @@ module.exports = function(app){
 		DEBUG && console.log("\x1b[33m"+"Login attempt:\nLogin: "+ req.body.login+"\nPassword: "+req.body.password+"\x1b[0m");
 		DB.Users.findOne({
 			where: {
-				login: req.body.login
+				login: req.body.userName
 			}
 		}).then(function(data) {
 

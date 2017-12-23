@@ -6,7 +6,7 @@ function loggedIn(userName) { // Updates page with profile link once user is log
     '<span class="has-text-light is-pulled-right">  |  </span>' +
     '<a id="profile" class="has-text-light is-pulled-right">Your Profile</a>' +
     '<span class="has-text-light is-pulled-right">Welcome, ' + userName + '.   </span>'
-  );
+    );
   
   sessionStorage.setItem('userName', userName);
 }
@@ -79,6 +79,8 @@ $(function() {
       method: 'GET',
       traditional: true,
       url: '/search/' + $('#searchTerm').val().trim(),
+    }).then(data =>{
+      
     });
   });
   // >>> End Search Code <<<
