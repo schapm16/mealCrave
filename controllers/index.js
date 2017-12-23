@@ -1,3 +1,4 @@
+var DEBUG = true;
 console.log("Controllers: \x1b[32mok!\x1b[0m");
 var path = require('path'),
 fs = require('fs');
@@ -21,7 +22,7 @@ module.exports = function(app){
 		console.log(request.file)
 		var image = new Buffer(request.file.buffer);
 	});
-
+	//add only food element to the database
 	app.post("api/addFood/", function(request, response){
 		var food = {
 			user: ""
@@ -42,14 +43,12 @@ module.exports = function(app){
 			console.log(url);
 			response.send("Ok!");
 		});
-	})
-
-
+	});
 
 	app.get("/api/location/:id", function(req, res) {
 		DB.Locations.findOne({
 			where: {
-				locations_id: req.params.id
+				id: req.params.id
 			}
 		}).then(function(location) {
 			res.json(location);
@@ -62,6 +61,7 @@ module.exports = function(app){
 				type: req.params.type
 			}
 		}).then(function(data) {
+			DEBUG || console.log("Poutput:"+data);
 			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
 		});
 	});
@@ -84,16 +84,20 @@ module.exports = function(app){
 		})
 	});
 
-	app.get("/login", function(req, res) {
+	app.post("/login", function(req, res) {
+		DEBUG && console.log("\x1b[33m"+"Login attempt:\nLogin: "+ req.body.login+"\nPassword: "+req.body.password+"\x1b[0m");
 		DB.Users.findOne({
 			where: {
-				login: req.body.userName
+				login: req.body.login
 			}
 		}).then(function(data) {
-			if (data) {
+
+			if (data.password == req.body.password) {
+				DEBUG && console.log("\x1b[32m"+req.body.login+": Access granted!"+"\x1b[0m");
 				res.json({ valid: true })
 			}
 			else {
+				DEBUG && console.log("\x1b[31m"+req.body.login+": Access denied!"+"\x1b[0m");
 				res.json({ valid: false })
 			}
 		})
