@@ -18,7 +18,7 @@ function loginValidation(userName, password) { // Validate user login informatio
   }
   else {
     $.ajax({ // Ask if userName and password match existing account
-      method: 'GET',
+      method: 'POST',
       traditional: true,
       url: '/login',
       data: { userName: userName, password: password }
