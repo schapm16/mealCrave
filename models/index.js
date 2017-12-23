@@ -45,6 +45,9 @@ const Locations = sequelize.define('locations', {
 	gps_tag: Sequelize.STRING,
 });
 
+Locations.belongsToMany(Food, {through: 'location_id'});
+Locations.belongsToMany(Users, {through: 'location_id'});
+
 sequelize.sync()
 .then(() => {Users.create({
 	login: "vvitali",
@@ -99,8 +102,6 @@ db.sendFoodToDB = function sendPhotoAndGetURL(food_name,
 	});
 	return "0";
 }
-
-
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
