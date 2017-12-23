@@ -1,22 +1,21 @@
 // >>> Start Function Declarations <<<
-// Updates page with profile link once user is logged in
-function loggedIn(userName) {
+
+function loggedIn(userName) { // Updates page with profile link once user is logged in
   $('.hero-head').html(
     '<a id="logout" class="has-text-light is-pulled-right">Logout</a>' +
     '<span class="has-text-light is-pulled-right">  |  </span>' +
     '<a id="profile" class="has-text-light is-pulled-right">Your Profile</a>' +
     '<span class="has-text-light is-pulled-right">Welcome, ' + userName + '.   </span>'
   );
-
 }
 
-function loginValidation(userName, password) {
+function loginValidation(userName, password) { // Validate user login information
 
   if (userName === '' || password === '') {
     $('#loginError').html('<p>Please fill out all of the fields</p>');
   }
   else {
-    $.ajax({
+    $.ajax({ // Ask if userName and password match existing account
       method: 'GET',
       traditional: true,
       url: '/login',
@@ -24,13 +23,11 @@ function loginValidation(userName, password) {
     }).done(function(response) {
       if (response.valid === true) {
         console.log('Login Successful');
-        $('#loginModal').removeClass('is-active');
+        $('#loginModal').removeClass('is-active'); // Close Login Modal
+        sessionStorage.setItem('userName', userName);
         loggedIn(userName); // Login user once userName and password are verified
       }
     });
-
-    $('#loginModal').removeClass('is-active'); // For Testing.... Remove!
-    loggedIn(userName);
   }
 }
 
@@ -43,28 +40,23 @@ function joinValidation(userName, passwordOne, passwordTwo) {
     $('#joinError').html('<p>Passwords Do Not Match</p>');
   }
   else {
-
     $.ajax({
       method: 'POST',
       traditional: true,
       url: "/join",
       data: { userName: userName, password: passwordOne }
     }).done(function(response) {
-
       if (response.valid === false) {
         $("#joinError").html("<p>Username Already Existis</p>");
       }
-
       else {
         console.log('Join Succesful');
         $('#joinModal').removeClass('is-active');
         loggedIn(userName); // Login user once new account is verified
       }
-
     });
   }
 }
-
 // >>> End Function Declarataions <<<
 
 
@@ -132,12 +124,17 @@ $(function() {
   // >>> The following is for the "Your Profile | Logout" navigation links <<<
   $(document).on('click', '#profile', function() {
     console.log("profile pressed");
+    $.ajax({
+      method: 'GET',
+      url:'/profile/' + sessionStorage.getItem('userName'),
+    });
   });
-
+  
   $(document).on('click', '#logout', function() {
     console.log("logout pressed");
+    sessionStorage.clear();
     location.reload();
   });
   // >>> End "Your Profile | Logout" links <<<
 
-});
+}); // document.ready closing brace
