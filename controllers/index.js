@@ -1,3 +1,4 @@
+var DEBUG = true;
 console.log("Controllers: \x1b[32mok!\x1b[0m");
 var path = require('path'),
 fs = require('fs');
@@ -62,6 +63,7 @@ module.exports = function(app){
 				type: req.params.type
 			}
 		}).then(function(data) {
+			DEBUG || console.log("Poutput:"+data);
 			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
 		});
 	});

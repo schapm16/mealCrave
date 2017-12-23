@@ -99,16 +99,11 @@ db.sendFoodToDB = function sendPhotoAndGetURL(food_name,
 	});
 	return "0";
 }
-//here is Food model - in future we can move it to a separate file
-db.Food = {
 
-};
 
-db.Food.findAll = ()=>{
-	console.log("Food model FindAll");
-}
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.Food = Food;
 console.log("Sequelize:\x1b[32mok!\x1b[0m");
 module.exports = db;
