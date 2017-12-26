@@ -60,9 +60,9 @@ module.exports = function(app){
 			where: {
 				type: req.params.type
 			}
-		}).then(function(data) {
-			DEBUG || console.log("Poutput:"+data);
-			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
+		}).then(function(results) {
+			console.log("Output: "+ results);
+			res.render("searchResults", {data: results, stylePath: '"./assets/css/searchResults.css"'});
 		});
 	});
 	app.get("/join", function(req, res) {

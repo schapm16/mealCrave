@@ -14,15 +14,15 @@
         <section class="hero has-bg-img">
           <div class="hero-body has-text-centered">
             <div class="container">
-              <h3>mealCrave. <span><input class="input" type="text" placeholder="Search Here"> <button id="searchSubmit" class="button is-dark">Submit</button></span></h3>
+              <h3>mealCrave. <span><input id="searchInput" class="input" type="text" placeholder="Search Here"> <button id="searchSubmit" class="button is-dark">Submit</button></span></h3>
             </div>
           </div>
         </section>
     </header>
-    <main class="Site-content">
-        <div class="mealPics">
+    <main class="Site-content container">
+        <div class="mealPics columns is-multiline has-text-centered">
                 {{#each data}}
-                <div class="column is-pulled-left" height="300"><img src={{photo_url}} data-name='{{food_name}}' data-rest='{{rest_name}}' data-price={{price}} data-restid='{{address}}' width="200" class="mealImages"></div>
+                <div class="column is-3"><img src={{photoUrl}} data-name='{{food_name}}' data-rest='{{rest_name}}' data-price={{price}} data-restid='{{address}}' width="200" class="mealImages"></div>
                 {{/each}}
         </div>
     </main>
@@ -55,13 +55,13 @@
         });
         
         $("#searchSubmit").on("click", function(){
-            alert($("#searchInput").val().trim())
+            var searchType = $("#searchInput").val().trim();
             $.ajax({
-                url: "/search/" + $("#searchInput").val().trim(),
+                url: "/search/" + searchType,
                 method: "GET"
             }).done(function(err,res){
-                if (err) {return res.status(500).end();}
-                location.reload();
+                //if (err) {return res.status(500).end();}
+                location.assign(searchType);
             });
             
         });
