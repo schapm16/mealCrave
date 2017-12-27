@@ -1,0 +1,146 @@
+    <style>
+      
+       #map {
+           height: 80%;
+           width: 90%;
+           margin: auto;
+       }
+      
+       html,
+       body {
+           height: 100%;
+           margin: 0;
+           padding: 10px;
+       }
+       
+       .hero-body {
+          background-image: url("assets/photos/restaurant.png");
+          background-size: 100vw auto;
+          background-position: center;
+          text-align: center;
+          font-size: 35px;
+          font-weight: bold;
+          padding: 15px;
+      }
+      
+       /*.has-bg-img {*/
+       /*    background: url("assets/photos/restaurant.png") center;*/
+       /*    background-size: cover;*/
+       /*}*/
+       
+    </style>   
+   
+    <header class="header">
+        <section class="hero has-bg-img">
+          <div class="hero-body has-text-centered">
+            <div class="container">
+              <h1>Satisfy your mealCrave <span id="theDuration"></span></h1>
+            </div>
+          </div>
+        </section>
+    </header>
+    <div id="map"></div>
+    <div id="startAdd">{{userAddress}}</div>
+    <div id="destAdd">{{restaurantAddress}}</div>
+    
+    <script>
+      $("#startAdd").hide();
+      $("#destAdd").hide();
+      $("#theDuration").hide();
+      
+        // function getLocation() {
+        //     var d1 = new $.Deferred();
+        //     var d2 = new $.Deferred();
+        //     var showPosition = function(position) {
+    
+        //         startLat = position.coords.latitude;
+        //         startLng = position.coords.longitude;
+    
+        //         //Request the formatted address of the users current coordinates and puts them in formatS
+        //         var URL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + startLat + "," + startLng + "&key=AIzaSyB6P6KfBWOmNmMk9IRDVgl8OTmVtMmSEQk";
+        //         $.ajax({
+        //             url: URL,
+        //             method: "GET"
+        //         }).done(function(response) {
+        //             startAddress = response.results["0"].formatted_address;
+        //             $("#formatS").html(startAddress);
+        //             $("#arrow").show();
+        //             d1.resolve(startAddress);
+        //         });
+        //         var tmpLatLng = {
+        //             startLat: startLat,
+        //             startLng: startLng,
+        //             startAddress: startAddress
+        //         };
+        //         d2.resolve(tmpLatLng);
+        //     };
+        //     if (navigator.geolocation) {
+        //         navigator.geolocation.getCurrentPosition(showPosition);
+        //     }
+        //     else {
+        //         lattitude.innerHTML = "Geolocation is not supported by this browser.";
+        //     }
+        //     return $.when(d1, d2).done(function() {
+        //     }).promise();
+        // }
+      var userAddress = $("#startAdd").text();
+      var restaurantAddress = $("#destAdd").text();
+      
+      function initMap() {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 7,
+          center: {lat: 41.85, lng: -87.65}
+        });
+        directionsDisplay.setMap(map);
+        getDistanceTime(userAddress, restaurantAddress);
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
+      }
+      
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        console.log("Start: " + userAddress);
+        console.log("End: " + restaurantAddress);
+        directionsService.route({
+          origin: userAddress, 
+          destination: restaurantAddress, 
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+      
+      function getDistanceTime(x, y) {
+        var directionsService = new google.maps.DirectionsService();
+        var request = {
+            origin: x, 
+            destination: y,
+            travelMode: google.maps.DirectionsTravelMode.DRIVING,
+        };
+
+        directionsService.route(request, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                console.log("RESPONSE: " + response);
+                var duration = response.routes[0].legs[0].duration.text;
+                $("#theDuration").text(" in " + duration);
+                $("#theDuration").show();
+                
+            }
+            else {
+                console.log("There is no route information available for this trip");
+            }
+        });
+      }
+      
+      initMap();
+    </script>
+    
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMRNMvB_hrPmwoHo_pkOvAfIOI5IMuMsA&callback=initMap">
+    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMRNMvB_hrPmwoHo_pkOvAfIOI5IMuMsA&libraries=places"></script>
+

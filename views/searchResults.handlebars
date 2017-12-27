@@ -45,13 +45,15 @@
             $(".modal").removeClass("is-clipped is-active");
         });
         
-        $("#modalRestName").on("click", function(){
-            alert($(this).attr("data-info"));
-            // $.ajax({
-            //     url: "map/" + $(this).data("info"),
-            //     method: "GET",
-            //     data:{}
-            //     })
+        $("#modalImage").on("click", function(){ //this will need to be changed to the restaurant name once we have included the location table
+            alert("clicked");
+            var restaurant = "uncc"; //this will be the name of the restaurant gotten from the span we click on 
+            $.ajax({
+                url: "/map/" + restaurant, //change this to the address we get from the data id in the span (or we could get the address from the id?? writing the address directly in may be easier but i don't know if it will make the app too slow??)
+                method: "GET",
+                }).done(function(err,res){
+                    location.assign("/map/" + restaurant);
+                });
         });
         
         $("#searchSubmit").on("click", function(){
