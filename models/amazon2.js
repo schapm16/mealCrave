@@ -7,7 +7,7 @@ module.exports = function(){
 	var objectToExport = {
 		name: "S3"
 	};
-	//aws credentials
+	//aws credentials, 
 	AWS.config.loadFromPath('./config/amazon-config.json');
 
 	var BucketName = 'mealcrave-2017';
@@ -18,8 +18,6 @@ module.exports = function(){
 	//s3.listBuckets(function(err, data) { console.log(err, data); });
 	console.log("AWS S3: \x1b[32mok!\x1b[0m");
 	objectToExport.sendPhotoAndGetURL = function sendPhotoAndGetURL(image, nameOfPhoto, cb){
-		//var image = fs.createReadStream(pathToPhoto);
-		//var image = new Buffer(image, "base64");
 		var params = {
 			Body: image.buffer,
 			Key: nameOfPhoto,

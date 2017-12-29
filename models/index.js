@@ -108,13 +108,14 @@ sequelize.sync()
 		for(var i =0; i<D; i++){
 			db.sendFoodToDB("BigMac"+i, //food name
 				Math.floor(Math.random() * 2 + 1), //random user id
-				"photoTemp", //random photo url, check definition of the function to change it from leromPixel link to actual data
+				"http://lorempixel.com/400/200/food/", //random photo url, check definition of the function to change it from leromPixel link to actual data
 				Math.floor(Math.random() * 100), //random price
+				Math.floor(Math.random() * 2 + 1), //random location ID
 				!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2), //random gluten free, and veg. parameters.
 				foodTypes[Math.floor(Math.random() * len)],//random food type from array of foodtypes
-				"amazing!", // optional test tag
-				Math.floor(Math.random() * 2 + 1)); // random user id
-		}
+				"amazing!")// optional test tag
+		};
+
 	}
 })
 
