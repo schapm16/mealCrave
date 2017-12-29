@@ -6,7 +6,7 @@ function loggedIn(userName) { // Updates page with profile link once user is log
     '<span class="has-text-light is-pulled-right">  |  </span>' +
     '<a id="profile" class="has-text-light is-pulled-right">Your Profile</a>' +
     '<span class="has-text-light is-pulled-right">Welcome, ' + userName + '.   </span>'
-  );
+    );
   
   sessionStorage.setItem('userName', userName);
 }
@@ -75,11 +75,7 @@ $(function() {
 
   // Sends text search terms to server upon click of search button
   $('#search').click(function() {
-    $.ajax({
-      method: 'GET',
-      traditional: true,
-      url: '/search/' + $('#searchTerm').val().trim(),
-    });
+    window.location.href = "/search/"+ $('#searchTerm').val().trim();
   });
   // >>> End Search Code <<<
 
