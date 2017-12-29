@@ -59,16 +59,18 @@ module.exports = function(app){
 			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
 		});
 	});
-
+	//this function will find every row in Food table, which contains "keyword" from request in food_name column
+	//and will send a JSON back
 	app.get("/search/byKeyword/:keyword", function(req, res) {
 		DB.Food.findAll({
-			where: {
-				name: req.params.type
+			where: {				
+				food_name: {
+					$like: '%' + req.params.keyword + '%'
+				}
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:"+data);
-			var JSON = data.stringify();
-			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
+			res.send(data);
 		});
 	});
 
