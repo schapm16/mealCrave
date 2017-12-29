@@ -19,8 +19,9 @@ module.exports = function(){
 	console.log("AWS S3: \x1b[32mok!\x1b[0m");
 	objectToExport.sendPhotoAndGetURL = function sendPhotoAndGetURL(image, nameOfPhoto, cb){
 		//var image = fs.createReadStream(pathToPhoto);
+		//var image = new Buffer(image, "base64");
 		var params = {
-			Body: image,
+			Body: image.buffer,
 			Key: nameOfPhoto,
 		};
 		s3.putObject(params, function(err, data){
@@ -37,6 +38,6 @@ module.exports = function(){
 				});
 			}
 		});
-	}
+	};
 	return objectToExport;
 }

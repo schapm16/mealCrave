@@ -19,34 +19,23 @@ module.exports = function(app){
 		console.log("index requested");
 		response.render("addFood");
 	});
-	app.post('/upload', upload.single('file'), function(request, response) {
-		console.log("Post Upload Photo request!");
-		console.log(!!request.file);
-		console.log(typeof(request.file));
-		console.log(request.file)
-		var image = new Buffer(request.file.buffer);
-	});
 	//add only food element to the database
-	app.post("api/addFood/", function(request, response){
+	app.post("/api/addFood", upload.single('imagefile'), function(request, response){
+		//request.file - this variable will contain file from "imagefile" key
 		var food = {
 			user: ""
 		}
-		DB.sendFoodToDB(request.food_name, 
-			request.user_id,
-			request.photoObjec, 
-			request.price, 
-			request.location, 
-			request.gFree, 
-			request.veg, 
-			request.type, 
-			request.tags);
-		response.send("Added!");
-		console.log(request.file);
-		var image = new Buffer(request.file.buffer);
-		DB.S3.sendPhotoAndGetURL(image, "testTest.jpg", function(url) {
-			console.log(url);
-			response.send("Ok!");
-		});
+		DEBUG && console.log(request.file.originalname);		
+
+		DB.sendFoodToDB(request.body.food_name, 
+			request.body.user_id,
+			request.file, 
+			request.body.price, 
+			request.body.location, 
+			request.body.gFree, 
+			request.body.veg, 
+			request.body.type, 
+			request.body.tags);
 	});
 
 	app.get("/api/location/:id", function(req, res) {
@@ -66,9 +55,23 @@ module.exports = function(app){
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:"+data);
+			var JSON = data.stringify();
 			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
 		});
 	});
+
+	app.get("/search/byKeyword/:keyword", function(req, res) {
+		DB.Food.findAll({
+			where: {
+				name: req.params.type
+			}
+		}).then(function(data) {
+			DEBUG || console.log("Poutput:"+data);
+			var JSON = data.stringify();
+			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
+		});
+	});
+
 	app.post("/join", function(req, res) {
 		DB.Users.findOne({
 			where: {
