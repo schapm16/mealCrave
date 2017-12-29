@@ -14,54 +14,56 @@
         <section class="hero has-bg-img">
           <div class="hero-body has-text-centered">
             <div class="container">
-              <h3>mealCrave. <span><input class="input" type="text" placeholder="Search Here"> <button id="searchSubmit" class="button is-dark">Submit</button></span></h3>
+              <h3>mealCrave. <span><input id="searchInput" class="input" type="text" placeholder="Search Here"> <button id="searchSubmit" class="button is-dark">Submit</button></span></h3>
+            </div>
           </div>
-      </div>
-  </section>
-</header>
-<main class="Site-content">
-    <div class="mealPics">
-        {{#each data}}
-        <div class="column is-pulled-left" height="300"><img src={{photoUrl}} data-name='{{food_name}}' data-rest='{{rest_name}}' data-price={{price}} data-restid='{{address}}' width="200" class="mealImages"></div>
-        {{/each}}
-    </div>
-</main>
-<script>
-    $(".mealImages").on("click", function(){
-        console.log($(this).data("restid"));
-        $("#modalImage").attr("src", $(this).attr("src"));
-        $("#modalMealName").html($(this).data("name"));
-        $("#modalRestName").html($(this).data("rest"));
-        $("#modalRestName").attr("data-info", $(this).data("restid"));
-        $("#modalPrice").html($(this).data("price"));
-        $(".modal").addClass("is-clipped is-active");
-    });
-    
-    $(".modal-background").on("click", function(){
-        $(".modal").removeClass("is-clipped is-active");
-    });
-    
-    $(".modal-close").on("click", function(){
-        $(".modal").removeClass("is-clipped is-active");
-    });
-    
-    $("#modalRestName").on("click", function(){
-        alert($(this).attr("data-info"));
+        </section>
+    </header>
+    <main class="Site-content container">
+        <div class="mealPics columns is-multiline has-text-centered">
+                {{#each data}}
+                <div class="column is-3"><img src={{photoUrl}} data-name='{{food_name}}' data-rest='{{rest_name}}' data-price={{price}} data-restid='{{address}}' width="200" class="mealImages"></div>
+                {{/each}}
+        </div>
+    </main>
+    <script>
+        $(".mealImages").on("click", function(){
+            console.log($(this).data("restid"));
+            $("#modalImage").attr("src", $(this).attr("src"));
+            $("#modalMealName").html($(this).data("name"));
+            $("#modalRestName").html($(this).data("rest"));
+            $("#modalRestName").attr("data-info", $(this).data("restid"));
+            $("#modalPrice").html($(this).data("price"));
+            $(".modal").addClass("is-clipped is-active");
+        });
+        
+        $(".modal-background").on("click", function(){
+            $(".modal").removeClass("is-clipped is-active");
+        });
+        
+        $(".modal-close").on("click", function(){
+            $(".modal").removeClass("is-clipped is-active");
+        });
+        
+        $("#modalRestName").on("click", function(){
+            alert($(this).attr("data-info"));
             // $.ajax({
             //     url: "map/" + $(this).data("info"),
             //     method: "GET",
             //     data:{}
             //     })
         });
-    
-    $("#searchSubmit").on("click", function(){
-        alert($("#searchInput").val().trim())
-        $.ajax({
-            url: "/search/" + $("#searchInput").val().trim(),
-            method: "GET"
-        }).done(function(err,res){
-            if (err) {return res.status(500).end();}
-            location.reload();
+        
+        $("#searchSubmit").on("click", function(){
+            var searchType = $("#searchInput").val().trim();
+            $.ajax({
+                url: "/search/" + searchType,
+                method: "GET"
+            }).done(function(err,res){
+                //if (err) {return res.status(500).end();}
+                location.assign(searchType);
+            });
+            
         });
         
     });
