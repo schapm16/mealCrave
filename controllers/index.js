@@ -73,6 +73,17 @@ module.exports = function(app){
 			res.send(data);
 		});
 	});
+	//this function will find every row in Food table from certain user, it uses user_id for searching
+	app.get("/search/byUserId/:userId", function(req, res) {
+		DB.Food.findAll({
+			where: {				
+				user_id: req.params.userId
+			}
+		}).then(function(data) {
+			DEBUG || console.log("Poutput:"+data);
+			res.send(data);
+		});
+	});
 
 	app.post("/join", function(req, res) {
 		DB.Users.findOne({
