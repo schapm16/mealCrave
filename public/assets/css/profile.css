@@ -56,9 +56,15 @@ form a {
     border-left: 2px solid black;
 }
 
-/*Testing Only*/
+.userDishWrapper {
+    margin: 20px auto;
+    padding: 20px;
+    
+    border: 2px solid #D4D4D4;
+    border-radius: 5px;
+}
 
-#postSample img {
+.userDishWrapper img {
     height: auto;
     width: 200px;
 }
