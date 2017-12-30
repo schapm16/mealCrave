@@ -70,7 +70,7 @@ module.exports = function(app){
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:"+data);
-			response.render("profile", {stylePath: '"./assets/css/login.css"'});
+			res.send(data);
 		});
 	});
 	//this function will find every row in Food table from certain user, it uses user_id for searching
@@ -81,7 +81,11 @@ module.exports = function(app){
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:"+data);
-			res.send(data);
+			//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db 
+			response.render("profile", {
+				stylePath: '"./assets/css/login.css"',
+				usersFood: data
+			});
 		});
 	});
 
