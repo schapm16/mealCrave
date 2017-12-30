@@ -1,0 +1,118 @@
+<div>
+	<div class="hero is-small">
+		<div class="hero-head">
+			<a id="logout" class="has-text-light is-pulled-right">Logout</a>
+		</div>
+
+		<div class="hero-body">
+			<h1 class="has-text-light is-size-2 title">mealCrave.</h1>
+		</div>
+	</div>
+</div>
+
+<div class="tile is-ancestor is-marginless">
+	<div class="tile is-8">
+		<div id="initialButtons" class="field">
+			<label class="label has-text-centered is-size-3">What would you like to do?</label>
+			<div class="control buttons is-centered">
+			<button id="openSearchForm" class="button is-link">Search for Dish</button>
+			<button id="openCreateDishForm" class="button is-danger">Create New Dish</button>
+			</div>
+		</div>
+
+		<form id="searchForm">
+			<div class="is-clearfix">
+				<a class="closeForm is-pulled-right">Close X</a>
+			</div>
+
+			<div class="field">
+				<label class="label">What kind of meal are you craving?</label>
+				<div class="control">
+					<input id="searchTerm" class="input" type="text" placeholder="e.g. Chicken Caesar Salad">
+				</div>
+			</div>
+			<div class="field">
+				<div class="control">
+					<button id="search" class="button is-link" type="button">Search</button>
+				</div>
+			</div>
+		</form>
+
+		<form id="createDishForm" method="POST" action="/api/addFood" enctype="mutlipart/form-data">
+			<div class="is-clearfix">
+				<a class="closeForm is-pulled-right">Close X</a>
+			</div>
+
+			<input id="userName" name="userName" type="hidden">
+			<input id="locationCoordinates" name="locationCoordinates" type="hidden">
+
+
+			<div class="field">
+				<label class="label">Where are You?</label>
+				<div class="control">
+					<input name="locationName" class="input" type="text" placeholder="Chili's">
+				</div>
+			</div>
+
+			<div class="field">
+				<label class="label">How much did your meal cost?</label>
+				<div class="control">
+					<input name="price" class="input" type="text" placeholder="15.75">
+				</div>
+			</div>
+
+			<div class="field">
+				<label class="label">What did you order off the menu?</label>
+				<div class="control">
+					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad">
+				</div>
+			</div>
+
+			<div class="field">
+				<label class="label">Select a category that best fits your meal.</label>
+				<div class="control">
+					<span class="select">
+						<select>
+							<option>Hamburger</option>
+							<option>Salad</option>
+						</select>
+						</span>
+				</div>
+			</div>
+
+			<div class="field">
+				<label class="label">Upload a photo of your meal.</label>
+				<div class="control">
+					<div class="file is-primary">
+						<label class="file-label">
+    				<input name="photo" class="file-input" type="file" accept="image/*" capture>
+    				<span class="file-cta">
+      				<span class="file-icon">
+        				<i class="fa fa-camera"></i>
+    					</span>
+      				<span class="file-label">Photo</span>
+    				</span>
+  					</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="field">
+				<div class="control">
+					<button id="createDish" class="button is-danger" type="submit">Create</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div id="userDishes" class="tile">
+		<div id="postSample">
+			<img src="/assets/photos/restaurant.png">
+			<p>Chili's</p>
+			<p>Price: $10</p>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="/assets/javascript/profile.js"></script>
+	

@@ -1,0 +1,64 @@
+html {
+    overflow-y: auto; /*Removes scroll bar*/
+}
+
+body {
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.hero {
+    background-image: url("../photos/restaurant.png");    /*url("../photos/restaurant.png")*/
+    background-size: 100vw auto;
+    background-position: center;
+    
+    border-bottom: 2px solid black;
+}
+
+.hero-head a,
+.hero-head span {
+    margin: 5px 7px;
+}
+
+
+#initialButtons {
+    margin: 0vh auto;
+}
+
+form a {
+    color: black;
+}
+
+#searchForm, #createDishForm {
+    display: none;
+    
+    box-sizing: border-box;
+    margin: 2vh auto;
+    padding: 0 4vh;
+    width: 100%;
+    
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+#createDishForm input,
+#createDishForm select {
+    border-color: #FF2B56;
+    box-shadow: none;
+}
+
+#searchForm input {
+    border-color: #3273DC;
+    box-shadow: none;
+}
+
+#userDishes {
+    border-left: 2px solid black;
+}
+
+/*Testing Only*/
+
+#postSample img {
+    height: auto;
+    width: 200px;
+}
