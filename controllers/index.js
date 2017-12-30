@@ -61,16 +61,19 @@ module.exports = function(app){
 	});
 	//this function will find every row in Food table, which contains "keyword" from request in food_name column
 	//and will send a JSON back
-	app.get("/search/byKeyword/:keyword", function(req, res) {
+	app.get("/search/byKeyword/:keyword", function(request, response) {
 		DB.Food.findAll({
 			where: {				
 				food_name: {
-					$like: '%' + req.params.keyword + '%'
+					$like: '%' + request.params.keyword + '%' //it will find every item with "keyword" in the food_name column, no matter what position
 				}
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:"+data);
-			res.send(data);
+			response.render("searchResults", {
+				stylePath: '"./assets/css/login.css"',
+				data: data
+			});
 		});
 	});
 	//this function will find every row in Food table from certain user, it uses user_id for searching
