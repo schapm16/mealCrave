@@ -70,7 +70,7 @@ module.exports = function(app){
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:"+data);
-			res.send(data);
+			response.render("profile", {stylePath: '"./assets/css/login.css"'});
 		});
 	});
 	//this function will find every row in Food table from certain user, it uses user_id for searching
