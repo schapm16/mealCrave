@@ -1,5 +1,5 @@
 html {
-    overflow-y: auto; /*Removes scroll bar*/
+    overflow-y: hidden; /*Removes scroll bar*/
 }
 
 body {
@@ -29,12 +29,12 @@ form a {
     color: black;
 }
 
-#searchForm, #createDishForm {
+#searchForm, #createDishForm, #editDishForm {
     display: none;
     
     box-sizing: border-box;
     margin: 2vh auto;
-    padding: 0 4vh;
+    padding: 0 2vw;
     width: 100%;
     
     max-height: 75vh;
@@ -52,19 +52,30 @@ form a {
     box-shadow: none;
 }
 
+
 #userDishes {
+    height: 80vh;
+    max-height: 80vh;
+    overflow-y: auto;
     border-left: 2px solid black;
 }
 
+
 .userDishWrapper {
-    margin: 20px auto;
-    padding: 20px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 5%;
     
     border: 2px solid #D4D4D4;
     border-radius: 5px;
+    
+    width: 80%;
+    
+    cursor: pointer;
+    
 }
 
 .userDishWrapper img {
     height: auto;
-    width: 200px;
+    width: 80%;
 }

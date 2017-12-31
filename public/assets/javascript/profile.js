@@ -15,10 +15,17 @@ $(function() {
     $('#initialButtons').css('display', 'none');
     $('#searchForm').css('display', 'block');
   });
+  
+  $('.userDishWrapper').click(function() {
+    $('#initialButtons').css('display', 'none');
+    $('#editDishForm').css('display', 'block');
+  });
 
   $('.closeForm').click(function(){
+    
     $('#createDishForm').css('display', 'none');
     $('#searchForm').css('display', 'none');
+    $('#editDishForm').css('display', 'none');
     $('#initialButtons').css('display', 'block');
   });
   // End Form Controls
@@ -39,7 +46,8 @@ $(function() {
     window.location.href="/search/byKeyword/" + $('#searchTerm').val().trim();
   });
   // End Search by Keyword
-
+  
+  
   
 
 });

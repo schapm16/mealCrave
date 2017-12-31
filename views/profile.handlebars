@@ -1,13 +1,12 @@
-<div>
-	<div class="hero is-small">
-		<div class="hero-head">
-			<a id="logout" class="has-text-light is-pulled-right">Logout</a>
-		</div>
-
-		<div class="hero-body">
-			<h1 class="has-text-light is-size-2 title">mealCrave.</h1>
-		</div>
+<div class="hero is-small">
+	<div class="hero-head">
+		<a id="logout" class="has-text-light is-pulled-right">Logout</a>
 	</div>
+
+	<div class="hero-body">
+		<h1 class="has-text-light is-size-2 title">mealCrave.</h1>
+	</div>
+</div>
 </div>
 
 <div class="tile is-ancestor is-marginless">
@@ -38,7 +37,7 @@
 			</div>
 		</form>
 
-		<form id="createDishForm" method="POST" action="/api/addFood" enctype="mutlipart/form-data">
+		<form id="createDishForm" method="POST" action="/api/addFood" enctype="multipart/form-data">
 			<div class="is-clearfix">
 				<a class="closeForm is-pulled-right">Close X</a>
 			</div>
@@ -62,23 +61,38 @@
 			</div>
 
 			<div class="field">
-				<label class="label">What did you order off the menu?</label>
+				<label class="label">What did you order off of the menu?</label>
 				<div class="control">
 					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad">
 				</div>
-			</div>
+			</div> 
 
 			<div class="field">
-				<label class="label">Select a category that best fits your meal.</label>
+				<label class="label">Do these apply?</label>
 				<div class="control">
-					<span class="select">
-						<select>
-							<option>Hamburger</option>
-							<option>Salad</option>
-						</select>
-						</span>
+					<label class="checkbox"> 
+						<input name="veg" type="checkbox">
+						Vegetarian
+					</label>
+				</div>
+
+				<div class="control">
+					<label class="checkbox"> 
+						<input name="gfree" type="checkbox">
+						Gluten Free
+					</label>
 				</div>
 			</div>
+
+			{{!--We may not use "type"--}} {{!--
+			<div class="field">--}} {{!-- <label class="label">Select a category that best fits your meal.</label>--}} {{!--
+				<div class="control">--}} {{!-- <span class="select">--}}
+			{{!--			<select>--}}
+			{{!--				<option>Hamburger</option>--}}
+			{{!--				<option>Salad</option>--}}
+			{{!--			</select>--}}
+			{{!--			</span>--}} {{!-- </div>--}} {{!--
+			</div>--}}
 
 			<div class="field">
 				<label class="label">Upload a photo of your meal.</label>
@@ -96,23 +110,121 @@
 					</div>
 				</div>
 			</div>
-
+			
 			<div class="field">
 				<div class="control">
 					<button id="createDish" class="button is-danger" type="submit">Create</button>
 				</div>
 			</div>
 		</form>
+		
+		<form id="editDishForm" method="POST" action="NEED PATH" enctype="multipart/form-data">
+			<div class="is-clearfix">
+				<a class="closeForm is-pulled-right">Close X</a>
+			</div>
+			
+			<div class="field">
+				<label class="label">Is this the correct restaurant name?</label>
+				<div class="control">
+					<input name="locationName" class="input" type="text" placeholder="Chili's">
+				</div>
+			</div>
+
+			<div class="field">
+				<label class="label">Is this the correct price of the meal?</label>
+				<div class="control">
+					<input name="price" class="input" type="text" placeholder="15.75">
+				</div>
+			</div>
+
+			<div class="field">
+				<label class="label">Need to change the name of the menu item you ordered?</label>
+				<div class="control">
+					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad">
+				</div>
+			</div> 
+
+			<div class="field">
+				<label class="label">Are these options correct?</label>
+				<div class="control">
+					<label class="checkbox"> 
+						<input name="veg" type="checkbox">
+						Vegetarian
+					</label>
+				</div>
+
+				<div class="control">
+					<label class="checkbox"> 
+						<input name="gfree" type="checkbox">
+						Gluten Free
+					</label>
+				</div>
+			</div>
+
+			{{!--We may not use "type"--}} {{!--
+			<div class="field">--}} {{!-- <label class="label">Is this the correct meal category?</label>--}} {{!--
+				<div class="control">--}} {{!-- <span class="select">--}}
+			{{!--			<select>--}}
+			{{!--				<option>Hamburger</option>--}}
+			{{!--				<option>Salad</option>--}}
+			{{!--			</select>--}}
+			{{!--			</span>--}} {{!-- </div>--}} {{!--
+			</div>--}}
+
+			<div class="field">
+				<label class="label">Want to upload a different photo?</label>
+				<div class="control">
+					<div class="file is-primary">
+						<label class="file-label">
+    				<input name="photo" class="file-input" type="file" accept="image/*" capture>
+    				<span class="file-cta">
+      				<span class="file-icon">
+        				<i class="fa fa-camera"></i>
+    					</span>
+      				<span class="file-label">Photo</span>
+    				</span>
+  					</label>
+					</div>
+				</div>
+			</div>
+			
+			<div class="field">
+				<div class="control">
+					<button id="editDish" class="button is-danger" type="submit">Create</button>
+				</div>
+			</div>
+		</form>
+		
 	</div>
 
-	<div id="userDishes" class="tile">
-		<div class="userDishWrapper" <div id="postSample">
-			<img src="/assets/photos/restaurant.png">
-			<p>Chili's</p>
-			<p>Price: $10</p>
+	<div id="userDishes">
+		<div class="tile">
+			<div class="tile is-parent is-vertical">
+				<div class="tile is-child">
+					<div class="userDishWrapper">
+						<img src="https://cleanfoodcrush.com/wp-content/uploads/2016/12/Kale-Chicken-Caesar-Salad-Recipe-1024x683.jpg">
+						<p>Location: Chili's</p>
+						<p>Menu Item: Chicken Caesar Salad</p>
+						<p>Price: $10</p>
+						<p>Gluten Free: No</p>
+						<p>Vegetarian: No</p>
+					</div>
+				</div>
+
+				<div class="tile is-child">
+					<div class="userDishWrapper">
+						<img src="https://static.pexels.com/photos/70497/pexels-photo-70497.jpeg">
+						<p>Location: Chili's</p>
+						<p>Menu Item: Bacon Cheeseburger</p>
+						<p>Price: $10</p>
+						<p>Gluten Free: No</p>
+						<p>Vegetarian: No</p>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
-</div>
 </div>
 
 <script type="text/javascript" src="/assets/javascript/profile.js"></script>

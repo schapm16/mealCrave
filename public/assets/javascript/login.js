@@ -129,7 +129,7 @@ $(function() {
   // >>> The following is for the "Your Profile | Logout" navigation links <<<
   $(document).on('click', '#profile', function() {
     console.log("profile pressed");
-    window.location.href='/profile/' + sessionStorage.getItem('userName');
+    window.location.href='/search/byUserId/' + sessionStorage.getItem('userName');
     
   });
   
