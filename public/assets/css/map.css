@@ -1,11 +1,4 @@
- #heading {
-     text-align: center;
-     font-size: 40px;
-     font-weight: bold;
-     padding: 20px;
- }
-
- /* Always set the map height explicitly to define the size of the div
+/* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
 
  #map {
@@ -20,26 +13,27 @@
  body {
      height: 100%;
      margin: 0;
-     padding: 0;
+     padding: 10px;
  }
 
- #floating-panel {
-     position: absolute;
-     top: 10px;
-     left: 25%;
-     z-index: 5;
-     background-color: #fff;
-     padding: 5px;
-     border: 1px solid #999;
-     text-align: center;
-     font-family: 'Roboto', 'sans-serif';
-     line-height: 30px;
-     padding-left: 10px;
- }
 
- .has-bg-img {
-     background: url("../photos/restaurant.png")center center;
-     background-size: cover;
+ .hero-body {
+          /*background-position: center;*/
+          /*text-align: center;*/
+          font-size: 35px;
+          font-weight: bold;
+          padding: 15px;
+      }
+       
+.has-bg-img { 
+    background: url("../photos/restaurant.png")center center; 
+    background-size:cover; 
+    
+} 
 
- }
+.Site-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 35px;
+}
  

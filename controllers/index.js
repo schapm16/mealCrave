@@ -62,13 +62,13 @@ module.exports = function(app) {
 			}
 		}).then(function(results) {
 			console.log("Output: " + results);
-			res.render("searchResults", { data: results, stylePath: '"./assets/css/searchResults.css"' });
+			res.render("searchResults", { data: results, stylePath: '"/assets/css/searchResults.css"' });
 		});
 	});
 
 	// ************************************************************************
 	app.get("/map/:restaurantAddress", function(req, res) {
-		res.render("map", { userAddress: "204 Northbend Dr Charlotte NC 28262", restaurantAddress: req.params.restaurantAddress, stylePath: '"./assets/css/map.css"' });
+		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
 	});
 	//USERADDRESS will be the users geolocation (we can wait and get this when loading the maps page if neccessary)
 	//RESTAURANTADDRESS will be the address we get from the data loaded in the results page. we need to "include" the restaurant table in the results that are returned so we can access the restarurants address

@@ -10,7 +10,8 @@
 }
 
 .has-bg-img { 
-    background: url("../photos/restaurant.png")center center; background-size:cover; 
+    background: url("../photos/restaurant.png")center center; 
+    background-size:cover; 
     
 }
 
