@@ -1,3 +1,4 @@
+{{!--Header Section--}}
 <div class="hero is-small">
 	<div class="hero-head">
 		<a id="logout" class="has-text-light is-pulled-right">Logout</a>
@@ -8,9 +9,15 @@
 	</div>
 </div>
 </div>
+{{!----}}
 
+{{!--Main Content Section--}}
 <div class="tile is-ancestor is-marginless">
+	
+	{{!--Forms and Buttons--}}
 	<div class="tile is-8">
+		
+		{{!--Buttons shown on page load--}}
 		<div id="initialButtons" class="field">
 			<label class="label has-text-centered is-size-3">What would you like to do?</label>
 			<div class="control buttons is-centered">
@@ -18,7 +25,9 @@
 				<button id="openCreateDishForm" class="button is-danger">Create New Dish</button>
 			</div>
 		</div>
-
+		{{!----}}
+		
+		{{!--Dish search form--}}
 		<form id="searchForm">
 			<div class="is-clearfix">
 				<a class="closeForm is-pulled-right">Close X</a>
@@ -36,20 +45,22 @@
 				</div>
 			</div>
 		</form>
-
+		{{!----}}
+		
+		{{!--Create dish form -> display:none on page load--}}
 		<form id="createDishForm" method="POST" action="/api/addFood" enctype="multipart/form-data">
 			<div class="is-clearfix">
 				<a class="closeForm is-pulled-right">Close X</a>
 			</div>
 
 			<input id="userName" name="userName" type="hidden">
-			<input id="locationCoordinates" name="locationCoordinates" type="hidden">
+			{{!--<input id="locationCoordinates" name="locationCoordinates" type="hidden">--}} {{!--This may not be needed--}}
 
 
 			<div class="field">
 				<label class="label">Where are You?</label>
 				<div class="control">
-					<input name="locationName" class="input" type="text" placeholder="Chili's">
+					<input id="createDishFormLocation" name="location" class="input" type="text" placeholder="Chili's">
 				</div>
 			</div>
 
@@ -117,7 +128,9 @@
 				</div>
 			</div>
 		</form>
+		{{!----}}
 		
+		{{!--Edit dish form -> display:none on page load--}}
 		<form id="editDishForm" method="POST" action="NEED PATH" enctype="multipart/form-data">
 			<div class="is-clearfix">
 				<a class="closeForm is-pulled-right">Close X</a>
@@ -126,7 +139,7 @@
 			<div class="field">
 				<label class="label">Is this the correct restaurant name?</label>
 				<div class="control">
-					<input name="locationName" class="input" type="text" placeholder="Chili's">
+					<input id="editDishFormLocation" name="location" class="input" type="text" placeholder="Chili's">
 				</div>
 			</div>
 
@@ -190,41 +203,53 @@
 			
 			<div class="field">
 				<div class="control">
-					<button id="editDish" class="button is-danger" type="submit">Create</button>
+					<button id="editDish" class="button is-danger" type="submit">Revise</button>
 				</div>
 			</div>
 		</form>
+		{{!----}}
+		
 		
 	</div>
-
+	{{!--End Forms and Buttons--}}
+	
+	{{!--User Dish Display--}}
 	<div id="userDishes">
 		<div class="tile">
 			<div class="tile is-parent is-vertical">
+				<div class="tile is-child has-text-centered">
+					<p class="title">Your Dishes</p>
+					<p class="subtitle"><em>(Click to Edit)</em></p>
+				</div>
 				<div class="tile is-child">
 					<div class="userDishWrapper">
 						<img src="https://cleanfoodcrush.com/wp-content/uploads/2016/12/Kale-Chicken-Caesar-Salad-Recipe-1024x683.jpg">
-						<p>Location: Chili's</p>
-						<p>Menu Item: Chicken Caesar Salad</p>
-						<p>Price: $10</p>
-						<p>Gluten Free: No</p>
-						<p>Vegetarian: No</p>
+						<p>Location: <span class="userDishLocation">Chili's</span></p>
+						<p>Menu Item: <span class="userDishMenuName">Chicken Caesar Salad</span></p>
+						<p>Price: $<span class="userDishPrice">10</span></p>
+						<p>Gluten Free: <span class="userDishGFree">Yes</span></p>
+						<p>Vegetarian: <span class="userDishVeg">Yes</span></p>
 					</div>
 				</div>
 
 				<div class="tile is-child">
 					<div class="userDishWrapper">
 						<img src="https://static.pexels.com/photos/70497/pexels-photo-70497.jpeg">
-						<p>Location: Chili's</p>
-						<p>Menu Item: Bacon Cheeseburger</p>
-						<p>Price: $10</p>
-						<p>Gluten Free: No</p>
-						<p>Vegetarian: No</p>
+						<p>Location: <span class="userDishLocation">Chili's</span></p>
+						<p>Menu Item: <span class="userDishMenuName">Bacon Cheeseburger</span></p>
+						<p>Price: $<span class="userDishPrice">11</span></p>
+						<p>Gluten Free: <span class="userDishGFree">No</span></p>
+						<p>Vegetarian: <span class="userDishVeg">No</span></p>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
+	{{!--End User Dish Display--}}
 </div>
+{{!--End Main Content Section--}}
 
 <script type="text/javascript" src="/assets/javascript/profile.js"></script>
+
+{{!--Google Places API--}}
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMRNMvB_hrPmwoHo_pkOvAfIOI5IMuMsA&libraries=places&callback=placesSearch"></script>

@@ -7,8 +7,9 @@ body {
     height: 100vh;
 }
 
+/*Header Styling*/
 .hero {
-    background-image: url("../photos/restaurant.png");    /*url("../photos/restaurant.png")*/
+    background-image: url("../photos/restaurant.png"); 
     background-size: 100vw auto;
     background-position: center;
     
@@ -19,8 +20,9 @@ body {
 .hero-head span {
     margin: 5px 7px;
 }
+/*End Header Styling*/
 
-
+/*Forms and Buttons Styling*/
 #initialButtons {
     margin: 0vh auto;
 }
@@ -51,15 +53,15 @@ form a {
     border-color: #3273DC;
     box-shadow: none;
 }
+/*End Forms and Buttons Styling*/
 
-
+/*User Dish Display Styling*/
 #userDishes {
     height: 80vh;
     max-height: 80vh;
     overflow-y: auto;
     border-left: 2px solid black;
 }
-
 
 .userDishWrapper {
     box-sizing: border-box;
@@ -79,3 +81,4 @@ form a {
     height: auto;
     width: 80%;
 }
+/*End User Dish Display Styling*/
