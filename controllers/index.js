@@ -71,7 +71,7 @@ module.exports = function(app){
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:"+data);
 			response.render("searchResults", {
-				stylePath: '"./assets/css/login.css"',
+				stylePath: '"/assets/css/searchResults.css"',
 				data: data
 			});
 		});
@@ -86,7 +86,7 @@ module.exports = function(app){
 			DEBUG || console.log("Poutput:"+data);
 			//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db 
 			response.render("profile", {
-				stylePath: '"./assets/css/login.css"',
+				stylePath: '"/assets/css/profile.css"',
 				usersFood: data
 			});
 		});
