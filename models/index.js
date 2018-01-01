@@ -111,7 +111,7 @@ sequelize.sync()
 				Math.floor(Math.random() * 2 + 1), //random user id
 				"http://lorempixel.com/400/200/food/", //random photo url, check definition of the function to change it from leromPixel link to actual data
 				Math.floor(Math.random() * 100), //random price
-				locMock[Math.floor(Math.random() * locMock.length-1)], //random location ID
+				locMock[Math.floor(Math.random() * (locMock.length-1))], //random location ID
 				!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2), //random gluten free, and veg. parameters.
 				foodTypes[Math.floor(Math.random() * len)],//random food type from array of foodtypes
 				"amazing!")// optional test tag
