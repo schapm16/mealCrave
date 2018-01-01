@@ -61,27 +61,34 @@ module.exports = function(app){
 	});
 	//this function will find every row in Food table, which contains "keyword" from request in food_name column
 	//and will send a JSON back
-	app.get("/search/byKeyword/:keyword", function(req, res) {
+	app.get("/search/byKeyword/:keyword", function(request, response) {
 		DB.Food.findAll({
 			where: {				
 				food_name: {
-					$like: '%' + req.params.keyword + '%'
+					$like: '%' + request.params.keyword + '%' //it will find every item with "keyword" in the food_name column, no matter what position
 				}
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:"+data);
-			res.send(data);
+			response.render("searchResults", {
+				stylePath: '"/assets/css/searchResults.css"',
+				data: data
+			});
 		});
 	});
 	//this function will find every row in Food table from certain user, it uses user_id for searching
-	app.get("/search/byUserId/:userId", function(req, res) {
+	app.get("/search/byUserId/:userId", function(request, response) {
 		DB.Food.findAll({
 			where: {				
-				user_id: req.params.userId
+				user_id: request.params.userId
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:"+data);
-			res.send(data);
+			//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db 
+			response.render("profile", {
+				stylePath: '"/assets/css/profile.css"',
+				usersFood: data
+			});
 		});
 	});
 
