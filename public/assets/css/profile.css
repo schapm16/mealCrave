@@ -1,0 +1,84 @@
+html {
+    overflow-y: hidden; /*Removes scroll bar*/
+}
+
+body {
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+/*Header Styling*/
+.hero {
+    background-image: url("../photos/restaurant.png"); 
+    background-size: 100vw auto;
+    background-position: center;
+    
+    border-bottom: 2px solid black;
+}
+
+.hero-head a,
+.hero-head span {
+    margin: 5px 7px;
+}
+/*End Header Styling*/
+
+/*Forms and Buttons Styling*/
+#initialButtons {
+    margin: 0vh auto;
+}
+
+form a {
+    color: black;
+}
+
+#searchForm, #createDishForm, #editDishForm {
+    display: none;
+    
+    box-sizing: border-box;
+    margin: 2vh auto;
+    padding: 0 2vw;
+    width: 100%;
+    
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+#createDishForm input,
+#createDishForm select {
+    border-color: #FF2B56;
+    box-shadow: none;
+}
+
+#searchForm input {
+    border-color: #3273DC;
+    box-shadow: none;
+}
+/*End Forms and Buttons Styling*/
+
+/*User Dish Display Styling*/
+#userDishes {
+    height: 80vh;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-left: 2px solid black;
+}
+
+.userDishWrapper {
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 5%;
+    
+    border: 2px solid #D4D4D4;
+    border-radius: 5px;
+    
+    width: 80%;
+    
+    cursor: pointer;
+    
+}
+
+.userDishWrapper img {
+    height: auto;
+    width: 80%;
+}
+/*End User Dish Display Styling*/

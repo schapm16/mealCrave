@@ -75,7 +75,7 @@ $(function() {
 
   // Sends text search terms to server upon click of search button
   $('#search').click(function() {
-    window.location.href = "/search/"+ $('#searchTerm').val().trim();
+    window.location.href = "/search/byKeyword/"+ $('#searchTerm').val().trim();
   });
   // >>> End Search Code <<<
 
@@ -129,16 +129,14 @@ $(function() {
   // >>> The following is for the "Your Profile | Logout" navigation links <<<
   $(document).on('click', '#profile', function() {
     console.log("profile pressed");
-    $.ajax({
-      method: 'GET',
-      url:'/profile/' + sessionStorage.getItem('userName'),
-    });
+    window.location.href='/search/byUserId/' + sessionStorage.getItem('userName');
+    
   });
   
   $(document).on('click', '#logout', function() {
     console.log("logout pressed");
     sessionStorage.clear();
-    location.reload();
+    window.location.reload();
   });
   // >>> End "Your Profile | Logout" links <<<
 

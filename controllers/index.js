@@ -20,20 +20,20 @@ module.exports = function(app) {
 		response.render("addFood");
 	});
 	//add only food element to the database
-	app.post("/api/addFood", upload.single('imagefile'), function(request, response) {
-		//request.file - this variable will contain file from "imagefile" key
+	app.post("/api/addFood", upload.single('photo'), function(request, response) {
+		//request.file - this variable will contain file from "photo" key
 		var food = {
 			user: ""
 		}
 		DEBUG && console.log(request.file.originalname);
 
-		DB.sendFoodToDB(request.body.food_name,
-			request.body.user_id,
+		DB.sendFoodToDB(request.body.menuName, //+
+			request.body.userName, //+
 			request.file,
-			request.body.price,
-			request.body.location,
-			request.body.gFree,
-			request.body.veg,
+			request.body.price, //+
+			request.body.location, //+
+			request.body.gFree, //+
+			request.body.veg, //+
 			request.body.type,
 			request.body.tags);
 	});
@@ -61,27 +61,34 @@ module.exports = function(app) {
 	});
 	//this function will find every row in Food table, which contains "keyword" from request in food_name column
 	//and will send a JSON back
-	app.get("/search/byKeyword/:keyword", function(req, res) {
+	app.get("/search/byKeyword/:keyword", function(request, response) {
 		DB.Food.findAll({
 			where: {
 				food_name: {
-					$like: '%' + req.params.keyword + '%'
+					$like: '%' + request.params.keyword + '%' //it will find every item with "keyword" in the food_name column, no matter what position
 				}
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:" + data);
-			res.send(data);
+			response.render("searchResults", {
+				stylePath: '"/assets/css/searchResults.css"',
+				data: data
+			});
 		});
 	});
 	//this function will find every row in Food table from certain user, it uses user_id for searching
-	app.get("/search/byUserId/:userId", function(req, res) {
+	app.get("/search/byUserId/:userId", function(request, response) {
 		DB.Food.findAll({
 			where: {
-				user_id: req.params.userId
+				user_id: request.params.userId
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:" + data);
-			res.send(data);
+			//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db 
+			response.render("profile", {
+				stylePath: '"/assets/css/profile.css"',
+				usersFood: data
+			});
 		});
 	});
 
@@ -127,11 +134,8 @@ module.exports = function(app) {
 		})
 	});
 
-	// ************************************************************************
 	app.get("/map/:restaurantAddress", function(req, res) {
 		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
 	});
-	//RESTAURANTADDRESS will be the address we get from the data loaded in the results page. we need to "include" the restaurant table in the results that are returned so we can access the restarurants address
-	//*************************************************************************
 
 }
