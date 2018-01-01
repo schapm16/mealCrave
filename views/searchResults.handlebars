@@ -3,7 +3,7 @@
         <div class="modal-background"></div>
         <div class="modal-content">
             <img id="modalImage" alt="Meal Image" width="400" height="400">
-            <div id="label">
+            <div id="label" class="has-text-white-bis is-size-4">
                 <h4><span id="modalMealName"></span> from <span id="modalRestName">Restaurant Name</span></h4>
                 <h4>$<span id="modalPrice">Price</span></h4>
             </div>
@@ -13,62 +13,21 @@
     <header class="header">
         <section class="hero has-bg-img">
           <div class="hero-body has-text-centered">
-            <div class="container">
-              <h3>mealCrave. <span><input id="searchInput" class="input" type="text" placeholder="Search Here"> <button id="searchSubmit" class="button is-dark">Submit</button></span></h3>
+            <div class="container title has-text-light has-text-wight-semibold is-size-3 has-text-centered is-vcentered">
+              <h3>mealCrave. <span><input id="searchInput" class="input" type="text" placeholder="e.g. Chicken Caesar Salad"> <button id="searchSubmit" class="button is-link">Search</button></span></h3>
             </div>
           </div>
         </section>
     </header>
+    <br>
+    <div id="noResults" class="title is-size-3 has-text-centered">No results match your search.</div>
     <main class="Site-content container">
         <div class="mealPics columns is-multiline has-text-centered">
+            {{!--The photo for each result will display with the corresponding data attributes--}}
                 {{#each data}}
-                <div class="column is-3"><img src={{photoUrl}} data-name='{{food_name}}' data-rest='{{rest_name}}' data-price={{price}} data-restid='{{address}}' width="200" class="mealImages"></div>
+                <div class="column is-one-third-tablet is-one-quarter-desktop"><img src={{photoUrl}} data-name='{{food_name}}' data-rest='{{rest_name}}' data-price={{price}} data-restid='{{address}}' width="200" class="mealImages"></div>
                 {{/each}}
         </div>
     </main>
-    <script>
-        $(".mealImages").on("click", function(){
-            console.log($(this).data("restid"));
-            $("#modalImage").attr("src", $(this).attr("src"));
-            $("#modalMealName").html($(this).data("name"));
-            $("#modalRestName").html($(this).data("rest"));
-            $("#modalRestName").attr("data-info", $(this).data("restid"));
-            $("#modalPrice").html($(this).data("price"));
-            $(".modal").addClass("is-clipped is-active");
-        });
-        
-        $(".modal-background").on("click", function(){
-            $(".modal").removeClass("is-clipped is-active");
-        });
-        
-        $(".modal-close").on("click", function(){
-            $(".modal").removeClass("is-clipped is-active");
-        });
-        
-        $("#modalImage").on("click", function(){ //this will need to be changed to the restaurant name once we have included the location table
-            alert("clicked");
-            var restaurant = "uncc"; //this will be the name of the restaurant gotten from the span we click on 
-            $.ajax({
-                url: "/map/" + restaurant, //change this to the address we get from the data id in the span (or we could get the address from the id?? writing the address directly in may be easier but i don't know if it will make the app too slow??)
-                method: "GET",
-                }).done(function(err,res){
-                    location.assign("/map/" + restaurant);
-                });
-        });
-        
-        $("#searchSubmit").on("click", function(){
-            var searchType = $("#searchInput").val().trim();
-            $.ajax({
-                url: "/search/" + searchType,
-                method: "GET"
-            }).done(function(err,res){
-                //if (err) {return res.status(500).end();}
-                location.assign(searchType);
-            });
-            
-        });
-        
-    });
-    
-</script>
+    <script type="text/javascript" src="/assets/javascript/searchResults.js"></script>
 </body>

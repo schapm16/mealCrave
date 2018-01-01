@@ -1,5 +1,8 @@
-/* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
+.Site-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 35px;
+}
 
  #map {
      height: 80%;
@@ -7,33 +10,21 @@
      margin: auto;
  }
 
- /* Optional: Makes the sample page fill the window. */
-
  html,
  body {
      height: 100%;
      margin: 0;
-     padding: 10px;
+     padding: 0px;
  }
 
-
- .hero-body {
-          background-position: center;
-          text-align: center;
-          font-size: 35px;
-          font-weight: bold;
-          padding: 15px;
-      }
-       
 .has-bg-img { 
     background: url("../photos/restaurant.png")center center; 
     background-size:cover; 
-    
 } 
 
-.Site-content {
-    width: 100%;
-    margin: 0 auto;
-    padding: 35px;
+#loading{
+    text-align: center;
 }
+
+
  

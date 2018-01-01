@@ -12,7 +12,6 @@
 .has-bg-img { 
     background: url("../photos/restaurant.png")center center; 
     background-size:cover; 
-    
 }
 
 .modal-content{
@@ -28,19 +27,9 @@
 .input{
     max-width: 50%;
 }
-h3{
-    font-weight: bold;
-    font-size: 28px;
-    color: white;
-}
-
-h4{
-    font-weight: bold;
-    font-size: 24px;
-    color: white;
-}
 
 #modalRestName:hover{
 	color: white;
 	text-decoration: underline;
 }
+

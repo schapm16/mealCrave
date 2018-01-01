@@ -1,102 +1,17 @@
 <body class="Site"> 
     <header class="header">
         <section class="hero has-bg-img">
-          <div class="hero-body has-text-centered">
+          <div class="hero-body has-text-centered is-vcentered is-flex-touch">
             <div class="container">
-              <h1 class="has-text-light">Satisfy your mealCrave <span id="theDuration"></span></h1>
+              <h1 class="has-text-light title is-size-2">Satisfy your mealCrave <span id="theDuration"></span></h1>
             </div>
           </div>
         </section>
     </header>
     <br>
+    <div id="loading"><img src="/assets/photos/loader.gif" alt="Loading"></div>
     <div id="map"></div>
     <div id="destAdd">{{restaurantAddress}}</div>
-    
-    <script>
-      $("#destAdd").hide();
-      $("#theDuration").hide();
-      var userAddress;
-      var restaurantAddress = $("#destAdd").text();
-      
-      
-        function getLocation() {
-            var showPosition = function(position) {
-    
-                startLat = position.coords.latitude;
-                startLng = position.coords.longitude;
-    
-                //Request the formatted address of the users current coordinates and saves them in userAddress variable
-                var URL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + startLat + "," + startLng + "&key=AIzaSyCMRNMvB_hrPmwoHo_pkOvAfIOI5IMuMsA";
-                $.ajax({
-                    url: URL,
-                    method: "GET"
-                }).done(function(response) {
-                    userAddress = response.results["0"].formatted_address;
-                    console.log("User's address from browser: " + userAddress);
-                    initMap();
-                });
-            };
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-                
-            }
-            else {
-                lattitude.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-      
-      function initMap() {
-        var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 7,
-          center: {lat: 35.227085, lng:  -80.843124}
-        });
-        directionsDisplay.setMap(map);
-        getDriveTime(userAddress, restaurantAddress);
-        calculateAndDisplayRoute(directionsService, directionsDisplay);
-      }
-      
-      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-        console.log("Start: " + userAddress);
-        console.log("End: " + restaurantAddress);
-        directionsService.route({
-          origin: userAddress, 
-          destination: restaurantAddress, 
-          travelMode: 'DRIVING'
-        }, function(response, status) {
-          if (status === 'OK') {
-            directionsDisplay.setDirections(response);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
-      }
-      
-      function getDriveTime(x, y) {
-        var directionsService = new google.maps.DirectionsService();
-        var request = {
-            origin: x, 
-            destination: y,
-            travelMode: google.maps.DirectionsTravelMode.DRIVING,
-        };
-
-        directionsService.route(request, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                console.log("RESPONSE: " + response);
-                var duration = response.routes[0].legs[0].duration.text;
-                $("#theDuration").text(" in " + duration);
-                $("#theDuration").show();
-                
-            }
-            else {
-                console.log("There is no route information available for this trip");
-            }
-        });
-      }
-      
-      getLocation();
-      
-    </script>
+    <script type="text/javascript" src="/assets/javascript/map.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMRNMvB_hrPmwoHo_pkOvAfIOI5IMuMsA&libraries=places"></script>
 </body>
