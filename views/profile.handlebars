@@ -131,10 +131,12 @@
 		{{!----}}
 		
 		{{!--Edit dish form -> display:none on page load--}}
-		<form id="editDishForm" method="POST" action="NEED PATH" enctype="multipart/form-data">
+		<form id="editDishForm" method="POST" action="/api/updateFood" enctype="multipart/form-data">
 			<div class="is-clearfix">
 				<a class="closeForm is-pulled-right">Close X</a>
 			</div>
+			
+			<input name="foodId" type="hidden"></input>
 			
 			<div class="field">
 				<label class="label">Is this the correct restaurant name?</label>
@@ -201,13 +203,20 @@
 				</div>
 			</div>
 			
-			<div class="field">
+			<div class="field is-grouped">
 				<div class="control">
 					<button id="editDish" class="button is-danger" type="submit">Revise</button>
+				</div>
+				<div class="control">
+					<button form="deleteDishForm" id="deleteDish" class="button is-dark" type="submit">Delete</button>
 				</div>
 			</div>
 		</form>
 		{{!----}}
+		
+		<form id="deleteDishForm" method="POST" action="/api/deleteFood" enctype="multipart/form-data">
+			<input name="foodId" type="hidden"></input>
+		</form>
 		
 		
 	</div>
@@ -223,6 +232,7 @@
 				</div>
 				<div class="tile is-child">
 					<div class="userDishWrapper">
+						<p class="userDishFoodId" style="display:none">1</p>
 						<img src="https://cleanfoodcrush.com/wp-content/uploads/2016/12/Kale-Chicken-Caesar-Salad-Recipe-1024x683.jpg">
 						<p>Location: <span class="userDishLocation">Chili's</span></p>
 						<p>Menu Item: <span class="userDishMenuName">Chicken Caesar Salad</span></p>
@@ -234,6 +244,7 @@
 
 				<div class="tile is-child">
 					<div class="userDishWrapper">
+						<p class="userDishFoodId" style="display:none">2</p>
 						<img src="https://static.pexels.com/photos/70497/pexels-photo-70497.jpeg">
 						<p>Location: <span class="userDishLocation">Chili's</span></p>
 						<p>Menu Item: <span class="userDishMenuName">Bacon Cheeseburger</span></p>
