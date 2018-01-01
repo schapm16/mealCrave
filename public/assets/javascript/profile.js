@@ -11,13 +11,13 @@ function placesSearch() {
 }
 //
 
-// Populates the editDishForm based on the information included in the userDish that the User clicks on
-function populateEditDishForm(dishClicked) {
+// Populates the editDishForm and deleteDishForm based on the information included in the userDish that the User clicks on
+function populateEditDishForms(dishClicked) {
   $('#editDishForm input[name="location"]').val($(dishClicked).find('.userDishLocation').text());
   $('#editDishForm input[name="price"]').val($(dishClicked).find('.userDishPrice').text());
   $('#editDishForm input[name="menuName"]').val($(dishClicked).find('.userDishMenuName').text());
-  
-  
+  $('#editDishForm input[name="foodId"]').val($(dishClicked).find('.userDishFoodId').text());
+  console.log($('#editDishForm input[name="foodId"]').val());
   if ($(dishClicked).find('.userDishGFree').text() === 'Yes') {
     $('#editDishForm input[name="gfree"]').prop('checked', 'true');
   }
@@ -25,6 +25,9 @@ function populateEditDishForm(dishClicked) {
   if ($(dishClicked).find('.userDishVeg').text() === 'Yes') {
     $('#editDishForm input[name="veg"]').prop('checked', 'true');
   }
+  
+  $('#deleteDishForm input[name="foodId"]').val($(dishClicked).find('.userDishFoodId').text());
+  console.log($('#deleteDishForm input[name="foodId"]').val());
 }
 //
 
@@ -55,7 +58,7 @@ $(function() {
     $('#searchForm').css('display', 'none');
     $('#createDishForm').css('display', 'none');
     
-    populateEditDishForm(this);
+    populateEditDishForms(this);
     
     $('#editDishForm').css('display', 'block');
   });
