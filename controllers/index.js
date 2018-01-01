@@ -39,6 +39,7 @@ module.exports = function(app){
 			request.body.veg, //+
 			request.body.type, 
 			request.body.tags);
+			response.send(request.body.menuName + " added!");
 		});
 
 		
