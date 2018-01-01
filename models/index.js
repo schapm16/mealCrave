@@ -50,7 +50,7 @@ const Food = sequelize.define('food', {
 		allowNull: false 
 	},
 	price: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.FLOAT,
 		allowNull: false 
 	},
 	gluFree: Sequelize.BOOLEAN,
@@ -137,7 +137,7 @@ db.sendFoodToDB = function(food_name,
 			photoUrl: url,
 			price: price,
 			gluFree: gFree,
-			type: type,
+			type: "standart",
 			veg: veg,
 			locationId: location_id
 		}).then(()=>{

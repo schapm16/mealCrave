@@ -20,20 +20,20 @@ module.exports = function(app){
 		response.render("addFood");
 	});
 	//add only food element to the database
-	app.post("/api/addFood", upload.single('imagefile'), function(request, response){
-		//request.file - this variable will contain file from "imagefile" key
+	app.post("/api/addFood", upload.single('photo'), function(request, response){
+		//request.file - this variable will contain file from "photo" key
 		var food = {
 			user: ""
 		}
 		DEBUG && console.log(request.file.originalname);		
 
-		DB.sendFoodToDB(request.body.food_name, 
-			request.body.user_id,
+		DB.sendFoodToDB(request.body.menuName, //+
+			request.body.userName,//+
 			request.file, 
-			request.body.price, 
-			request.body.location, 
-			request.body.gFree, 
-			request.body.veg, 
+			request.body.price, //+
+			request.body.location, //+
+			request.body.gFree, //+
+			request.body.veg, //+
 			request.body.type, 
 			request.body.tags);
 	});
