@@ -15,34 +15,27 @@ module.exports = function(app) {
 		console.log("index requested");
 		response.render("login", { stylePath: '"./assets/css/login.css"' });
 	});
-	app.post('/upload', upload.single('file'), function(request, response) {
-		console.log("Post Upload Photo request!");
-		console.log(!!request.file);
-		console.log(typeof(request.file));
-		console.log(request.file)
-		var image = new Buffer(request.file.buffer);
+	app.get("/addFood", function(request, response) {
+		console.log("index requested");
+		response.render("addFood");
 	});
 	//add only food element to the database
-	app.post("api/addFood/", function(request, response) {
+	app.post("/api/addFood", upload.single('imagefile'), function(request, response) {
+		//request.file - this variable will contain file from "imagefile" key
 		var food = {
 			user: ""
 		}
-		DB.sendFoodToDB(request.food_name,
-			request.user_id,
-			request.photoObjec,
-			request.price,
-			request.location,
-			request.gFree,
-			request.veg,
-			request.type,
-			request.tags);
-		response.send("Added!");
-		console.log(request.file);
-		var image = new Buffer(request.file.buffer);
-		DB.S3.sendPhotoAndGetURL(image, "testTest.jpg", function(url) {
-			console.log(url);
-			response.send("Ok!");
-		});
+		DEBUG && console.log(request.file.originalname);
+
+		DB.sendFoodToDB(request.body.food_name,
+			request.body.user_id,
+			request.file,
+			request.body.price,
+			request.body.location,
+			request.body.gFree,
+			request.body.veg,
+			request.body.type,
+			request.body.tags);
 	});
 
 	app.get("/api/location/:id", function(req, res) {
@@ -60,21 +53,39 @@ module.exports = function(app) {
 			where: {
 				type: req.params.type
 			}
-		}).then(function(results) {
-			console.log("Output: " + results);
-			res.render("searchResults", { data: results, stylePath: '"/assets/css/searchResults.css"' });
+		}).then(function(data) {
+			DEBUG || console.log("Poutput:" + data);
+			var JSON = data.stringify();
+			res.render("searchResults", { data: data, stylePath: "/assets/css/searchResults.css" });
+		});
+	});
+	//this function will find every row in Food table, which contains "keyword" from request in food_name column
+	//and will send a JSON back
+	app.get("/search/byKeyword/:keyword", function(req, res) {
+		DB.Food.findAll({
+			where: {
+				food_name: {
+					$like: '%' + req.params.keyword + '%'
+				}
+			}
+		}).then(function(data) {
+			DEBUG || console.log("Poutput:" + data);
+			res.send(data);
+		});
+	});
+	//this function will find every row in Food table from certain user, it uses user_id for searching
+	app.get("/search/byUserId/:userId", function(req, res) {
+		DB.Food.findAll({
+			where: {
+				user_id: req.params.userId
+			}
+		}).then(function(data) {
+			DEBUG || console.log("Poutput:" + data);
+			res.send(data);
 		});
 	});
 
-	// ************************************************************************
-	app.get("/map/:restaurantAddress", function(req, res) {
-		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
-	});
-	//USERADDRESS will be the users geolocation (we can wait and get this when loading the maps page if neccessary)
-	//RESTAURANTADDRESS will be the address we get from the data loaded in the results page. we need to "include" the restaurant table in the results that are returned so we can access the restarurants address
-	//*************************************************************************
-
-	app.get("/join", function(req, res) {
+	app.post("/join", function(req, res) {
 		DB.Users.findOne({
 			where: {
 				//res = {userName: ___ ,
@@ -82,8 +93,12 @@ module.exports = function(app) {
 				login: req.body.userName
 			}
 		}).then(function(data) {
+			DEBUG && console.log("Join: response: " + !data);
 			if (!data) {
-				DB.Users.create(req.body).then(function() {
+				DB.Users.create({
+					login: req.body.userName,
+					password: req.body.password
+				}).then(function() {
 					res.json({ valid: true })
 				});
 			}
@@ -97,7 +112,7 @@ module.exports = function(app) {
 		DEBUG && console.log("\x1b[33m" + "Login attempt:\nLogin: " + req.body.login + "\nPassword: " + req.body.password + "\x1b[0m");
 		DB.Users.findOne({
 			where: {
-				login: req.body.login
+				login: req.body.userName
 			}
 		}).then(function(data) {
 
@@ -111,4 +126,13 @@ module.exports = function(app) {
 			}
 		})
 	});
+
+	// ************************************************************************
+	app.get("/map/:restaurantAddress", function(req, res) {
+		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
+	});
+	//USERADDRESS will be the users geolocation (we can wait and get this when loading the maps page if neccessary)
+	//RESTAURANTADDRESS will be the address we get from the data loaded in the results page. we need to "include" the restaurant table in the results that are returned so we can access the restarurants address
+	//*************************************************************************
+
 }

@@ -7,8 +7,7 @@ var basename = path.basename(__filename);
 var env = process.env.NODE_ENV || 'development';
 var config = require(__dirname + '/../config/config.json')[env];
 var db = {};
-var S3 = require("./amazon2.js");
-
+var S3 = require("./amazon2.js")(); 
 if (config.use_env_variable) {
 	var sequelize = new Sequelize(process.env[config.use_env_variable], config);
 }
@@ -109,49 +108,45 @@ sequelize.sync()
 		for(var i =0; i<D; i++){
 			db.sendFoodToDB("BigMac"+i, //food name
 				Math.floor(Math.random() * 2 + 1), //random user id
-				"photoTemp", //random photo url, check definition of the function to change it from leromPixel link to actual data
+				"http://lorempixel.com/400/200/food/", //random photo url, check definition of the function to change it from leromPixel link to actual data
 				Math.floor(Math.random() * 100), //random price
+				Math.floor(Math.random() * 2 + 1), //random location ID
 				!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2), //random gluten free, and veg. parameters.
 				foodTypes[Math.floor(Math.random() * len)],//random food type from array of foodtypes
-				"amazing!", // optional test tag
-				Math.floor(Math.random() * 2 + 1)); // random user id
-		}
+				"amazing!")// optional test tag
+		};
+
 	}
 })
 
-
-
-db.sendFoodToDB = function sendPhotoAndGetURL(food_name, 
+db.sendFoodToDB = function(food_name, 
 	user_id, 
 	photo_object, 
 	price,
+	location_id,
 	gFree, 
 	veg, 
 	type, 
-	tags,
-	location_id){
-	Food.create({
-		user_id: user_id,
-		food_name: food_name,
-		photoUrl: "http://lorempixel.com/400/200/",
-		price: price,
-		gluFree: gFree,
-		type: type,
-		veg: veg,
-		locationId: location_id
-
-	}).then(()=>{
-		console.log(food_name+"Added!")
-	})
-	//will return true in case of success
-
-	return 0;
+	tags){
 	S3.sendPhotoAndGetURL(photo_object, user_id+"/"+food_name+".jpg", function(url){
 		console.log(url);
-		response.send("Ok!");
+
+		Food.create({
+			user_id: user_id,
+			food_name: food_name,
+			photoUrl: url,
+			price: price,
+			gluFree: gFree,
+			type: type,
+			veg: veg,
+			locationId: location_id
+		}).then(()=>{
+			console.log(food_name+"  Added!")
+		});
 	});
-	return "0";
 }
+
+db.getFoodByType
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
