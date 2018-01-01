@@ -25,10 +25,13 @@ module.exports = function(app){
 		var food = {
 			user: ""
 		}
-		DEBUG && console.log(request.file.originalname);		
+		DEBUG && console.log(request.file.originalname);
+		DEBUG && console.log(request.body.location)		
 
-		DB.sendFoodToDB(request.body.menuName, //+
-			request.body.userName,//+
+		DB.Users.findOne({ where: {login: request.body.userName} }).then(userObject => {
+			console.log("UserID:" + userObject.user_id);
+			DB.sendFoodToDB(request.body.menuName, //+
+			userObject.user_id,//+
 			request.file, 
 			request.body.price, //+
 			request.body.location, //+
@@ -36,6 +39,10 @@ module.exports = function(app){
 			request.body.veg, //+
 			request.body.type, 
 			request.body.tags);
+			response.send(request.body.menuName + " added!");
+		});
+
+		
 	});
 
 	app.get("/api/location/:id", function(req, res) {
@@ -63,13 +70,14 @@ module.exports = function(app){
 	//and will send a JSON back
 	app.get("/search/byKeyword/:keyword", function(request, response) {
 		DB.Food.findAll({
+			//include: DB.Locations,
 			where: {				
 				food_name: {
 					$like: '%' + request.params.keyword + '%' //it will find every item with "keyword" in the food_name column, no matter what position
 				}
 			}
 		}).then(function(data) {
-			DEBUG || console.log("Poutput:"+data);
+			DEBUG && console.log(data);
 			response.render("searchResults", {
 				stylePath: '"/assets/css/searchResults.css"',
 				data: data
@@ -83,7 +91,7 @@ module.exports = function(app){
 				user_id: request.params.userId
 			}
 		}).then(function(data) {
-			DEBUG || console.log("Poutput:"+data);
+			DEBUG && console.log(data);
 			//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db 
 			response.render("profile", {
 				stylePath: '"/assets/css/profile.css"',

@@ -1,4 +1,4 @@
-'use strict';
+
 
 var fs = require('fs');
 var path = require('path');
@@ -104,13 +104,14 @@ sequelize.sync()
 
 		var D = process.argv[2]
 		var foodTypes = ["burger","salad","pasta","drink"];
+		var locMock = ["Charlotte, NC", "Portland, OR"];
 		var len = foodTypes.length-1;
 		for(var i =0; i<D; i++){
 			db.sendFoodToDB("BigMac"+i, //food name
 				Math.floor(Math.random() * 2 + 1), //random user id
 				"http://lorempixel.com/400/200/food/", //random photo url, check definition of the function to change it from leromPixel link to actual data
 				Math.floor(Math.random() * 100), //random price
-				Math.floor(Math.random() * 2 + 1), //random location ID
+				locMock[Math.floor(Math.random() * (locMock.length-1))], //random location ID
 				!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2), //random gluten free, and veg. parameters.
 				foodTypes[Math.floor(Math.random() * len)],//random food type from array of foodtypes
 				"amazing!")// optional test tag
@@ -123,30 +124,34 @@ db.sendFoodToDB = function(food_name,
 	user_id, 
 	photo_object, 
 	price,
-	location_id,
+	location_address,
 	gFree, 
 	veg, 
 	type, 
 	tags){
 	S3.sendPhotoAndGetURL(photo_object, user_id+"/"+food_name+".jpg", function(url){
-		console.log(url);
+			//trying to find a location in database
+			Locations.findOrCreate({where: {location_name: location_address}, defaults: {gps_tag: location_address}}).spread((locationF, created) => {
+				console.log("inner test, created: "+ created);
 
-		Food.create({
-			user_id: user_id,
-			food_name: food_name,
-			photoUrl: url,
-			price: price,
-			gluFree: gFree,
-			type: "standart",
-			veg: veg,
-			locationId: location_id
-		}).then(()=>{
-			console.log(food_name+"  Added!")
+				console.log(locationF.id);
+
+				Food.create({
+					user_id: user_id,
+					food_name: food_name,
+					photoUrl: url,
+					price: price,
+					gluFree: gFree,
+					type: "standart",
+					veg: veg,
+					locationId: locationF.id
+				}).then(()=>{
+					console.log(food_name+"  Added!")
+				});
+			});
 		});
-	});
 }
 
-db.getFoodByType
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
