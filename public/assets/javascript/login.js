@@ -2,13 +2,15 @@
 
 function loggedIn(userName) { // Updates page with profile link once user is logged in
   $('.hero-head').html(
+    '<div class="is-clearfix">' +
+    '<p class="has-text-light is-pulled-right">Welcome, ' + userName + '.   </p>' +
+    '</div>' +
     '<a id="logout" class="has-text-light is-pulled-right">Logout</a>' +
     '<span class="has-text-light is-pulled-right">  |  </span>' +
-    '<a id="profile" class="has-text-light is-pulled-right">Your Profile</a>' +
-    '<span class="has-text-light is-pulled-right">Welcome, ' + userName + '.   </span>'
-  );
-
-  sessionStorage.setItem('userName', userName);
+    '<a id="profile" class="has-text-light is-pulled-right">Your Profile</a>'
+    );
+  
+   sessionStorage.setItem('userName', userName);
 }
 
 function loginValidation(userName, password) { // Validate user login information
