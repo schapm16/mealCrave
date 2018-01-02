@@ -112,8 +112,8 @@ sequelize.sync()
 					foodTypes[Math.floor(Math.random() * len)], //random food type from array of foodtypes
 					"amazing!",
 					"placeholder",
-					()=>{
-						
+					() => {
+
 					}) // optional test tag
 			};
 		}
@@ -242,12 +242,13 @@ db.editFoodInDB = function(food_id,
 	cb(userName);
 };
 
-db.deleteFood = function(food_id) {
+db.deleteFood = function(food_id, cb) {
 	Food.destroy({
 		where: {
 			food_id: food_id
 		}
 	}).then(() => {
+		cb()
 		console.log(food_id + "  Deleted!");
 	});
 };

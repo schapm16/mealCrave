@@ -13,10 +13,10 @@
 
 {{!--Main Content Section--}}
 <div class="tile is-ancestor is-marginless">
-	
+
 	{{!--Forms and Buttons--}}
 	<div class="tile is-8">
-		
+
 		{{!--Buttons shown on page load--}}
 		<div id="initialButtons" class="field">
 			<label class="label has-text-centered is-size-3">What would you like to do?</label>
@@ -26,7 +26,7 @@
 			</div>
 		</div>
 		{{!----}}
-		
+
 		{{!--Dish search form--}}
 		<form id="searchForm">
 			<div class="is-clearfix">
@@ -47,15 +47,15 @@
 			</div>
 		</form>
 		{{!----}}
-		
+
 		{{!--Create dish form -> display:none on page load--}}
 		<form id="createDishForm" method="POST" action="/api/addFood" enctype="multipart/form-data">
 			<div class="is-clearfix">
 				<a class="closeForm is-pulled-right">Close X</a>
 			</div>
 
-			<input id="userName" name="userName" type="hidden">
-			{{!--<input id="locationCoordinates" name="locationCoordinates" type="hidden">--}} {{!--This may not be needed--}}
+			<input id="userName" name="userName" type="hidden">{{!--<input id="locationCoordinates" name="locationCoordinates" type="hidden">--}}
+			{{!--This may not be needed--}}
 
 
 			<div class="field">
@@ -77,33 +77,36 @@
 				<div class="control">
 					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad">
 				</div>
-			</div> 
+			</div>
 
 			<div class="field">
 				<label class="label">Do these apply?</label>
 				<div class="control">
-					<label class="checkbox"> 
+					<label class="checkbox">
 						<input name="veg" type="checkbox">
 						Vegetarian
 					</label>
 				</div>
 
 				<div class="control">
-					<label class="checkbox"> 
+					<label class="checkbox">
 						<input name="gfree" type="checkbox">
 						Gluten Free
 					</label>
 				</div>
 			</div>
 
-			{{!--We may not use "type"--}} {{!--
-			<div class="field">--}} {{!-- <label class="label">Select a category that best fits your meal.</label>--}} {{!--
-				<div class="control">--}} {{!-- <span class="select">--}}
-					{{!--			<select>--}}
-						{{!--				<option>Hamburger</option>--}}
-						{{!--				<option>Salad</option>--}}
-					{{!--			</select>--}}
-				{{!--			</span>--}} {{!-- </div>--}} {{!--
+			{{!--We may not use "type"--}}
+			{{!--
+			<div class="field">--}}{{!-- <label class="label">Select a category that best fits your meal.</label>--}}
+			{{!--
+				<div class="control">--}}{{!-- <span class="select">--}}
+			{{!--			<select>--}}
+			{{!--				<option>Hamburger</option>--}}
+			{{!--				<option>Salad</option>--}}
+			{{!--			</select>--}}
+			{{!--			</span>--}}{{!-- </div>--}}
+			{{!--
 			</div>--}}
 
 			<div class="field">
@@ -122,7 +125,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="field">
 				<div class="control">
 					<button id="createDish" class="button is-danger" type="submit">Create</button>
@@ -130,16 +133,16 @@
 			</div>
 		</form>
 		{{!----}}
-		
+
 		{{!--Edit dish form -> display:none on page load--}}
 		<form id="editDishForm" method="POST" action="/api/updateFood" enctype="multipart/form-data">
 			<div class="is-clearfix">
 				<a class="closeForm is-pulled-right">Close X</a>
 			</div>
-			
+
 			<input name="userName" type="hidden">
 			<input name="foodId" type="hidden">
-			
+
 			<div class="field">
 				<label class="label">Is this the correct restaurant name?</label>
 				<div class="control">
@@ -159,33 +162,36 @@
 				<div class="control">
 					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad">
 				</div>
-			</div> 
+			</div>
 
 			<div class="field">
 				<label class="label">Are these options correct?</label>
 				<div class="control">
-					<label class="checkbox"> 
+					<label class="checkbox">
 						<input name="veg" type="checkbox">
 						Vegetarian
 					</label>
 				</div>
 
 				<div class="control">
-					<label class="checkbox"> 
+					<label class="checkbox">
 						<input name="gfree" type="checkbox">
 						Gluten Free
 					</label>
 				</div>
 			</div>
 
-			{{!--We may not use "type"--}} {{!--
-			<div class="field">--}} {{!-- <label class="label">Is this the correct meal category?</label>--}} {{!--
-				<div class="control">--}} {{!-- <span class="select">--}}
-					{{!--			<select>--}}
-						{{!--				<option>Hamburger</option>--}}
-						{{!--				<option>Salad</option>--}}
-					{{!--			</select>--}}
-				{{!--			</span>--}} {{!-- </div>--}} {{!--
+			{{!--We may not use "type"--}}
+			{{!--
+			<div class="field">--}}{{!-- <label class="label">Is this the correct meal category?</label>--}}
+			{{!--
+				<div class="control">--}}{{!-- <span class="select">--}}
+			{{!--			<select>--}}
+			{{!--				<option>Hamburger</option>--}}
+			{{!--				<option>Salad</option>--}}
+			{{!--			</select>--}}
+			{{!--			</span>--}}{{!-- </div>--}}
+			{{!--
 			</div>--}}
 
 			<div class="field">
@@ -204,7 +210,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="field is-grouped">
 				<div class="control">
 					<button id="editDish" class="button is-danger" type="submit">Revise</button>
@@ -215,16 +221,16 @@
 			</div>
 		</form>
 		{{!----}}
-		
+
 		<form id="deleteDishForm" method="POST" action="/api/deleteFood">
 			<input name="userName" type="hidden">
 			<input name="foodId" type="hidden">
 		</form>
-		
-		
+
+
 	</div>
 	{{!--End Forms and Buttons--}}
-	
+
 	{{!--User Dish Display--}}
 	<div id="userDishes">
 		<div class="tile">
@@ -234,28 +240,26 @@
 					<p class="subtitle"><em>(Click to Edit)</em></p>
 				</div>
 				{{#each usersFood}}
-				<div class="tile is-child">
-					<div class="userDishWrapper">
-						<p class="userDishFoodId" style="display:none">{{food_id}}</p>
-						<img src="{{photoUrl}}">
-						<p class="fullAddress" style="display:none">{{location.dataValues.gps_tag}}</p>
-						<p>Location: <span class="userDishLocation">{{location.dataValues.location_name}}</span></p>
-						<p>Menu Item: <span class="userDishMenuName">{{food_name}}</span></p>
-						<p>Price: $<span class="userDishPrice">{{price}}</span></p>
-						<p>Gluten Free: <span class="userDishGFree">{{gluFree}}</span></p>
-						<p>Vegetarian: <span class="userDishVeg">{{veg}}</span></p>
-					</div>
-				</div>
+					<div class="tile is-child">
+						<div class="userDishWrapper">
+							<p class="userDishFoodId" style="display:none">{{food_id}}</p>
+							<img src="{{photoUrl}}">
+							<p class="fullAddress" style="display:none">{{location.dataValues.gps_tag}}</p>
+							<p>Location: <span class="userDishLocation">{{location.dataValues.location_name}}</span></p>
+							<p>Menu Item: <span class="userDishMenuName">{{food_name}}</span></p>
+							<p>Price: $<span class="userDishPrice">{{price}}</span></p>
+							<p>Gluten Free: <span class="userDishGFree">{{gluFree}}</span></p>
+							<p>Vegetarian: <span class="userDishVeg">{{veg}}</span></p>
+						</div>
 				{{/each}}
+				</div>
 			</div>
 		</div>
+		{{!--End User Dish Display--}}
 	</div>
-	{{!--End User Dish Display--}}
-</div>
-{{!--End Main Content Section--}}
+	{{!--End Main Content Section--}}
 
-<script type="text/javascript" src="/assets/javascript/profile.js"></script>
+	<script type="text/javascript" src="/assets/javascript/profile.js"></script>
 
-{{!--Google Places API--}}
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMRNMvB_hrPmwoHo_pkOvAfIOI5IMuMsA&libraries=places&callback=placesSearch"></script>
-
+	{{!--Google Places API--}}
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMRNMvB_hrPmwoHo_pkOvAfIOI5IMuMsA&libraries=places&callback=placesSearch"></script>
