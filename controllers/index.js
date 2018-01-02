@@ -167,7 +167,8 @@ module.exports = function(app) {
 			req.body.gfree,
 			req.body.file,
 			req.body.userName,
-			function(userName) {
+			function(userName, foodId) {
+				console.log("foodID = " + foodId)
 				console.log("tesetset");
 				console.log(userName);
 				res.redirect("/search/byUserId/" + userName);
