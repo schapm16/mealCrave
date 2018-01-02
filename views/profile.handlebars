@@ -56,25 +56,24 @@
 			<input id="userName" name="userName" type="hidden">
 			{{!--<input id="locationCoordinates" name="locationCoordinates" type="hidden">--}} {{!--This may not be needed--}}
 
-
 			<div class="field">
 				<label class="label">Where are You?</label>
 				<div class="control">
-					<input id="createDishFormLocation" name="location" class="input" type="text" placeholder="Chili's">
+					<input id="createDishFormLocation" name s="input" type="text" placeholder="Chili's" required>
 				</div>
 			</div>
 
 			<div class="field">
 				<label class="label">How much did your meal cost?</label>
 				<div class="control">
-					<input name="price" class="input" type="text" placeholder="15.75">
+					<input name="price" class="input" type="text" placeholder="15.75" required>
 				</div>
 			</div>
 
 			<div class="field">
 				<label class="label">What did you order off of the menu?</label>
 				<div class="control">
-					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad">
+					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad" required>
 				</div>
 			</div> 
 
@@ -110,7 +109,7 @@
 				<div class="control">
 					<div class="file is-primary">
 						<label class="file-label">
-    				<input name="photo" class="file-input" type="file" accept="image/*" capture>
+    				<input name="photo" class="file-input" type="file" accept="image/*" capture required>
     				<span class="file-cta">
       				<span class="file-icon">
         				<i class="fa fa-camera"></i>
