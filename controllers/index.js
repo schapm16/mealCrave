@@ -34,7 +34,7 @@ module.exports = function(app) {
 				request.file,
 				request.body.price, //+
 				request.body.location, //+
-				request.body.gFree, //+
+				request.body.gfree, //+
 				request.body.veg, //+
 				request.body.type,
 				request.body.tags,

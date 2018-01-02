@@ -1,9 +1,9 @@
 {
-  "development": {
-    "username": "root",
-    "password": null,
-    "database": "mealcreave_db",
-    "host": "localhost",
+  "development":{
+    "username": "updphtnrz7nfhi5x",
+    "password": "a0hn48bavotvcqzi",
+    "database": "ektdszxhbrfgy5rf",
+    "host": "tk3mehkfmmrhjg0b.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
@@ -14,11 +14,11 @@
     "dialect": "mysql",
     "logging": false
   },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+ "production": {
+    "username": "updphtnrz7nfhi5x",
+    "password": "a0hn48bavotvcqzi",
+    "database": "ektdszxhbrfgy5rf",
+    "host": "tk3mehkfmmrhjg0b.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
