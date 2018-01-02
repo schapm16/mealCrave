@@ -13,6 +13,7 @@ console.log(Object.getOwnPropertyNames(DB));
 module.exports = function(app) {
 	app.get("/", function(request, response) {
 		console.log("index requested");
+		console.log("Cookies :  ", request.cookies);
 		response.render("login", { stylePath: '"./assets/css/login.css"' });
 	});
 	app.get("/addFood", function(request, response) {
@@ -151,7 +152,7 @@ module.exports = function(app) {
 
 				if (data.password == req.body.password) {
 					DEBUG && console.log("\x1b[32m" + req.body.login + ": Access granted!" + "\x1b[0m");
-					res.json({ valid: true })
+					res.cookie("login", "true").json({ valid: true })
 				}
 				else {
 					DEBUG && console.log("\x1b[31m" + req.body.login + ": Access denied!" + "\x1b[0m");
@@ -188,7 +189,8 @@ module.exports = function(app) {
 	});
 
 	app.get('/cookie',function(req, res){
-		res.cookie(cookie_name , 'cookie_value').send('Cookie is set');
+		//res.cookie('cookiename', 'cookievalue', { maxAge: 900000, httpOnly: true });
+		res.cookie("login" , 'cookie_value').send('Cookie is set');
 	});
 
 }

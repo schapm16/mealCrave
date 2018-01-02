@@ -2,8 +2,10 @@ var express = require("express");
 var app = express();
 var handlebars = require("express-handlebars");
 const session = require('express-session');
-var passport       = require('passport');
+var passport = require('passport');
 var cookieParser  = require("cookie-parser");
+app.use(cookieParser());
+
 var LocalStrategy  = require('passport-local').Strategy;
 //connectiong handlebars engine to express server
 app.set("view engine", "handlebars");
@@ -18,7 +20,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(cookieParser());
 //path for temporary saving photos
 app.use(bodyParser({uploadDir:'/uploads/'}));
 app.use(session({ secret: 'SECRET' }));

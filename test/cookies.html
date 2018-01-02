@@ -3,13 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Cookie tester</title>
+	<script	src="https://code.jquery.com/jquery-3.2.1.js"
+	integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+	crossorigin="anonymous"></script>
 </head>
 <body>
 
 	<h1 id="coo">No cookies for you!</h1>
 	<script>
-		
-		document.getElementById("coo").value(document.cookie)
+		$.get("http://localhost:8080/cookie", function(data){
+			document.getElementById("coo").innerText = data;
+			console.log(data)
+		});
 	</script>
 </body>
 </html>
