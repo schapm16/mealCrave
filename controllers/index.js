@@ -170,7 +170,7 @@ module.exports = function(app) {
 			req.body.menuName,
 			req.body.veg,
 			req.body.gfree,
-			req.body.file,
+			req.file,
 			req.body.userName,
 			function(userName, foodId) {
 				console.log("foodID = " + foodId)

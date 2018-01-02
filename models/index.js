@@ -171,7 +171,7 @@ db.editFoodInDB = function(food_id,
 	console.log(userName);
 	if (photo_object) {
 		S3.sendPhotoAndGetURL(photo_object, "pictures/" + food_name + ".jpg", function(url) {
-			console.log(url);
+			console.log("New photo: " + url);
 
 			Food.update({
 				photoUrl: url
