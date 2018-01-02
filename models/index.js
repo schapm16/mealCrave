@@ -176,7 +176,7 @@ db.sendFoodToDB = function(food_name,
 };
 
 db.editFoodInDB = function(food_id,
-	location_id,
+	location_address,
 	price,
 	food_name,
 	veg,
@@ -200,16 +200,19 @@ db.editFoodInDB = function(food_id,
 			});
 		});
 	}
-	if (location_id) {
-		Food.update({
-			locationId: location_id
-		}, {
-			where: {
-				food_id: food_id
-			}
-		}).then(() => {
-			console.log(food_name + "  Updated location!");
-		});
+	if (location_address) {
+		var locationName = location_address.split(",");
+		Locations.findOrCreate({ where: { gps_tag: location_address }, defaults: { location_name: locationName[0] } }).spread((locationF, created) => {
+			Food.update({
+				locationId: locationF.id
+			}, {
+				where: {
+					food_id: food_id
+				}
+			}).then(() => {
+				console.log(food_name + "  Updated location!");
+			});
+		})
 	}
 	if (price) {
 		Food.update({
