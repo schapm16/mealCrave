@@ -146,13 +146,13 @@ db.sendFoodToDB = function(food_name,
 				console.log("lorem!");
 				url = "http://lorempixel.com/400/200/food/";
 			}
-			if (gfree == "on") {
+			if (gfree == "true") {
 				gluten = 1
 			}
 			if (gfree == null) {
 				gluten = 0
 			}
-			if (veg == "on") {
+			if (veg == "true") {
 				vegi = 1
 			}
 			if (veg == null) {
@@ -233,19 +233,19 @@ db.editFoodInDB = function(food_id,
 			console.log(food_name + "  Updated food name!");
 		});
 	}
-	if (gFree == "on") {
+	if (gFree == "true") {
 		gluten = 1
 	}
 	if (gFree == null) {
 		gluten = 0
 	}
-	if (veg == "on") {
+	if (veg == "true") {
 		vegi = 1
 	}
 	if (veg == null) {
 		vegi = 0
 	}
-	if (veg == "on" || veg == null) {
+	if (veg == "true" || veg == null) {
 		Food.update({
 			veg: vegi
 		}, {
@@ -256,7 +256,7 @@ db.editFoodInDB = function(food_id,
 			console.log(food_name + "  Updated veg!");
 		});
 	}
-	if (gFree == "on" || gFree == null) {
+	if (gFree == "true" || gFree == null) {
 		Food.update({
 			gluFree: gluten
 		}, {
