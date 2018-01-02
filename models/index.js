@@ -71,8 +71,8 @@ Users.belongsTo(Locations);
 Food.belongsTo(Users, { foreignKey: "user_id" });
 
 sequelize.sync()
-	.then(() => {}).then(() => {
-		console.log("Synced!");
+.then(() => {}).then(() => {
+	console.log("Synced!");
 		//if argument was passed in command linu at start - create a test-data in database
 		if (process.argv[2]) {
 			Locations.create({
