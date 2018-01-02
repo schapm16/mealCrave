@@ -236,8 +236,9 @@
 				{{#each usersFood}}
 				<div class="tile is-child">
 					<div class="userDishWrapper">
-						<p class="{{food_id}}" style="display:none">1</p>
+						<p class="foodId" style="display:none">{{food_id}}</p>
 						<img src="{{photoUrl}}">
+						<p class="fullAddress" style="display:none">{{location.dataValues.gps_tag}}</p>
 						<p>Location: <span class="userDishLocation">{{location.dataValues.location_name}}</span></p>
 						<p>Menu Item: <span class="userDishMenuName">{{food_name}}</span></p>
 						<p>Price: $<span class="userDishPrice">{{price}}</span></p>
