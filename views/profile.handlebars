@@ -57,40 +57,39 @@
 			<input id="userName" name="userName" type="hidden">{{!--<input id="locationCoordinates" name="locationCoordinates" type="hidden">--}}
 			{{!--This may not be needed--}}
 
-
 			<div class="field">
 				<label class="label">Where are You?</label>
 				<div class="control">
-					<input id="createDishFormLocation" name="location" class="input" type="text" placeholder="Chili's">
+					<input id="createDishFormLocation" name="location" class="input" type="text" placeholder="Chili's" required>
 				</div>
 			</div>
 
 			<div class="field">
 				<label class="label">How much did your meal cost?</label>
 				<div class="control">
-					<input name="price" class="input" type="text" placeholder="15.75">
+					<input name="price" class="input" type="text" placeholder="15.75" required>
 				</div>
 			</div>
 
 			<div class="field">
 				<label class="label">What did you order off of the menu?</label>
 				<div class="control">
-					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad">
+					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad" required>
 				</div>
 			</div>
 
 			<div class="field">
 				<label class="label">Do these apply?</label>
 				<div class="control">
-					<label class="checkbox">
-						<input name="veg" type="checkbox">
+					<label class="checkbox"> 
+						<input name="veg" type="checkbox" value="true" defaultValue="false">
 						Vegetarian
 					</label>
 				</div>
 
 				<div class="control">
-					<label class="checkbox">
-						<input name="gfree" type="checkbox">
+					<label class="checkbox"> 
+						<input name="gfree" type="checkbox" value="true" defaultValue="false">
 						Gluten Free
 					</label>
 				</div>
@@ -114,14 +113,14 @@
 				<div class="control">
 					<div class="file is-primary">
 						<label class="file-label">
-							<input name="photo" class="file-input" type="file" accept="image/*" capture>
-							<span class="file-cta">
-								<span class="file-icon">
-									<i class="fa fa-camera"></i>
-								</span>
-								<span class="file-label">Photo</span>
-							</span>
-						</label>
+    				<input name="photo" class="file-input" type="file" accept="image/*" capture required>
+    				<span class="file-cta">
+      				<span class="file-icon">
+        				<i class="fa fa-camera"></i>
+    					</span>
+      				<span class="file-label">Photo</span>
+    				</span>
+  					</label>
 					</div>
 				</div>
 			</div>
@@ -144,38 +143,38 @@
 			<input name="foodId" type="hidden">
 
 			<div class="field">
-				<label class="label">Is this the correct restaurant name?</label>
+				<label class="label">Is this the correct location?</label>
 				<div class="control">
-					<input id="editDishFormLocation" name="location" class="input" type="text" placeholder="Chili's">
+					<input id="editDishFormLocation" name="location" class="input" type="text" placeholder="Chili's" required>
 				</div>
 			</div>
 
 			<div class="field">
 				<label class="label">Is this the correct price of the meal?</label>
 				<div class="control">
-					<input name="price" class="input" type="text" placeholder="15.75">
+					<input name="price" class="input" type="text" placeholder="15.75" required>
 				</div>
 			</div>
 
 			<div class="field">
 				<label class="label">Need to change the name of the menu item you ordered?</label>
 				<div class="control">
-					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad">
+					<input name="menuName" class="input" type="text" placeholder="Chicken Caesar Salad" required>
 				</div>
 			</div>
 
 			<div class="field">
 				<label class="label">Are these options correct?</label>
 				<div class="control">
-					<label class="checkbox">
-						<input name="veg" type="checkbox">
+					<label class="checkbox"> 
+						<input name="veg" type="checkbox" value="true" defaultValue="false">
 						Vegetarian
 					</label>
 				</div>
 
 				<div class="control">
-					<label class="checkbox">
-						<input name="gfree" type="checkbox">
+					<label class="checkbox"> 
+						<input name="gfree" type="checkbox" value="true" defaultValue="false">
 						Gluten Free
 					</label>
 				</div>
@@ -251,8 +250,8 @@
 							<p>Gluten Free: <span class="userDishGFree">{{gluFree}}</span></p>
 							<p>Vegetarian: <span class="userDishVeg">{{veg}}</span></p>
 						</div>
-				{{/each}}
 				</div>
+				{{/each}}
 			</div>
 		</div>
 		{{!--End User Dish Display--}}
