@@ -156,4 +156,8 @@ module.exports = function(app) {
 		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
 	});
 
+	app.post("/api/updateFood", upload.single('photo'), function(req, res) {
+		console.log(req.body.userName);
+		res.send(req.body.userName);
+	});
 }
