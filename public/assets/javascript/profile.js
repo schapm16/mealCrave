@@ -25,7 +25,7 @@ function populateEditDishForms(dishClicked) {
   if ($(dishClicked).find('.userDishVeg').text() === 'Yes') {
     $('#editDishForm input[name="veg"]').prop('checked', 'true');
   }
-
+  $('#deleteDishForm input[name="userName"]').val(sessionStorage.getItem('userName'));
   $('#deleteDishForm input[name="foodId"]').val($(dishClicked).find('.userDishFoodId').text());
 }
 //

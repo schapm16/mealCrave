@@ -110,7 +110,11 @@ sequelize.sync()
 					locMock[Math.floor(Math.random() * (locMock.length - 1))], //random location ID
 					!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2), //random gluten free, and veg. parameters.
 					foodTypes[Math.floor(Math.random() * len)], //random food type from array of foodtypes
-					"amazing!") // optional test tag
+					"amazing!",
+					"placeholder",
+					()=>{
+						
+					}) // optional test tag
 			};
 		}
 	})
