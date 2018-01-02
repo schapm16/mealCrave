@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var handlebars = require("express-handlebars");
-const session = require('session');
+const session = require('express-session');
 var passport       = require('passport');
 var cookieParser  = require("cookie-parser");
 var LocalStrategy  = require('passport-local').Strategy;
@@ -18,8 +18,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
-//path for temporary saving photos
 app.use(cookieParser());
+//path for temporary saving photos
 app.use(bodyParser({uploadDir:'/uploads/'}));
 app.use(session({ secret: 'SECRET' }));
 

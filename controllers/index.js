@@ -1,7 +1,7 @@
 var DEBUG = true;
 console.log("Controllers: \x1b[32mok!\x1b[0m");
 var path = require('path'),
-	fs = require('fs');
+fs = require('fs');
 //express part for uploading files from html-form
 var multer = require('multer');
 //var S3 = require("../models/amazon.js");
@@ -186,4 +186,9 @@ module.exports = function(app) {
 	app.get("/map/:restaurantAddress", function(req, res) {
 		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
 	});
+
+	app.get('/cookie',function(req, res){
+		res.cookie(cookie_name , 'cookie_value').send('Cookie is set');
+	});
+
 }
