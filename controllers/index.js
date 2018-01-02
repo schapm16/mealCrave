@@ -10,39 +10,39 @@ var upload = multer({ dest: null });
 
 console.log(Object.getOwnPropertyNames(DB));
 
-module.exports = function(app){
-	app.get("/", function(request, response){
+module.exports = function(app) {
+	app.get("/", function(request, response) {
 		console.log("index requested");
-		response.render("login", {stylePath: '"./assets/css/login.css"'});
+		response.render("login", { stylePath: '"./assets/css/login.css"' });
 	});
-	app.get("/addFood", function(request, response){
+	app.get("/addFood", function(request, response) {
 		console.log("index requested");
 		response.render("addFood");
 	});
 	//add only food element to the database
-	app.post("/api/addFood", upload.single('photo'), function(request, response){
+	app.post("/api/addFood", upload.single('photo'), function(request, response) {
 		//request.file - this variable will contain file from "photo" key
 		var food = {
 			user: ""
 		}
 		DEBUG && console.log(request.file.originalname);
-		DEBUG && console.log(request.body.location)		
+		DEBUG && console.log(request.body.location)
 
-		DB.Users.findOne({ where: {login: request.body.userName} }).then(userObject => {
+		DB.Users.findOne({ where: { login: request.body.userName } }).then(userObject => {
 			console.log("UserID:" + userObject.user_id);
 			DB.sendFoodToDB(request.body.menuName, //+
-			userObject.user_id,//+
-			request.file, 
-			request.body.price, //+
-			request.body.location, //+
-			request.body.gFree, //+
-			request.body.veg, //+
-			request.body.type, 
-			request.body.tags);
+				userObject.user_id, //+
+				request.file,
+				request.body.price, //+
+				request.body.location, //+
+				request.body.gFree, //+
+				request.body.veg, //+
+				request.body.type,
+				request.body.tags);
 			response.send(request.body.menuName + " added!");
 		});
 
-		
+
 	});
 
 	app.get("/api/location/:id", function(req, res) {
@@ -61,9 +61,9 @@ module.exports = function(app){
 				type: req.params.type
 			}
 		}).then(function(data) {
-			DEBUG || console.log("Poutput:"+data);
-			var JSON = data.stringify();
-			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
+			DEBUG || console.log("Poutput:" + data);
+			//var JSON = data.stringify();
+			res.render("searchResults", { data: data, stylePath: "/assets/css/searchResults.css" });
 		});
 	});
 	//this function will find every row in Food table, which contains "keyword" from request in food_name column
@@ -71,13 +71,15 @@ module.exports = function(app){
 	app.get("/search/byKeyword/:keyword", function(request, response) {
 		DB.Food.findAll({
 			include: DB.Locations,
-			where: {				
+			where: {
 				food_name: {
 					$like: '%' + request.params.keyword + '%' //it will find every item with "keyword" in the food_name column, no matter what position
 				}
 			}
 		}).then(function(data) {
+
 			DEBUG && console.log(data);
+			console.log("DATA: " + data);
 			response.render("searchResults", {
 				stylePath: '"/assets/css/searchResults.css"',
 				data: data
@@ -113,7 +115,7 @@ module.exports = function(app){
 				login: req.body.userName
 			}
 		}).then(function(data) {
-			DEBUG && console.log("Join: response: "+!data);
+			DEBUG && console.log("Join: response: " + !data);
 			if (!data) {
 				DB.Users.create({
 					login: req.body.userName,
@@ -129,7 +131,7 @@ module.exports = function(app){
 	});
 
 	app.post("/login", function(req, res) {
-		DEBUG && console.log("\x1b[33m"+"Login attempt:\nLogin: "+ req.body.login+"\nPassword: "+req.body.password+"\x1b[0m");
+		DEBUG && console.log("\x1b[33m" + "Login attempt:\nLogin: " + req.body.login + "\nPassword: " + req.body.password + "\x1b[0m");
 		DB.Users.findOne({
 			where: {
 				login: req.body.userName
@@ -137,15 +139,20 @@ module.exports = function(app){
 		}).then(function(data) {
 
 			if (data.password == req.body.password) {
-				DEBUG && console.log("\x1b[32m"+req.body.login+": Access granted!"+"\x1b[0m");
+				DEBUG && console.log("\x1b[32m" + req.body.login + ": Access granted!" + "\x1b[0m");
 				res.json({ valid: true })
 			}
 			else {
-				DEBUG && console.log("\x1b[31m"+req.body.login+": Access denied!"+"\x1b[0m");
+				DEBUG && console.log("\x1b[31m" + req.body.login + ": Access denied!" + "\x1b[0m");
 				res.json({ valid: false })
 			}
 		})
 	});
+
+	app.get("/map/:restaurantAddress", function(req, res) {
+		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
+	});
+
 	app.post("/api/updateFood", upload.single('photo'), function(req, res) {
 		console.log(req.body.userName);
 		res.send(req.body.userName);
