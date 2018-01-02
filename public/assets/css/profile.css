@@ -82,3 +82,15 @@ form a {
     width: 80%;
 }
 /*End User Dish Display Styling*/
+
+
+@media only screen and (max-width: 768px) {
+  
+  #userDishes {
+    height: 80vh;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-left: none;
+    margin-top: 5vh;
+    }
+} 
