@@ -20,6 +20,9 @@
 		{{!--Buttons shown on page load--}}
 		<div id="initialButtons" class="field">
 			<label class="label has-text-centered is-size-3">What would you like to do?</label>
+			{{#each usersFood}}
+			<p>{{this.location.location_name}}</p>
+			{{/each}}
 			<div class="control buttons is-centered">
 				<button id="openSearchForm" class="button is-link">Search for Dish</button>
 				<button id="openCreateDishForm" class="button is-danger">Create New Dish</button>
@@ -35,6 +38,7 @@
 
 			<div class="field">
 				<label class="label">What kind of meal are you craving?</label>
+
 				<div class="control">
 					<input id="searchTerm" class="input" type="text" placeholder="e.g. Chicken Caesar Salad">
 				</div>
@@ -98,11 +102,11 @@
 			{{!--We may not use "type"--}} {{!--
 			<div class="field">--}} {{!-- <label class="label">Select a category that best fits your meal.</label>--}} {{!--
 				<div class="control">--}} {{!-- <span class="select">--}}
-			{{!--			<select>--}}
-			{{!--				<option>Hamburger</option>--}}
-			{{!--				<option>Salad</option>--}}
-			{{!--			</select>--}}
-			{{!--			</span>--}} {{!-- </div>--}} {{!--
+					{{!--			<select>--}}
+						{{!--				<option>Hamburger</option>--}}
+						{{!--				<option>Salad</option>--}}
+					{{!--			</select>--}}
+				{{!--			</span>--}} {{!-- </div>--}} {{!--
 			</div>--}}
 
 			<div class="field">
@@ -110,14 +114,14 @@
 				<div class="control">
 					<div class="file is-primary">
 						<label class="file-label">
-    				<input name="photo" class="file-input" type="file" accept="image/*" capture>
-    				<span class="file-cta">
-      				<span class="file-icon">
-        				<i class="fa fa-camera"></i>
-    					</span>
-      				<span class="file-label">Photo</span>
-    				</span>
-  					</label>
+							<input name="photo" class="file-input" type="file" accept="image/*" capture>
+							<span class="file-cta">
+								<span class="file-icon">
+									<i class="fa fa-camera"></i>
+								</span>
+								<span class="file-label">Photo</span>
+							</span>
+						</label>
 					</div>
 				</div>
 			</div>
@@ -180,11 +184,11 @@
 			{{!--We may not use "type"--}} {{!--
 			<div class="field">--}} {{!-- <label class="label">Is this the correct meal category?</label>--}} {{!--
 				<div class="control">--}} {{!-- <span class="select">--}}
-			{{!--			<select>--}}
-			{{!--				<option>Hamburger</option>--}}
-			{{!--				<option>Salad</option>--}}
-			{{!--			</select>--}}
-			{{!--			</span>--}} {{!-- </div>--}} {{!--
+					{{!--			<select>--}}
+						{{!--				<option>Hamburger</option>--}}
+						{{!--				<option>Salad</option>--}}
+					{{!--			</select>--}}
+				{{!--			</span>--}} {{!-- </div>--}} {{!--
 			</div>--}}
 
 			<div class="field">
@@ -192,14 +196,14 @@
 				<div class="control">
 					<div class="file is-primary">
 						<label class="file-label">
-    				<input name="photo" class="file-input" type="file" accept="image/*" capture>
-    				<span class="file-cta">
-      				<span class="file-icon">
-        				<i class="fa fa-camera"></i>
-    					</span>
-      				<span class="file-label">Photo</span>
-    				</span>
-  					</label>
+							<input name="photo" class="file-input" type="file" accept="image/*" capture>
+							<span class="file-cta">
+								<span class="file-icon">
+									<i class="fa fa-camera"></i>
+								</span>
+								<span class="file-label">Photo</span>
+							</span>
+						</label>
 					</div>
 				</div>
 			</div>

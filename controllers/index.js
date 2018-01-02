@@ -86,19 +86,23 @@ module.exports = function(app){
 	});
 	//this function will find every row in Food table from certain user, it uses user_id for searching
 	app.get("/search/byUserId/:userId", function(request, response) {
-		DB.Food.findAll({
-			include: DB.Locations,
-			where: {				
-				user_id: request.params.userId
-			}
-		}).then(function(data) {
-			DEBUG && console.log(data);
+		DB.Users.findOne({ where: {login: request.params.userId} }).then(userObject => {
+			console.log("UserID:" + userObject.user_id);
+			DB.Food.findAll({
+				include: DB.Locations,
+				where: {				
+					user_id: userObject.user_id
+				}
+			}).then(function(data) {
+				DEBUG && console.log(data);
 			//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db 
 			response.render("profile", {
 				stylePath: '"/assets/css/profile.css"',
 				usersFood: data
 			});
 		});
+		});
+		
 	});
 
 	app.post("/join", function(req, res) {
