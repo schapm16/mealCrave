@@ -85,13 +85,13 @@ $(function() {
     $('#locationCoordinates').val(position.coords.latitude + ' ' + position.coords.longitude);
     console.log($('#locationCoordinates').val());
   }, null, { enableHighAccuracy: true, maximumAge: 300000, timeOut: 5000 });
-  // 
+  //
 
 
   // Dish Search by Keyword
   $('#search').click(function() {
     window.location.href = "/search/byKeyword/" + $('#searchTerm').val().trim();
   });
-  // 
+  //
 
 });

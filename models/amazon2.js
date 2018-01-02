@@ -7,7 +7,7 @@ module.exports = function() {
 	var objectToExport = {
 		name: "S3"
 	};
-	//aws credentials, 
+	//aws credentials,
 	AWS.config.loadFromPath('./config/amazon-config.json');
 
 	var BucketName = 'mealcrave-2017';

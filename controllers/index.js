@@ -1,7 +1,7 @@
 var DEBUG = true;
 console.log("Controllers: \x1b[32mok!\x1b[0m");
 var path = require('path'),
-fs = require('fs');
+	fs = require('fs');
 //express part for uploading files from html-form
 var multer = require('multer');
 //var S3 = require("../models/amazon.js");
@@ -27,7 +27,6 @@ module.exports = function(app) {
 		}
 		DEBUG && console.log(request.file.originalname);
 		DEBUG && console.log(request.body.location)
-
 		DB.Users.findOne({ where: { login: request.body.userName } }).then(userObject => {
 			console.log("UserID:" + userObject.user_id);
 			DB.sendFoodToDB(request.body.menuName, //+
@@ -62,8 +61,10 @@ module.exports = function(app) {
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:" + data);
+
 			//var JSON = data.stringify();
 			res.render("searchResults", { data: data, stylePath: "/assets/css/searchResults.css" });
+
 		});
 	});
 	//this function will find every row in Food table, which contains "keyword" from request in food_name column
@@ -77,7 +78,6 @@ module.exports = function(app) {
 				}
 			}
 		}).then(function(data) {
-
 			DEBUG && console.log(data);
 			console.log("DATA: " + data);
 			response.render("searchResults", {
@@ -87,24 +87,25 @@ module.exports = function(app) {
 		});
 	});
 	//this function will find every row in Food table from certain user, it uses user_id for searching
+
 	app.get("/search/byUserId/:userId", function(request, response) {
-		DB.Users.findOne({ where: {login: request.params.userId} }).then(userObject => {
+		DB.Users.findOne({ where: { login: request.params.userId } }).then(userObject => {
 			console.log("UserID:" + userObject.user_id);
 			DB.Food.findAll({
 				include: DB.Locations,
-				where: {				
+				where: {
 					user_id: userObject.user_id
 				}
 			}).then(function(data) {
 				DEBUG && console.log(data);
-			//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db 
-			response.render("profile", {
-				stylePath: '"/assets/css/profile.css"',
-				usersFood: data
+				//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db
+				response.render("profile", {
+					stylePath: '"/assets/css/profile.css"',
+					usersFood: data
+				});
 			});
 		});
-		});
-		
+
 	});
 
 	app.post("/join", function(req, res) {
@@ -138,7 +139,7 @@ module.exports = function(app) {
 			}
 		}).then(function(data) {
 
-			if (data.password == req.body.password) {
+			if (data.password == req.body.password && data.login == req.body.userName) {
 				DEBUG && console.log("\x1b[32m" + req.body.login + ": Access granted!" + "\x1b[0m");
 				res.json({ valid: true })
 			}
@@ -148,13 +149,29 @@ module.exports = function(app) {
 			}
 		})
 	});
-
-	app.get("/map/:restaurantAddress", function(req, res) {
-		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
-	});
-
 	app.post("/api/updateFood", upload.single('photo'), function(req, res) {
 		console.log(req.body.userName);
-		res.send(req.body.userName);
+		DB.editFoodInDB(req.body.foodId,
+			req.body.location,
+			req.body.price,
+			req.body.menuName,
+			req.body.veg,
+			req.body.gfree,
+			req.body.file,
+			req.body.userName,
+			function(userName) {
+				console.log("tesetset");
+				console.log(userName);
+				res.redirect("/search/byUserId/" + userName);
+			});
+	});
+
+	app.post("api/deleteFood", function(req, res) {
+		DB.deleteFood(req.body.foodId).then(function() {
+			res.redirect("/search/byUserId/" + req.body.userName)
+		});
+	})
+	app.get("/map/:restaurantAddress", function(req, res) {
+		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
 	});
 }

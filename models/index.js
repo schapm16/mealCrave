@@ -75,7 +75,6 @@ sequelize.sync()
 		console.log("Synced!");
 		//if argument was passed in command linu at start - create a test-data in database
 		if (process.argv[2]) {
-
 			Locations.create({
 				location_name: "Charlotte, NC",
 				gps_tag: "34.333, 35.222"
@@ -113,7 +112,6 @@ sequelize.sync()
 					foodTypes[Math.floor(Math.random() * len)], //random food type from array of foodtypes
 					"amazing!") // optional test tag
 			};
-
 		}
 	})
 
@@ -129,6 +127,7 @@ db.sendFoodToDB = function(food_name,
 
 	S3.sendPhotoAndGetURL(photo_object, user_id + "/" + food_name + ".jpg", function(url) {
 		//trying to find a location in database
+
 		var locationName = location_address.split(",");
 		console.log(locationName)
 		Locations.findOrCreate({ where: { gps_tag: location_address }, defaults: { location_name: locationName[0] } }).spread((locationF, created) => {
@@ -149,13 +148,104 @@ db.sendFoodToDB = function(food_name,
 				veg: veg,
 				locationId: locationF.id
 			}).then(() => {
-				console.log(food_name + "  Added!" + locationName[0]);
+				console.log(food_name + "  Added!");
 			});
 		});
 	});
 };
 
+db.editFoodInDB = function(food_id,
+	location_id,
+	price,
+	food_name,
+	veg,
+	gFree,
+	photo_object, userName, cb) {
+	console.log(userName);
+	if (photo_object) {
+		S3.sendPhotoAndGetURL(photo_object, "pictures/" + food_name + ".jpg", function(url) {
+			console.log(url);
 
+			Food.update({
+				photoUrl: url
+			}, {
+				where: {
+					food_id: food_id
+				}
+			}).then(() => {
+				console.log(food_name + "  Updated photo!");
+			});
+		});
+	}
+	if (location_id) {
+		Food.update({
+			locationId: location_id
+		}, {
+			where: {
+				food_id: food_id
+			}
+		}).then(() => {
+			console.log(food_name + "  Updated location!");
+		});
+	}
+	if (price) {
+		Food.update({
+			price: price
+		}, {
+			where: {
+				food_id: food_id
+			}
+		}).then(() => {
+			console.log(food_name + "  Updated price!");
+		});
+	}
+	if (food_name) {
+		Food.update({
+			food_name: food_name
+		}, {
+			where: {
+				food_id: food_id
+			}
+		}).then(() => {
+			console.log(food_name + "  Updated food name!");
+		});
+	}
+	if (veg) {
+		Food.update({
+			veg: veg
+		}, {
+			where: {
+				food_id: food_id
+			}
+		}).then(() => {
+			console.log(food_name + "  Updated veg!");
+		});
+	}
+	if (gFree) {
+		Food.update({
+			gluFree: gFree
+		}, {
+			where: {
+				food_id: food_id
+			}
+		}).then(() => {
+			console.log(food_name + "  Updated gluten!");
+		});
+	}
+	cb(userName);
+};
+
+db.deleteFood = function(food_id) {
+	Food.destroy({
+		where: {
+			food_id: food_id
+		}
+	}).then(() => {
+		console.log(food_id + "  Deleted!");
+	});
+};
+
+db.getFoodByType;
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
