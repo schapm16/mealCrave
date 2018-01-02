@@ -29,7 +29,8 @@ module.exports = function() {
 			else {
 				var urlParams = {
 					Bucket: BucketName,
-					Key: nameOfPhoto
+					Key: nameOfPhoto,
+					Expires: 604800 //expires in one week
 				};
 				s3.getSignedUrl('getObject', urlParams, function(err, url) {
 					cb(url)
