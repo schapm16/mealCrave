@@ -25,7 +25,7 @@
         <div class="mealPics columns is-multiline has-text-centered">
             {{!--The photo for each result will display with the corresponding data attributes--}}
                 {{#each data}}
-                <div class="column is-one-third-tablet is-one-quarter-desktop"><img src={{photoUrl}} data-name='{{food_name}}' data-rest='{{rest_name}}' data-price={{price}} data-restid='{{address}}' width="200" class="mealImages"></div>
+                <div class="column is-one-third-tablet is-one-quarter-desktop"><img src={{photoUrl}} data-name='{{food_name}}' data-rest='{{location.dataValues.location_name}}' data-price={{price}} data-restid='{{location.dataValues.gps_tag}}' width="200" class="mealImages"></div>
                 {{/each}}
         </div>
     </main>

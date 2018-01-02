@@ -69,7 +69,6 @@ module.exports = function(app) {
 	//this function will find every row in Food table, which contains "keyword" from request in food_name column
 	//and will send a JSON back
 	app.get("/search/byKeyword/:keyword", function(request, response) {
-		console.log("Response: " + response);
 		DB.Food.findAll({
 			include: DB.Locations,
 			where: {
@@ -80,6 +79,7 @@ module.exports = function(app) {
 		}).then(function(data) {
 
 			DEBUG && console.log(data);
+			console.log("DATA: " + data[0].dataValues.location.dataValues.location_name);
 			response.render("searchResults", {
 				stylePath: '"/assets/css/searchResults.css"',
 				data: data
@@ -100,7 +100,7 @@ module.exports = function(app) {
 					user_id: theID
 				}
 			}).then(function(response) {
-				DEBUG && console.log("Inside response: " + response.photoUrl);
+				DEBUG && console.log("Inside response: " + response);
 				//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db 
 				res.render("profile", {
 					stylePath: '"/assets/css/profile.css"',

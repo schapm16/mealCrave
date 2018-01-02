@@ -21,7 +21,7 @@ $(".mealImages").on("click", function() {
     $("#modalImage").attr("src", $(this).attr("src"));
     $("#modalMealName").html($(this).data("name"));
     $("#modalRestName").html($(this).data("rest"));
-    $("#modalRestName").attr("data-info", $(this).data("restid"));
+    $("#modalImage").attr("data-info", $(this).data("restid"));
     $("#modalPrice").html($(this).data("price"));
     //Launch the modal
     $(".modal").addClass("is-clipped is-active");
@@ -40,8 +40,9 @@ $(".modal-close").on("click", function() {
 //When the user clicks on the name of the restaurant in the modal
 $("#modalImage").on("click", function() { //this will need to be changed to the restaurant name once we have included the location table
     //assign the restaurant address to the "restaurant" variable
-    var restaurant = "uncc"; //this will be the name of the restaurant gotten from the span we click on 
+    var restaurant = $(this).attr("data-info"); //this will be the name of the restaurant gotten from the span we click on 
     //Request the map page with the route highlighted from the user's current loation to the restaurand location
+    console.log(restaurant);
     $.ajax({
         url: "/map/" + restaurant, //change this to the address we get from the data id in the span (or we could get the address from the id?? writing the address directly in may be easier but i don't know if it will make the app too slow??)
         method: "GET",
