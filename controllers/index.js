@@ -79,7 +79,7 @@ module.exports = function(app) {
 		}).then(function(data) {
 
 			DEBUG && console.log(data);
-			console.log("DATA: " + data[0].dataValues.location.dataValues.location_name);
+			console.log("DATA: " + data);
 			response.render("searchResults", {
 				stylePath: '"/assets/css/searchResults.css"',
 				data: data
