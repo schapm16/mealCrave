@@ -87,8 +87,8 @@ module.exports = function(app){
 	//this function will find every row in Food table from certain user, it uses user_id for searching
 	app.get("/search/byUserId/:userId", function(request, response) {
 		DB.Food.findAll({
-			where: {
-				include: DB.Locations,				
+			include: DB.Locations,
+			where: {				
 				user_id: request.params.userId
 			}
 		}).then(function(data) {
