@@ -138,15 +138,23 @@ module.exports = function(app) {
 				login: req.body.userName
 			}
 		}).then(function(data) {
-
-			if (data.password == req.body.password && data.login == req.body.userName) {
-				DEBUG && console.log("\x1b[32m" + req.body.login + ": Access granted!" + "\x1b[0m");
-				res.json({ valid: true })
-			}
-			else {
+			console.log(data)
+			if (data == null) {
 				DEBUG && console.log("\x1b[31m" + req.body.login + ": Access denied!" + "\x1b[0m");
 				res.json({ valid: false })
 			}
+			else if (data.login == req.body.userName) {
+
+				if (data.password == req.body.password) {
+					DEBUG && console.log("\x1b[32m" + req.body.login + ": Access granted!" + "\x1b[0m");
+					res.json({ valid: true })
+				}
+				else {
+					DEBUG && console.log("\x1b[31m" + req.body.login + ": Access denied!" + "\x1b[0m");
+					res.json({ valid: false })
+				}
+			}
+
 		})
 	});
 	app.post("/api/updateFood", upload.single('photo'), function(req, res) {
