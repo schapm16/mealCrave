@@ -18,14 +18,14 @@ function populateEditDishForms(dishClicked) {
   $('#editDishForm input[name="price"]').val($(dishClicked).find('.userDishPrice').text());
   $('#editDishForm input[name="menuName"]').val($(dishClicked).find('.userDishMenuName').text());
   $('#editDishForm input[name="foodId"]').val($(dishClicked).find('.userDishFoodId').text());
-  if ($(dishClicked).find('.userDishGFree').text() === 'Yes') {
+  if ($(dishClicked).find('.userDishGFree').text() === 'true') {
     $('#editDishForm input[name="gfree"]').prop('checked', 'true');
   }
 
-  if ($(dishClicked).find('.userDishVeg').text() === 'Yes') {
+  if ($(dishClicked).find('.userDishVeg').text() === 'true') {
     $('#editDishForm input[name="veg"]').prop('checked', 'true');
   }
-
+  $('#deleteDishForm input[name="userName"]').val(sessionStorage.getItem('userName'));
   $('#deleteDishForm input[name="foodId"]').val($(dishClicked).find('.userDishFoodId').text());
 }
 //
@@ -72,7 +72,6 @@ $(function() {
     $('#searchForm').css('display', 'none');
     $('#editDishForm').css('display', 'none');
     $('#initialButtons').css('display', 'block');
-
   });
   //
 
@@ -92,27 +91,5 @@ $(function() {
   $('#search').click(function() {
     window.location.href = "/search/byKeyword/" + $('#searchTerm').val().trim();
   });
-  //
-
-  if ($(".userDishGFree").text() === "true") {
-    alert($(".userDishGFree").text());
-    $(".userDishGFree").html("Yes");
-    if ($(".userDishVeg").text() === "true") {
-      alert("Vegetarian");
-      $(".userDishVeg").html("Yes");
-    }
-    else {
-      $(".userDishVeg").html("No");
-    }
-  }
-  else {
-    $(".userDishGFree").html("No");
-    if ($(".userDishVeg").text() === "true") {
-      $(".userDishVeg").html("Yes");
-    }
-    else {
-      $(".userDishVeg").html("No");
-    }
-  }
 
 });
