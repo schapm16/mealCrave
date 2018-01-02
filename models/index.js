@@ -1,5 +1,3 @@
-'use strict';
-
 var fs = require('fs');
 var path = require('path');
 var Sequelize = require('sequelize');
@@ -78,6 +76,7 @@ sequelize.sync()
 		//if argument was passed in command linu at start - create a test-data in database
 		if (process.argv[2]) {
 
+
 			Locations.create({
 				location_name: "Charlotte, NC",
 				gps_tag: "34.333, 35.222"
@@ -103,6 +102,20 @@ sequelize.sync()
 
 			var D = process.argv[2]
 			var foodTypes = ["burger", "salad", "pasta", "drink"];
+			var locMock = ["Charlotte, NC", "Portland, OR"];
+			var len = foodTypes.length - 1;
+			for (var i = 0; i < D; i++) {
+				db.sendFoodToDB("BigMac" + i, //food name
+					Math.floor(Math.random() * 2 + 1), //random user id
+					"lorem", //random photo url, check definition of the function to change it from leromPixel link to actual data
+					Math.floor(Math.random() * 100), //random price
+					locMock[Math.floor(Math.random() * (locMock.length - 1))], //random location ID
+					!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2), //random gluten free, and veg. parameters.
+					foodTypes[Math.floor(Math.random() * len)], //random food type from array of foodtypes
+					"amazing!") // optional test tag
+			};
+			var D = process.argv[2]
+			var foodTypes = ["burger", "salad", "pasta", "drink"];
 			var len = foodTypes.length - 1;
 			for (var i = 0; i < D; i++) {
 				db.sendFoodToDB("BigMac" + i, //food name
@@ -122,25 +135,34 @@ db.sendFoodToDB = function(food_name,
 	user_id,
 	photo_object,
 	price,
-	location_id,
+	location_address,
 	gFree,
 	veg,
 	type,
 	tags) {
-	S3.sendPhotoAndGetURL(photo_object, user_id + "/" + food_name + ".jpg", function(url) {
-		console.log(url);
 
-		Food.create({
-			user_id: user_id,
-			food_name: food_name,
-			photoUrl: url,
-			price: price,
-			gluFree: gFree,
-			type: "standart",
-			veg: veg,
-			locationId: location_id
-		}).then(() => {
-			console.log(food_name + "  Added!")
+	S3.sendPhotoAndGetURL(photo_object, user_id + "/" + food_name + ".jpg", function(url) {
+		//trying to find a location in database
+		Locations.findOrCreate({ where: { location_name: location_address }, defaults: { gps_tag: location_address } }).spread((locationF, created) => {
+			console.log("inner test, created: " + created);
+
+			console.log(locationF.id);
+			if (photo_object == "lorem") {
+				console.log("lorem!");
+				url = "http://lorempixel.com/400/200/food/";
+			}
+			Food.create({
+				user_id: user_id,
+				food_name: food_name,
+				photoUrl: url,
+				price: price,
+				gluFree: gFree,
+				type: "standart",
+				veg: veg,
+				locationId: locationF.id
+			}).then(() => {
+				console.log(food_name + "  Added!")
+			});
 		});
 	});
 }
