@@ -20,9 +20,6 @@
 		{{!--Buttons shown on page load--}}
 		<div id="initialButtons" class="field">
 			<label class="label has-text-centered is-size-3">What would you like to do?</label>
-			{{#each usersFood}}
-			<p>{{this.location.location_name}}</p>
-			{{/each}}
 			<div class="control buttons is-centered">
 				<button id="openSearchForm" class="button is-link">Search for Dish</button>
 				<button id="openCreateDishForm" class="button is-danger">Create New Dish</button>
@@ -57,8 +54,8 @@
 				<a class="closeForm is-pulled-right">Close X</a>
 			</div>
 
-			<input id="userName" name="userName" type="hidden">
-			{{!--<input id="locationCoordinates" name="locationCoordinates" type="hidden">--}} {{!--This may not be needed--}}
+			<input id="userName" name="userName" type="hidden">{{!--<input id="locationCoordinates" name="locationCoordinates" type="hidden">--}}
+			{{!--This may not be needed--}}
 
 
 			<div class="field">
@@ -99,14 +96,17 @@
 				</div>
 			</div>
 
-			{{!--We may not use "type"--}} {{!--
-			<div class="field">--}} {{!-- <label class="label">Select a category that best fits your meal.</label>--}} {{!--
-				<div class="control">--}} {{!-- <span class="select">--}}
-					{{!--			<select>--}}
-						{{!--				<option>Hamburger</option>--}}
-						{{!--				<option>Salad</option>--}}
-					{{!--			</select>--}}
-				{{!--			</span>--}} {{!-- </div>--}} {{!--
+			{{!--We may not use "type"--}}
+			{{!--
+			<div class="field">--}}{{!-- <label class="label">Select a category that best fits your meal.</label>--}}
+			{{!--
+				<div class="control">--}}{{!-- <span class="select">--}}
+			{{!--			<select>--}}
+			{{!--				<option>Hamburger</option>--}}
+			{{!--				<option>Salad</option>--}}
+			{{!--			</select>--}}
+			{{!--			</span>--}}{{!-- </div>--}}
+			{{!--
 			</div>--}}
 
 			<div class="field">
@@ -181,14 +181,17 @@
 				</div>
 			</div>
 
-			{{!--We may not use "type"--}} {{!--
-			<div class="field">--}} {{!-- <label class="label">Is this the correct meal category?</label>--}} {{!--
-				<div class="control">--}} {{!-- <span class="select">--}}
-					{{!--			<select>--}}
-						{{!--				<option>Hamburger</option>--}}
-						{{!--				<option>Salad</option>--}}
-					{{!--			</select>--}}
-				{{!--			</span>--}} {{!-- </div>--}} {{!--
+			{{!--We may not use "type"--}}
+			{{!--
+			<div class="field">--}}{{!-- <label class="label">Is this the correct meal category?</label>--}}
+			{{!--
+				<div class="control">--}}{{!-- <span class="select">--}}
+			{{!--			<select>--}}
+			{{!--				<option>Hamburger</option>--}}
+			{{!--				<option>Salad</option>--}}
+			{{!--			</select>--}}
+			{{!--			</span>--}}{{!-- </div>--}}
+			{{!--
 			</div>--}}
 
 			<div class="field">
@@ -237,18 +240,17 @@
 					<p class="subtitle"><em>(Click to Edit)</em></p>
 				</div>
 				{{#each usersFood}}
-				<div class="tile is-child">
-					<div class="userDishWrapper">
-						<p class="{{food_id}}" style="display:none">1</p>
-						{{!--<img src="/assets/photos/download.jpg">--}}
-						<img src="{{photoUrl}}">
-						<p>Location: <span class="userDishLocation">{{location.dataValues.location_name}}</span></p>
-						<p>Menu Item: <span class="userDishMenuName">{{food_name}}</span></p>
-						<p>Price: $<span class="userDishPrice">{{price}}</span></p>
-						<p>Gluten Free: <span class="userDishGFree">{{gluFree}}</span></p>
-						<p>Vegetarian: <span class="userDishVeg">{{veg}}</span></p>
+					<div class="tile is-child">
+						<div class="userDishWrapper" <p class="foodId" style="display:none">{{food_id}}</p>
+							<img src="{{photoUrl}}">
+							<p class="fullAddress" style="display:none">{{location.dataValues.gps_tag}}</p>
+							<p>Location: <span class="userDishLocation">{{location.dataValues.location_name}}</span></p>
+							<p>Menu Item: <span class="userDishMenuName">{{food_name}}</span></p>
+							<p>Price: $<span class="userDishPrice">{{price}}</span></p>
+							<p>Gluten Free: <span class="userDishGFree">{{gluFree}}</span></p>
+							<p>Vegetarian: <span class="userDishVeg">{{veg}}</span></p>
+						</div>
 					</div>
-				</div>
 				{{/each}}
 			</div>
 		</div>
@@ -261,4 +263,3 @@
 
 {{!--Google Places API--}}
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMRNMvB_hrPmwoHo_pkOvAfIOI5IMuMsA&libraries=places&callback=placesSearch"></script>
-

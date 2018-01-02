@@ -14,7 +14,7 @@ function placesSearch() {
 // Populates the editDishForm and deleteDishForm based on the information included in the userDish that the User clicks on
 function populateEditDishForms(dishClicked) {
   $('#editDishForm input[name="userName"]').val(sessionStorage.getItem('userName'));
-  $('#editDishForm input[name="location"]').val($(dishClicked).find('.userDishLocation').text());
+  $('#editDishForm input[name="location"]').val($(dishClicked).find('.fullAddress').text());
   $('#editDishForm input[name="price"]').val($(dishClicked).find('.userDishPrice').text());
   $('#editDishForm input[name="menuName"]').val($(dishClicked).find('.userDishMenuName').text());
   $('#editDishForm input[name="foodId"]').val($(dishClicked).find('.userDishFoodId').text());
@@ -33,7 +33,7 @@ function populateEditDishForms(dishClicked) {
 
 // >>> Execution Begins Here <<<
 $(function() {
-
+  $("")
   // Logout
   $('#logout').click(function() {
     sessionStorage.clear();
@@ -93,5 +93,26 @@ $(function() {
     window.location.href = "/search/byKeyword/" + $('#searchTerm').val().trim();
   });
   //
+
+  if ($(".userDishGFree").text() === "true") {
+    alert($(".userDishGFree").text());
+    $(".userDishGFree").html("Yes");
+    if ($(".userDishVeg").text() === "true") {
+      alert("Vegetarian");
+      $(".userDishVeg").html("Yes");
+    }
+    else {
+      $(".userDishVeg").html("No");
+    }
+  }
+  else {
+    $(".userDishGFree").html("No");
+    if ($(".userDishVeg").text() === "true") {
+      $(".userDishVeg").html("Yes");
+    }
+    else {
+      $(".userDishVeg").html("No");
+    }
+  }
 
 });
