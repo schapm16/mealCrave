@@ -1,5 +1,3 @@
-
-
 var fs = require('fs');
 var path = require('path');
 var Sequelize = require('sequelize');
@@ -7,7 +5,7 @@ var basename = path.basename(__filename);
 var env = process.env.NODE_ENV || 'development';
 var config = require(__dirname + '/../config/config.json')[env];
 var db = {};
-var S3 = require("./amazon2.js")(); 
+var S3 = require("./amazon2.js")();
 if (config.use_env_variable) {
 	var sequelize = new Sequelize(process.env[config.use_env_variable], config);
 }
@@ -23,15 +21,15 @@ const Users = sequelize.define('users', {
 		primaryKey: true,
 		autoIncrement: true,
 	},
-	login:  {
+	login: {
 		type: Sequelize.STRING,
 		unique: true,
-		allowNull: false 
+		allowNull: false
 	},
 	alias: Sequelize.STRING,
 	password: {
 		type: Sequelize.STRING,
-		allowNull: false 
+		allowNull: false
 	},
 	preferences: Sequelize.STRING,
 });
@@ -43,15 +41,15 @@ const Food = sequelize.define('food', {
 	},
 	food_name: {
 		type: Sequelize.STRING,
-		allowNull: false 
+		allowNull: false
 	},
 	photoUrl: {
 		type: Sequelize.STRING,
-		allowNull: false 
+		allowNull: false
 	},
 	price: {
 		type: Sequelize.FLOAT,
-		allowNull: false 
+		allowNull: false
 	},
 	gluFree: Sequelize.BOOLEAN,
 	type: Sequelize.STRING,
@@ -60,102 +58,202 @@ const Food = sequelize.define('food', {
 const Locations = sequelize.define('locations', {
 	location_name: {
 		type: Sequelize.STRING,
-		allowNull: false 
+		allowNull: false
 	},
 	gps_tag: {
 		type: Sequelize.STRING,
-		allowNull: false 
+		allowNull: false
 	},
 });
 
 Food.belongsTo(Locations);
 Users.belongsTo(Locations);
-Food.belongsTo(Users, {foreignKey: "user_id"});
+Food.belongsTo(Users, { foreignKey: "user_id" });
 
 sequelize.sync()
-.then(() => {	
-}).then(()=>{
-	console.log("Synced!");
-	//if argument was passed in command linu at start - create a test-data in database
-	if(process.argv[2]){
+	.then(() => {}).then(() => {
+		console.log("Synced!");
+		//if argument was passed in command linu at start - create a test-data in database
+		if (process.argv[2]) {
+			Locations.create({
+				location_name: "Charlotte, NC",
+				gps_tag: "34.333, 35.222"
+			});
+			Locations.create({
+				location_name: "Portland, OR",
+				gps_tag: "66.77, 12.192"
+			});
+			Users.create({
+				login: "vvitali",
+				alias: "Vorobyev",
+				password: "test_password",
+				locationId: 1,
+				preferences: "no",
+			});
+			Users.create({
+				login: "cstephen",
+				alias: "Chapman",
+				password: "s_password_test",
+				locationId: 2,
+				preferences: "no",
+			});
 
-		Locations.create({
-			location_name:"Charlotte, NC",
-			gps_tag: "34.333, 35.222"
-		});
-		Locations.create({
-			location_name:"Portland, OR",
-			gps_tag: "66.77, 12.192"
-		});
-		Users.create({
-			login: "vvitali",
-			alias: "Vorobyev",
-			password: "test_password",
-			locationId: 1,
-			preferences: "no",
-		});
-		Users.create({
-			login: "cstephen",
-			alias: "Chapman",
-			password: "s_password_test",
-			locationId: 2,
-			preferences: "no",
-		});
+			var D = process.argv[2]
+			var foodTypes = ["burger", "salad", "pasta", "drink"];
+			var locMock = ["Charlotte, NC", "Portland, OR"];
+			var len = foodTypes.length - 1;
+			for (var i = 0; i < D; i++) {
+				db.sendFoodToDB("BigMac" + i, //food name
+					Math.floor(Math.random() * 2 + 1), //random user id
+					"lorem", //random photo url, check definition of the function to change it from leromPixel link to actual data
+					Math.floor(Math.random() * 100), //random price
+					locMock[Math.floor(Math.random() * (locMock.length - 1))], //random location ID
+					!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2), //random gluten free, and veg. parameters.
+					foodTypes[Math.floor(Math.random() * len)], //random food type from array of foodtypes
+					"amazing!",
+					"placeholder",
+					() => {
 
-		var D = process.argv[2]
-		var foodTypes = ["burger","salad","pasta","drink"];
-		var locMock = ["Charlotte, NC", "Portland, OR"];
-		var len = foodTypes.length-1;
-		for(var i =0; i<D; i++){
-			db.sendFoodToDB("BigMac"+i, //food name
-				Math.floor(Math.random() * 2 + 1), //random user id
-				"lorem", //random photo url, check definition of the function to change it from leromPixel link to actual data
-				Math.floor(Math.random() * 100), //random price
-				locMock[Math.floor(Math.random() * (locMock.length-1))], //random location ID
-				!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2), //random gluten free, and veg. parameters.
-				foodTypes[Math.floor(Math.random() * len)],//random food type from array of foodtypes
-				"amazing!")// optional test tag
-		};
+					}) // optional test tag
+			};
+		}
+	})
 
-	}
-})
-
-db.sendFoodToDB = function(food_name, 
-	user_id, 
-	photo_object, 
+db.sendFoodToDB = function(food_name,
+	user_id,
+	photo_object,
 	price,
 	location_address,
-	gFree, 
-	veg, 
-	type, 
-	tags){
+	gFree,
+	veg,
+	type,
+	tags,
+	userName,
+	cb) {
 
-	S3.sendPhotoAndGetURL(photo_object, user_id+"/"+food_name+".jpg", function(url){
-			//trying to find a location in database
-			Locations.findOrCreate({where: {location_name: location_address}, defaults: {gps_tag: location_address}}).spread((locationF, created) => {
-				console.log("inner test, created: "+ created);
+	S3.sendPhotoAndGetURL(photo_object, user_id + "/" + food_name + ".jpg", function(url) {
+		//trying to find a location in database
 
-				console.log(locationF.id);
-				if(photo_object == "lorem"){
-					console.log("lorem!");
-					url = "http://lorempixel.com/400/200/food/";
-				}
-				Food.create({
-					user_id: user_id,
-					food_name: food_name,
-					photoUrl: url,
-					price: price,
-					gluFree: gFree,
-					type: "standart",
-					veg: veg,
-					locationId: locationF.id
-				}).then(()=>{
-					console.log(food_name+"  Added!")
-				});
+		var locationName = location_address.split(",");
+		console.log(locationName)
+		Locations.findOrCreate({ where: { gps_tag: location_address }, defaults: { location_name: locationName[0] } }).spread((locationF, created) => {
+			console.log("inner test, created: " + created);
+
+			console.log(locationF.id);
+			if (photo_object == "lorem") {
+				console.log("lorem!");
+				url = "http://lorempixel.com/400/200/food/";
+			}
+			Food.create({
+				user_id: user_id,
+				food_name: food_name,
+				photoUrl: url,
+				price: price,
+				gluFree: gFree,
+				type: "standart",
+				veg: veg,
+				locationId: locationF.id
+			}).then(() => {
+				console.log(food_name + "  Added!");
+				cb(userName);
 			});
 		});
-}
+	});
+};
 
+db.editFoodInDB = function(food_id,
+	location_id,
+	price,
+	food_name,
+	veg,
+	gFree,
+	photo_object, userName, cb) {
+	console.log(userName);
+	if (photo_object) {
+		S3.sendPhotoAndGetURL(photo_object, "pictures/" + food_name + ".jpg", function(url) {
+			console.log(url);
+
+			Food.update({
+				photoUrl: url
+			}, {
+				where: {
+					food_id: food_id
+				}
+			}).then(() => {
+				console.log(food_name + "  Updated photo!");
+			});
+		});
+	}
+	if (location_id) {
+		Food.update({
+			locationId: location_id
+		}, {
+			where: {
+				food_id: food_id
+			}
+		}).then(() => {
+			console.log(food_name + "  Updated location!");
+		});
+	}
+	if (price) {
+		Food.update({
+			price: price
+		}, {
+			where: {
+				food_id: food_id
+			}
+		}).then(() => {
+			console.log(food_name + "  Updated price!");
+		});
+	}
+	if (food_name) {
+		Food.update({
+			food_name: food_name
+		}, {
+			where: {
+				food_id: food_id
+			}
+		}).then(() => {
+			console.log(food_name + "  Updated food name!");
+		});
+	}
+	if (veg) {
+		Food.update({
+			veg: veg
+		}, {
+			where: {
+				food_id: food_id
+			}
+		}).then(() => {
+			console.log(food_name + "  Updated veg!");
+		});
+	}
+	if (gFree) {
+		Food.update({
+			gluFree: gFree
+		}, {
+			where: {
+				food_id: food_id
+			}
+		}).then(() => {
+			console.log(food_name + "  Updated gluten!");
+		});
+	}
+	cb(userName);
+};
+
+db.deleteFood = function(food_id, cb) {
+	Food.destroy({
+		where: {
+			food_id: food_id
+		}
+	}).then(() => {
+		cb()
+		console.log(food_id + "  Deleted!");
+	});
+};
+
+db.getFoodByType;
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
