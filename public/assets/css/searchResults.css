@@ -31,8 +31,10 @@
 #modalRestName:hover{
 	color: white;
 	text-decoration: underline;
+	cursor: pointer;
 }
 
+.mealImages,
 #homeLink:hover{
     cursor: pointer;
 }

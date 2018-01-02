@@ -94,4 +94,23 @@ $(function() {
   });
   //
 
+  if ($(".userDishGFree") === "true") {
+    $(".userDishGFree").html("Yes");
+    if ($(".userDishVeg") === "true") {
+      $(".userDishVeg").html("Yes");
+    }
+    else {
+      $(".userDishVeg").html("No");
+    }
+  }
+  else {
+    $(".userDishGFree").html("No");
+    if ($(".userDishVeg") === "true") {
+      $(".userDishVeg").html("Yes");
+    }
+    else {
+      $(".userDishVeg").html("No");
+    }
+  }
+
 });

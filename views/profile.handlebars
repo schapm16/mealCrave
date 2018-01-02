@@ -20,9 +20,6 @@
 		{{!--Buttons shown on page load--}}
 		<div id="initialButtons" class="field">
 			<label class="label has-text-centered is-size-3">What would you like to do?</label>
-			{{#each usersFood}}
-			<p>{{this.location.location_name}}</p>
-			{{/each}}
 			<div class="control buttons is-centered">
 				<button id="openSearchForm" class="button is-link">Search for Dish</button>
 				<button id="openCreateDishForm" class="button is-danger">Create New Dish</button>
@@ -240,8 +237,7 @@
 				<div class="tile is-child">
 					<div class="userDishWrapper">
 						<p class="{{food_id}}" style="display:none">1</p>
-						<img src="/assets/photos/download.jpg">
-						{{!--<img src="{{photoUrl}}">--}}
+						<img src="{{photoUrl}}">
 						<p>Location: <span class="userDishLocation">{{location.dataValues.location_name}}</span></p>
 						<p>Menu Item: <span class="userDishMenuName">{{food_name}}</span></p>
 						<p>Price: $<span class="userDishPrice">{{price}}</span></p>
