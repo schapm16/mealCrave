@@ -39,10 +39,10 @@ module.exports = function(app) {
 				request.body.type,
 				request.body.tags,
 				request.body.userName,
-				function(userName){
+				function(userName) {
 					response.redirect('/search/byUserId/' + request.body.userName);
 				});
-			
+
 		});
 
 
