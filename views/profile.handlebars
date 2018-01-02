@@ -238,7 +238,7 @@
 						<p class="{{food_id}}" style="display:none">1</p>
 						<img src="/assets/photos/download.jpg">
 						{{!--<img src="{{photoUrl}}">--}}
-						<p>Location: <span class="userDishLocation">Chili's</span></p>
+						<p>Location: <span class="userDishLocation">{{location.dataValues.location_name}}</span></p>
 						<p>Menu Item: <span class="userDishMenuName">{{food_name}}</span></p>
 						<p>Price: $<span class="userDishPrice">{{price}}</span></p>
 						<p>Gluten Free: <span class="userDishGFree">{{gluFree}}</span></p>
@@ -246,18 +246,6 @@
 					</div>
 				</div>
 				{{/each}}
-
-				{{!--<div class="tile is-child">--}}
-				{{!--	<div class="userDishWrapper">--}}
-				{{!--		<p class="userDishFoodId" style="display:none">2</p>--}}
-				{{!--		<img src="https://static.pexels.com/photos/70497/pexels-photo-70497.jpeg">--}}
-				{{!--		<p>Location: <span class="userDishLocation">Chili's</span></p>--}}
-				{{!--		<p>Menu Item: <span class="userDishMenuName">Bacon Cheeseburger</span></p>--}}
-				{{!--		<p>Price: $<span class="userDishPrice">11</span></p>--}}
-				{{!--		<p>Gluten Free: <span class="userDishGFree">No</span></p>--}}
-				{{!--		<p>Vegetarian: <span class="userDishVeg">No</span></p>--}}
-				{{!--	</div>--}}
-				{{!--</div>--}}
 			</div>
 		</div>
 	</div>

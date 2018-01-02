@@ -26,5 +26,8 @@
     text-align: center;
 }
 
+#homeLink:hover{
+    cursor: pointer;
+}
 
  

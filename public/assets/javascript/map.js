@@ -6,6 +6,15 @@ $("#theDuration").hide();
 var userAddress;
 var restaurantAddress = $("#destAdd").text();
 
+$("#homeLink").on("click", function() {
+    $.ajax({
+        url: "/",
+        method: "GET",
+    }).done(function(err, res) {
+        location.assign("/");
+    });
+});
+
 //getLocation will get the users location from the browser
 function getLocation() {
     function showPosition(position) {
