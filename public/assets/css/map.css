@@ -5,9 +5,10 @@
 }
 
  #map {
-     height: 80%;
-     width: 90%;
-     margin: auto;
+     height: 100%;
+     width: 100%;
+     margin: 0 auto;
+     margin-top: -25px;
  }
 
  html,
