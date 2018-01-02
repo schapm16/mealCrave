@@ -161,7 +161,7 @@ module.exports = function(app) {
 			}
 		}).then(function(data) {
 
-			if (data.password == req.body.password) {
+			if (data.password == req.body.password && data.login == req.body.userName) {
 				DEBUG && console.log("\x1b[32m" + req.body.login + ": Access granted!" + "\x1b[0m");
 				res.json({ valid: true })
 			}
