@@ -241,7 +241,8 @@
 				</div>
 				{{#each usersFood}}
 					<div class="tile is-child">
-						<div class="userDishWrapper" <p class="foodId" style="display:none">{{food_id}}</p>
+						<div class="userDishWrapper">
+							<p class="userDishFoodId" style="display:none">{{food_id}}</p>
 							<img src="{{photoUrl}}">
 							<p class="fullAddress" style="display:none">{{location.dataValues.gps_tag}}</p>
 							<p>Location: <span class="userDishLocation">{{location.dataValues.location_name}}</span></p>
@@ -250,16 +251,15 @@
 							<p>Gluten Free: <span class="userDishGFree">{{gluFree}}</span></p>
 							<p>Vegetarian: <span class="userDishVeg">{{veg}}</span></p>
 						</div>
-					</div>
 				{{/each}}
+				</div>
 			</div>
 		</div>
+		{{!--End User Dish Display--}}
 	</div>
-	{{!--End User Dish Display--}}
-</div>
-{{!--End Main Content Section--}}
+	{{!--End Main Content Section--}}
 
-<script type="text/javascript" src="/assets/javascript/profile.js"></script>
+	<script type="text/javascript" src="/assets/javascript/profile.js"></script>
 
-{{!--Google Places API--}}
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMRNMvB_hrPmwoHo_pkOvAfIOI5IMuMsA&libraries=places&callback=placesSearch"></script>
+	{{!--Google Places API--}}
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMRNMvB_hrPmwoHo_pkOvAfIOI5IMuMsA&libraries=places&callback=placesSearch"></script>

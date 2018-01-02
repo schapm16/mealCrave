@@ -123,7 +123,9 @@ db.sendFoodToDB = function(food_name,
 	gFree,
 	veg,
 	type,
-	tags) {
+	tags,
+	userName,
+	cb) {
 
 	S3.sendPhotoAndGetURL(photo_object, user_id + "/" + food_name + ".jpg", function(url) {
 		//trying to find a location in database
@@ -149,6 +151,7 @@ db.sendFoodToDB = function(food_name,
 				locationId: locationF.id
 			}).then(() => {
 				console.log(food_name + "  Added!");
+				cb(userName);
 			});
 		});
 	});

@@ -37,8 +37,12 @@ module.exports = function(app) {
 				request.body.gFree, //+
 				request.body.veg, //+
 				request.body.type,
-				request.body.tags);
-			response.send(request.body.menuName + " added!");
+				request.body.tags,
+				request.body.userName,
+				function(userName) {
+					response.redirect('/search/byUserId/' + request.body.userName);
+				});
+
 		});
 
 
