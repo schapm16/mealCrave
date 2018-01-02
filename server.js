@@ -5,6 +5,7 @@ const session = require('express-session');
 var passport = require('passport');
 var cookieParser  = require("cookie-parser");
 app.use(cookieParser());
+var RedisStore = require('connect-redis')(session)
 
 var LocalStrategy  = require('passport-local').Strategy;
 //connectiong handlebars engine to express server

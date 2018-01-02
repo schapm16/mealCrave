@@ -192,5 +192,9 @@ module.exports = function(app) {
 		//res.cookie('cookiename', 'cookievalue', { maxAge: 900000, httpOnly: true });
 		res.cookie("login" , 'cookie_value').send('Cookie is set');
 	});
+	app.get('/logout',function(req, res){
+		clearCookie("login");
+	});
+
 
 }
