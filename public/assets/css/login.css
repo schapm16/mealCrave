@@ -1,44 +1,61 @@
 html {
-    overflow-y: hidden; /*Removes scroll bar*/
+  overflow-y: hidden;
+  /*Removes scroll bar*/
 }
 
 body {
-    box-sizing: border-box;
-    height: 100vh;
+  box-sizing: border-box;
+  height: 100vh;
 }
 
 #whiteSpace {
-    height: 15vh;
+  height: 15vh;
 }
 
 main {
-    background-image: url("../photos/restaurant.png");
-    background-size: 100vw auto;
-    background-position: center;
+  background-image: url("../photos/restaurant.png");
+  background-size: 100vw auto;
+  background-position: center;
 }
 
 
 /*Login | Join links*/
-.hero-head a {
-    margin: 5px 7px;
-}
 
-.hero-head span {
-    margin: 5px 7px;
+.hero-head a,
+.hero-head span{
+  margin: 5px 7px;
 }
 
 .button {
-    background-color: #00BEAC;
+  background-color: #00BEAC;
 }
 
 
 /*Styling for Login and Join Modals*/
-.modal-content{
-    background-color: white;
-    border-radius: 5px;
-    padding: 20px;
+
+.modal-content {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
 }
 
 p {
-    color: red;
+  color: red;
+}
+
+@media only screen and (max-width: 768px) {
+  #whiteSpace {
+    display: none;
+  }
+
+  main {
+    height: 100vh;
+    background-size: auto 100vh;
+  }
+
+  .hero-head a,
+  .hero-head span {
+    margin: 5px 7px;
+    font-size: 1.25em;
+  }
 }
