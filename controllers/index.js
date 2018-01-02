@@ -188,7 +188,7 @@ module.exports = function(app) {
 	app.get("/map/:restaurantAddress", function(req, res) {
 		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
 	});
-	app.get("/nearme", function(req, res) {
-		res.render("nearMe", { stylePath: '"/assets/css/map.css"' });
-	});
+	// app.get("/nearme", function(req, res) {
+	// 	res.render("nearMe", { stylePath: '"/assets/css/map.css"' });
+	// });
 }

@@ -79,11 +79,11 @@ $(function() {
   // Get userName and Location on Page load
   $('#userName').val(sessionStorage.getItem('userName'));
 
-  window.navigator.geolocation.getCurrentPosition(function(position) {
-    console.log('position attained');
-    $('#locationCoordinates').val(position.coords.latitude + ' ' + position.coords.longitude);
-    console.log($('#locationCoordinates').val());
-  }, null, { enableHighAccuracy: true, maximumAge: 300000, timeOut: 5000 });
+  // window.navigator.geolocation.getCurrentPosition(function(position) {
+  //   console.log('position attained');
+  //   $('#locationCoordinates').val(position.coords.latitude + ' ' + position.coords.longitude);
+  //   console.log($('#locationCoordinates').val());
+  // }, null, { enableHighAccuracy: true, maximumAge: 300000, timeOut: 5000 });
   //
 
 
