@@ -136,7 +136,8 @@
 				<a class="closeForm is-pulled-right">Close X</a>
 			</div>
 			
-			<input name="foodId" type="hidden"></input>
+			<input name="userName" type="hidden">
+			<input name="foodId" type="hidden">
 			
 			<div class="field">
 				<label class="label">Is this the correct restaurant name?</label>
@@ -214,8 +215,9 @@
 		</form>
 		{{!----}}
 		
-		<form id="deleteDishForm" method="POST" action="/api/deleteFood" enctype="multipart/form-data">
-			<input name="foodId" type="hidden"></input>
+		<form id="deleteDishForm" method="POST" action="/api/deleteFood">
+			<input name="userName" type="hidden">
+			<input name="foodId" type="hidden">
 		</form>
 		
 		
