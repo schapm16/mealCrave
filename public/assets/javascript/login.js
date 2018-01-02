@@ -10,7 +10,7 @@ function loggedIn(userName) { // Updates page with profile link once user is log
     '<a id="profile" class="has-text-light is-pulled-right">Your Profile</a>'
     );
   
-  sessionStorage.setItem('userName', userName);
+   sessionStorage.setItem('userName', userName);
 }
 
 function loginValidation(userName, password) { // Validate user login information
@@ -69,15 +69,15 @@ function joinValidation(userName, passwordOne, passwordTwo) {
 // >>> Execution Begins Here <<<
 $(function() {
   /* global $ */
-  
+
   //Check if user already logged in this Session so that page can reflect that
-  if(sessionStorage.getItem('userName')) {
+  if (sessionStorage.getItem('userName')) {
     loggedIn(sessionStorage.getItem('userName'));
   }
 
   // Sends text search terms to server upon click of search button
   $('#search').click(function() {
-    window.location.href = "/search/byKeyword/"+ $('#searchTerm').val().trim();
+    window.location.href = "/search/byKeyword/" + $('#searchTerm').val().trim();
   });
   // >>> End Search Code <<<
 
@@ -131,10 +131,16 @@ $(function() {
   // >>> The following is for the "Your Profile | Logout" navigation links <<<
   $(document).on('click', '#profile', function() {
     console.log("profile pressed");
-    window.location.href='/search/byUserId/' + sessionStorage.getItem('userName');
-    
+    console.log(sessionStorage.getItem('userName'));
+    $.ajax({
+      url: "/search/byUserId/" + sessionStorage.getItem('userName'),
+      method: "GET",
+    }).done(function(err, res) {
+      //once the call is complete, load the profile page
+      window.location.href = '/search/byUserId/' + sessionStorage.getItem('userName');
+    });
   });
-  
+
   $(document).on('click', '#logout', function() {
     console.log("logout pressed");
     sessionStorage.clear();
