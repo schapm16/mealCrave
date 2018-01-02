@@ -75,8 +75,6 @@ sequelize.sync()
 		console.log("Synced!");
 		//if argument was passed in command linu at start - create a test-data in database
 		if (process.argv[2]) {
-
-
 			Locations.create({
 				location_name: "Charlotte, NC",
 				gps_tag: "34.333, 35.222"
@@ -114,20 +112,6 @@ sequelize.sync()
 					foodTypes[Math.floor(Math.random() * len)], //random food type from array of foodtypes
 					"amazing!") // optional test tag
 			};
-			var D = process.argv[2]
-			var foodTypes = ["burger", "salad", "pasta", "drink"];
-			var len = foodTypes.length - 1;
-			for (var i = 0; i < D; i++) {
-				db.sendFoodToDB("BigMac" + i, //food name
-					Math.floor(Math.random() * 2 + 1), //random user id
-					"http://lorempixel.com/400/200/food/", //random photo url, check definition of the function to change it from leromPixel link to actual data
-					Math.floor(Math.random() * 100), //random price
-					Math.floor(Math.random() * 2 + 1), //random location ID
-					!!Math.floor(Math.random() * 2), !!Math.floor(Math.random() * 2), //random gluten free, and veg. parameters.
-					foodTypes[Math.floor(Math.random() * len)], //random food type from array of foodtypes
-					"amazing!") // optional test tag
-			};
-
 		}
 	})
 
@@ -143,7 +127,10 @@ db.sendFoodToDB = function(food_name,
 
 	S3.sendPhotoAndGetURL(photo_object, user_id + "/" + food_name + ".jpg", function(url) {
 		//trying to find a location in database
-		Locations.findOrCreate({ where: { location_name: location_address }, defaults: { gps_tag: location_address } }).spread((locationF, created) => {
+
+		var locationName = location_address.split(",");
+		console.log(locationName)
+		Locations.findOrCreate({ where: { gps_tag: location_address }, defaults: { location_name: locationName[0] } }).spread((locationF, created) => {
 			console.log("inner test, created: " + created);
 
 			console.log(locationF.id);
@@ -161,11 +148,11 @@ db.sendFoodToDB = function(food_name,
 				veg: veg,
 				locationId: locationF.id
 			}).then(() => {
-				console.log(food_name + "  Added!")
+				console.log(food_name + "  Added!");
 			});
 		});
 	});
-}
+};
 
 db.editFoodInDB = function(food_id,
 	location_id,
@@ -254,11 +241,11 @@ db.deleteFood = function(food_id) {
 			food_id: food_id
 		}
 	}).then(() => {
-		console.log(food_id + "  Deleted!")
-	})
-}
+		console.log(food_id + "  Deleted!");
+	});
+};
 
-db.getFoodByType
+db.getFoodByType;
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

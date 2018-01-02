@@ -26,8 +26,7 @@ module.exports = function(app) {
 			user: ""
 		}
 		DEBUG && console.log(request.file.originalname);
-
-
+		DEBUG && console.log(request.body.location)
 		DB.Users.findOne({ where: { login: request.body.userName } }).then(userObject => {
 			console.log("UserID:" + userObject.user_id);
 			DB.sendFoodToDB(request.body.menuName, //+
@@ -62,23 +61,25 @@ module.exports = function(app) {
 			}
 		}).then(function(data) {
 			DEBUG || console.log("Poutput:" + data);
-			var JSON = data.stringify();
-			res.render("searchResults", { data: data, stylePath: "assets/css/searchResults.css" });
+
+			//var JSON = data.stringify();
+			res.render("searchResults", { data: data, stylePath: "/assets/css/searchResults.css" });
+
 		});
 	});
 	//this function will find every row in Food table, which contains "keyword" from request in food_name column
 	//and will send a JSON back
 	app.get("/search/byKeyword/:keyword", function(request, response) {
 		DB.Food.findAll({
+			include: DB.Locations,
 			where: {
-				//include: DB.Locations,
 				food_name: {
 					$like: '%' + request.params.keyword + '%' //it will find every item with "keyword" in the food_name column, no matter what position
 				}
 			}
 		}).then(function(data) {
-			DEBUG || console.log("Poutput:" + data);
 			DEBUG && console.log(data);
+			console.log("DATA: " + data);
 			response.render("searchResults", {
 				stylePath: '"/assets/css/searchResults.css"',
 				data: data
@@ -86,6 +87,7 @@ module.exports = function(app) {
 		});
 	});
 	//this function will find every row in Food table from certain user, it uses user_id for searching
+
 	app.get("/search/byUserId/:userId", function(request, response) {
 		DB.Food.findAll({
 			where: {
@@ -101,6 +103,29 @@ module.exports = function(app) {
 			response.render("profile", {
 				stylePath: '"/assets/css/profile.css"',
 				usersFood: data
+			})
+		})
+	})
+
+	app.get("/search/byUserId/:username", function(request, res) {
+		DB.Users.findOne({
+			where: {
+				login: request.params.username
+			}
+		}).then(function(data) {
+			console.log("USER ID: " + data.user_id);
+			var theID = data.user_id;
+			DB.Food.findAll({
+				where: {
+					user_id: theID
+				}
+			}).then(function(response) {
+				DEBUG && console.log("Inside response: " + response);
+				//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db
+				res.render("profile", {
+					stylePath: '"/assets/css/profile.css"',
+					usersFood: response
+				});
 			});
 		});
 	});
@@ -146,7 +171,6 @@ module.exports = function(app) {
 			}
 		})
 	});
-
 	app.post("/api/updateFood", upload.single('photo'), function(req, res) {
 		console.log(req.body.userName);
 		DB.editFoodInDB(req.body.foodId,
@@ -169,4 +193,7 @@ module.exports = function(app) {
 			res.redirect("/search/byUserId/" + req.body.userName)
 		});
 	})
-};
+	app.get("/map/:restaurantAddress", function(req, res) {
+		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });
+	});
+}

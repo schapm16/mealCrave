@@ -1,0 +1,30 @@
+.Site-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 35px;
+}
+
+ #map {
+     height: 80%;
+     width: 90%;
+     margin: auto;
+ }
+
+ html,
+ body {
+     height: 100%;
+     margin: 0;
+     padding: 0px;
+ }
+
+.has-bg-img { 
+    background: url("../photos/restaurant.png")center center; 
+    background-size:cover; 
+} 
+
+#loading{
+    text-align: center;
+}
+
+
+ 
