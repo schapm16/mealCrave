@@ -230,29 +230,31 @@
 					<p class="title">Your Dishes</p>
 					<p class="subtitle"><em>(Click to Edit)</em></p>
 				</div>
+				{{#each usersFood}}
 				<div class="tile is-child">
 					<div class="userDishWrapper">
 						<p class="userDishFoodId" style="display:none">1</p>
-						<img src="https://cleanfoodcrush.com/wp-content/uploads/2016/12/Kale-Chicken-Caesar-Salad-Recipe-1024x683.jpg">
+						<img src="/assets/photos/download.jpg">
 						<p>Location: <span class="userDishLocation">Chili's</span></p>
-						<p>Menu Item: <span class="userDishMenuName">Chicken Caesar Salad</span></p>
-						<p>Price: $<span class="userDishPrice">10</span></p>
-						<p>Gluten Free: <span class="userDishGFree">Yes</span></p>
-						<p>Vegetarian: <span class="userDishVeg">Yes</span></p>
+						<p>Menu Item: <span class="userDishMenuName">{{food_name}}</span></p>
+						<p>Price: $<span class="userDishPrice">{{price}}</span></p>
+						<p>Gluten Free: <span class="userDishGFree">{{gluFree}}</span></p>
+						<p>Vegetarian: <span class="userDishVeg">{{veg}}</span></p>
 					</div>
 				</div>
+				{{/each}}
 
-				<div class="tile is-child">
-					<div class="userDishWrapper">
-						<p class="userDishFoodId" style="display:none">2</p>
-						<img src="https://static.pexels.com/photos/70497/pexels-photo-70497.jpeg">
-						<p>Location: <span class="userDishLocation">Chili's</span></p>
-						<p>Menu Item: <span class="userDishMenuName">Bacon Cheeseburger</span></p>
-						<p>Price: $<span class="userDishPrice">11</span></p>
-						<p>Gluten Free: <span class="userDishGFree">No</span></p>
-						<p>Vegetarian: <span class="userDishVeg">No</span></p>
-					</div>
-				</div>
+				{{!--<div class="tile is-child">--}}
+				{{!--	<div class="userDishWrapper">--}}
+				{{!--		<p class="userDishFoodId" style="display:none">2</p>--}}
+				{{!--		<img src="https://static.pexels.com/photos/70497/pexels-photo-70497.jpeg">--}}
+				{{!--		<p>Location: <span class="userDishLocation">Chili's</span></p>--}}
+				{{!--		<p>Menu Item: <span class="userDishMenuName">Bacon Cheeseburger</span></p>--}}
+				{{!--		<p>Price: $<span class="userDishPrice">11</span></p>--}}
+				{{!--		<p>Gluten Free: <span class="userDishGFree">No</span></p>--}}
+				{{!--		<p>Vegetarian: <span class="userDishVeg">No</span></p>--}}
+				{{!--	</div>--}}
+				{{!--</div>--}}
 			</div>
 		</div>
 	</div>
