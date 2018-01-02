@@ -163,25 +163,27 @@ module.exports = function(app) {
 	});
 	app.post("/api/updateFood", upload.single('photo'), function(req, res) {
 		console.log(req.body.userName);
+		console.log(req.body.veg)
 		DB.editFoodInDB(req.body.foodId,
 			req.body.location,
 			req.body.price,
 			req.body.menuName,
 			req.body.veg,
 			req.body.gfree,
-			req.body.file,
+			req.file,
 			req.body.userName,
-			function(userName) {
+			function(userName, foodId) {
+				console.log("foodID = " + foodId)
 				console.log("tesetset");
 				console.log(userName);
 				res.redirect("/search/byUserId/" + userName);
 			});
 	});
 
-	app.post("api/deleteFood", function(req, res) {
-		DB.deleteFood(req.body.foodId).then(function() {
+	app.post("/api/deleteFood", function(req, res) {
+		DB.deleteFood(req.body.foodId, function() {
 			res.redirect("/search/byUserId/" + req.body.userName)
-		});
+		})
 	})
 	app.get("/map/:restaurantAddress", function(req, res) {
 		res.render("map", { restaurantAddress: req.params.restaurantAddress, stylePath: '"/assets/css/map.css"' });

@@ -112,8 +112,8 @@ sequelize.sync()
 					foodTypes[Math.floor(Math.random() * len)], //random food type from array of foodtypes
 					"amazing!",
 					"placeholder",
-					()=>{
-						
+					() => {
+
 					}) // optional test tag
 			};
 		}
@@ -171,7 +171,7 @@ db.editFoodInDB = function(food_id,
 	console.log(userName);
 	if (photo_object) {
 		S3.sendPhotoAndGetURL(photo_object, "pictures/" + food_name + ".jpg", function(url) {
-			console.log(url);
+			console.log("New photo: " + url);
 
 			Food.update({
 				photoUrl: url
@@ -242,12 +242,13 @@ db.editFoodInDB = function(food_id,
 	cb(userName);
 };
 
-db.deleteFood = function(food_id) {
+db.deleteFood = function(food_id, cb) {
 	Food.destroy({
 		where: {
 			food_id: food_id
 		}
 	}).then(() => {
+		cb()
 		console.log(food_id + "  Deleted!");
 	});
 };
