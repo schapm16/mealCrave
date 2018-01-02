@@ -124,7 +124,7 @@ db.sendFoodToDB = function(food_name,
 	photo_object,
 	price,
 	location_address,
-	gFree,
+	gfree,
 	veg,
 	type,
 	tags,
@@ -137,6 +137,8 @@ db.sendFoodToDB = function(food_name,
 		var locationName = location_address.split(",");
 		console.log(locationName)
 		Locations.findOrCreate({ where: { gps_tag: location_address }, defaults: { location_name: locationName[0] } }).spread((locationF, created) => {
+			var gluten;
+			var vegi;
 			console.log("inner test, created: " + created);
 
 			console.log(locationF.id);
@@ -144,14 +146,26 @@ db.sendFoodToDB = function(food_name,
 				console.log("lorem!");
 				url = "http://lorempixel.com/400/200/food/";
 			}
+			if (gfree == "on") {
+				gluten = 1
+			}
+			if (gfree == null) {
+				gluten = 0
+			}
+			if (veg == "on") {
+				vegi = 1
+			}
+			if (veg == null) {
+				vegi = 0
+			}
 			Food.create({
 				user_id: user_id,
 				food_name: food_name,
 				photoUrl: url,
 				price: price,
-				gluFree: gFree,
+				gluFree: gluten,
 				type: "standart",
-				veg: veg,
+				veg: vegi,
 				locationId: locationF.id
 			}).then(() => {
 				console.log(food_name + "  Added!");
@@ -169,6 +183,8 @@ db.editFoodInDB = function(food_id,
 	gFree,
 	photo_object, userName, cb) {
 	console.log(userName);
+	var gluten;
+	var vegi;
 	if (photo_object) {
 		S3.sendPhotoAndGetURL(photo_object, "pictures/" + food_name + ".jpg", function(url) {
 			console.log("New photo: " + url);
@@ -217,9 +233,21 @@ db.editFoodInDB = function(food_id,
 			console.log(food_name + "  Updated food name!");
 		});
 	}
-	if (veg) {
+	if (gFree == "on") {
+		gluten = 1
+	}
+	if (gFree == null) {
+		gluten = 0
+	}
+	if (veg == "on") {
+		vegi = 1
+	}
+	if (veg == null) {
+		vegi = 0
+	}
+	if (veg == "on" || veg == null) {
 		Food.update({
-			veg: veg
+			veg: vegi
 		}, {
 			where: {
 				food_id: food_id
@@ -228,9 +256,9 @@ db.editFoodInDB = function(food_id,
 			console.log(food_name + "  Updated veg!");
 		});
 	}
-	if (gFree) {
+	if (gFree == "on" || gFree == null) {
 		Food.update({
-			gluFree: gFree
+			gluFree: gluten
 		}, {
 			where: {
 				food_id: food_id
