@@ -70,7 +70,7 @@ module.exports = function(app){
 	//and will send a JSON back
 	app.get("/search/byKeyword/:keyword", function(request, response) {
 		DB.Food.findAll({
-			//include: DB.Locations,
+			include: DB.Locations,
 			where: {				
 				food_name: {
 					$like: '%' + request.params.keyword + '%' //it will find every item with "keyword" in the food_name column, no matter what position
