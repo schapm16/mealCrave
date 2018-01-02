@@ -52,6 +52,15 @@ $("#modalImage").on("click", function() { //this will need to be changed to the 
     });
 });
 
+$("#homeLink").on("click", function() {
+    $.ajax({
+        url: "/",
+        method: "GET",
+    }).done(function(err, res) {
+        location.assign("/");
+    });
+});
+
 //If there are no search results, show the "noResults" message
 if ($('.mealPics').children().length == 0) {
     $("#noResults").show();

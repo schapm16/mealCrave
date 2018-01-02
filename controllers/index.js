@@ -89,45 +89,23 @@ module.exports = function(app) {
 	//this function will find every row in Food table from certain user, it uses user_id for searching
 
 	app.get("/search/byUserId/:userId", function(request, response) {
-		DB.Food.findAll({
-			where: {
-				user_id: request.params.userId
-			}
-		}).then(function(data) {
-			DEBUG || console.log("Poutput:" + data);
-			//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db
-
-			DEBUG && console.log(data);
-			//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db
-
-			response.render("profile", {
-				stylePath: '"/assets/css/profile.css"',
-				usersFood: data
-			})
-		})
-	})
-
-	app.get("/search/byUserId/:username", function(request, res) {
-		DB.Users.findOne({
-			where: {
-				login: request.params.username
-			}
-		}).then(function(data) {
-			console.log("USER ID: " + data.user_id);
-			var theID = data.user_id;
+		DB.Users.findOne({ where: { login: request.params.userId } }).then(userObject => {
+			console.log("UserID:" + userObject.user_id);
 			DB.Food.findAll({
+				include: DB.Locations,
 				where: {
-					user_id: theID
+					user_id: userObject.user_id
 				}
-			}).then(function(response) {
-				DEBUG && console.log("Inside response: " + response);
+			}).then(function(data) {
+				DEBUG && console.log(data);
 				//data will contain an array of food objects, each object contains has same keys as columns inside food-table in mysql-db
-				res.render("profile", {
+				response.render("profile", {
 					stylePath: '"/assets/css/profile.css"',
-					usersFood: response
+					usersFood: data
 				});
 			});
 		});
+
 	});
 
 	app.post("/join", function(req, res) {
