@@ -132,7 +132,9 @@ db.sendFoodToDB = function(food_name,
 
 	S3.sendPhotoAndGetURL(photo_object, user_id+"/"+food_name+".jpg", function(url){
 			//trying to find a location in database
-			Locations.findOrCreate({where: {location_name: location_address}, defaults: {gps_tag: location_address}}).spread((locationF, created) => {
+			var locationName = location_address.split(",");
+			console.log(locationName)
+			Locations.findOrCreate({where: {gps_tag: location_address}, defaults: {location_name: locationName[0]}}).spread((locationF, created) => {
 				console.log("inner test, created: "+ created);
 
 				console.log(locationF.id);
@@ -150,7 +152,7 @@ db.sendFoodToDB = function(food_name,
 					veg: veg,
 					locationId: locationF.id
 				}).then(()=>{
-					console.log(food_name+"  Added!")
+					console.log(food_name+"  Added!" + locationName[0]);
 				});
 			});
 		});

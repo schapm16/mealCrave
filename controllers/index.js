@@ -141,4 +141,8 @@ module.exports = function(app){
 			}
 		})
 	});
+	app.post("/api/updateFood", upload.single('photo'), function(req, res) {
+		console.log(req.body.userName);
+		res.send(req.body.userName);
+	});
 }
