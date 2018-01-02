@@ -173,7 +173,8 @@ db.editFoodInDB = function(food_id,
 	food_name,
 	veg,
 	gFree,
-	photo_object) {
+	photo_object, userName, cb) {
+	console.log(userName);
 	if (photo_object) {
 		S3.sendPhotoAndGetURL(photo_object, "pictures/" + food_name + ".jpg", function(url) {
 			console.log(url);
@@ -244,6 +245,7 @@ db.editFoodInDB = function(food_id,
 			console.log(food_name + "  Updated gluten!");
 		});
 	}
+	cb(userName);
 };
 
 db.deleteFood = function(food_id) {

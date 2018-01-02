@@ -147,17 +147,21 @@ module.exports = function(app) {
 		})
 	});
 
-	app.post("/api/updateFood", function(req, res) {
+	app.post("/api/updateFood", upload.single('photo'), function(req, res) {
+		console.log(req.body.userName);
 		DB.editFoodInDB(req.body.foodId,
 			req.body.location,
 			req.body.price,
 			req.body.menuName,
 			req.body.veg,
 			req.body.gfree,
-			req.body.file
-		).then(function() {
-			res.redirect("/search/byUserId/" + req.body.userName)
-		});
+			req.body.file,
+			req.body.userName,
+			function(userName) {
+				console.log("tesetset");
+				console.log(userName);
+				res.redirect("/search/byUserId/" + userName);
+			});
 	});
 
 	app.post("api/deleteFood", function(req, res) {
