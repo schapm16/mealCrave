@@ -33,7 +33,14 @@ function populateEditDishForms(dishClicked) {
 
 // >>> Execution Begins Here <<<
 $(function() {
+
+  //keeps the enter key from reloading the page
+  $('form').keypress(function(event) {
+    return event.keyCode != 13;
+  });
+
   $("")
+
   // Logout
   $('#logout').click(function() {
     sessionStorage.clear();
