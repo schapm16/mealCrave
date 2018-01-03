@@ -8,9 +8,9 @@ function loggedIn(userName) { // Updates page with profile link once user is log
     '<a id="logout" class="has-text-light is-pulled-right">Logout</a>' +
     '<span class="has-text-light is-pulled-right">  |  </span>' +
     '<a id="profile" class="has-text-light is-pulled-right">Your Profile</a>'
-    );
-  
-   sessionStorage.setItem('userName', userName);
+  );
+
+  sessionStorage.setItem('userName', userName);
 }
 
 function loginValidation(userName, password) { // Validate user login information
@@ -68,8 +68,11 @@ function joinValidation(userName, passwordOne, passwordTwo) {
 
 // >>> Execution Begins Here <<<
 $(function() {
-  /* global $ */
 
+  //keeps the enter key from reloading the page
+  $('form').keypress(function(event) {
+    return event.keyCode != 13;
+  });
   //Check if user already logged in this Session so that page can reflect that
   if (sessionStorage.getItem('userName')) {
     loggedIn(sessionStorage.getItem('userName'));
