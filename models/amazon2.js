@@ -27,15 +27,18 @@ module.exports = function() {
 				console.log(err, err.stack);
 			}
 			else {
-				var urlParams = {
-					Bucket: BucketName,
-					Key: nameOfPhoto,
-					Expires: 604800 //expires in one week
-				};
-				s3.getSignedUrl('getObject', urlParams, function(err, url) {
-					cb(url)
-					return url;
-				});
+				//instead of using temporary links, or make a new function for creating a new link every time when we need id
+				// we will use direct path to the out backet. So, no access control now ( :( )
+				// var urlParams = {
+				// 	Bucket: BucketName,
+				// 	Key: nameOfPhoto,
+				// 	Expires: 604800 //expires in one week
+				// };
+				// s3.getSignedUrl('getObject', urlParams, function(err, url) {
+				// 	cb(url)
+				// 	return url;
+				// });
+				cb("https://s3.amazonaws.com/mealcrave-2017/"+nameOfPhoto);
 			}
 		});
 	};

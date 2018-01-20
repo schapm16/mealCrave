@@ -71,8 +71,8 @@ Users.belongsTo(Locations);
 Food.belongsTo(Users, { foreignKey: "user_id" });
 
 sequelize.sync()
-	.then(() => {}).then(() => {
-		console.log("Synced!");
+.then(() => {}).then(() => {
+	console.log("Synced!");
 		//if argument was passed in command linu at start - create a test-data in database
 		if (process.argv[2]) {
 			Locations.create({
@@ -133,7 +133,8 @@ db.sendFoodToDB = function(food_name,
 
 	S3.sendPhotoAndGetURL(photo_object, user_id + "/" + food_name + ".jpg", function(url) {
 		//trying to find a location in database
-
+		console.log("\x1b[32mUSERID in sendFoodToDB DB:\x1b[0m");
+		console.log(user_id);
 		var locationName = location_address.split(",");
 		console.log(locationName)
 		Locations.findOrCreate({ where: { gps_tag: location_address }, defaults: { location_name: locationName[0] } }).spread((locationF, created) => {
