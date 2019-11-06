@@ -29,7 +29,7 @@
     "path": "^0.12.7",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "sequelize": "^4.28.6",
+    "sequelize": "^5.15.1",
     "sequelize-cli": "^3.2.0"
   },
   "devDependencies": {
