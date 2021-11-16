@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/schapm16/mealCrave#readme",
   "dependencies": {
-    "aws-sdk": "^2.173.0",
+    "aws-sdk": "^2.814.0",
     "body-parser": "^1.18.2",
     "bulma": "^0.6.1",
     "express": "^4.16.2",
